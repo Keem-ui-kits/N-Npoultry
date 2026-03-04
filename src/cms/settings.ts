@@ -13,7 +13,7 @@ export const siteSettings: SiteSettings = {
     logo: '/images/logo.png',
     favicon: '/favicon.ico'
   },
-  
+
   contact: {
     phone: '+254 700 000 000',
     whatsapp: '254700000000',
@@ -21,7 +21,7 @@ export const siteSettings: SiteSettings = {
     address: 'Machakos, Kenya',
     mapUrl: 'https://maps.google.com/?q=Machakos+Kenya'
   },
-  
+
   business: {
     hours: {
       monday: '6:00 AM – 6:00 PM',
@@ -35,7 +35,7 @@ export const siteSettings: SiteSettings = {
     deliveryAreas: ['Machakos', 'Nairobi', 'Athi River', 'Kitengela', 'Mlolongo'],
     minimumOrder: 'KSh 500'
   },
-  
+
   seo: {
     title: 'N&N Poultry Palace | Fresh Table Eggs in Machakos',
     description: 'Daily-collected fresh table eggs, ex-layer hens & poultry manure. Delivered to homes & businesses across Machakos. Order now or get a wholesale quote.',
@@ -52,7 +52,7 @@ export const siteSettings: SiteSettings = {
     ogImage: '/images/og-image.jpg',
     canonicalUrl: 'https://www.nnpoultrypalace.co.ke'
   },
-  
+
   social: {
     facebook: 'https://facebook.com/nnpoultrypalace',
     instagram: 'https://instagram.com/nnpoultrypalace',
@@ -66,7 +66,6 @@ export const mainNavigation: NavItem[] = [
   { label: 'Home', href: '#hero' },
   { label: 'Products', href: '#products' },
   { label: 'About', href: '#why-nn' },
-  { label: 'Education', href: '#education' },
   { label: 'Testimonials', href: '#testimonials' },
   { label: 'Order', href: '#order' }
 ];
@@ -75,7 +74,6 @@ export const mobileNavigation: NavItem[] = [
   { label: 'Home', href: '#hero' },
   { label: 'Products', href: '#products' },
   { label: 'About', href: '#why-nn' },
-  { label: 'Education', href: '#education' },
   { label: 'Testimonials', href: '#testimonials' },
   { label: 'Order', href: '#order' }
 ];
@@ -84,7 +82,6 @@ export const footerNavigation: NavItem[] = [
   { label: 'Home', href: '#hero' },
   { label: 'Products', href: '#products' },
   { label: 'About Us', href: '#why-nn' },
-  { label: 'Education Hub', href: '#education' },
   { label: 'Order Now', href: '#order' },
   { label: 'Testimonials', href: '#testimonials' }
 ];
@@ -155,8 +152,8 @@ export const testimonials = [
     id: 'testimonial-1',
     name: 'Wanjiru M.',
     role: 'Home Cook',
-    location: 'Westlands',
-    quote: "I've been buying from N&N for over eight months and the eggs are consistently fresh. The yolks are bright and rich — you can really taste the difference from supermarket eggs. Delivery is always on time!",
+    location: 'Syokimau',
+    quote: "I've been buying from N&N for over eight months and the eggs are consistently fresh. Living in Syokimau, it's great to have such high-quality eggs delivered right to my door. The yolks are bright and rich — you can really taste the difference!",
     rating: 5,
     verified: true,
     verifiedType: 'buyer' as const,
@@ -166,8 +163,8 @@ export const testimonials = [
     id: 'testimonial-2',
     name: 'Chef Kamau J.',
     role: 'Restaurant Owner',
-    location: 'Karen',
-    quote: "We switched our restaurant supply to N&N six months ago. Their wholesale pricing is fair, invoicing is professional, and I have never had a rejected batch. Reliable and easy to work with — highly recommended for any food business.",
+    location: 'Machakos Town',
+    quote: "We switched our restaurant supply in Machakos Town to N&N six months ago. Their wholesale pricing is fair, invoicing is professional, and I have never had a rejected batch. Reliable and easy to work with — highly recommended for any local food business.",
     rating: 5,
     verified: true,
     verifiedType: 'wholesale' as const,
@@ -177,8 +174,8 @@ export const testimonials = [
     id: 'testimonial-3',
     name: 'Amina S.',
     role: 'Breakfast Kiosk Owner',
-    location: 'Ngong Road',
-    quote: "I run a small breakfast kiosk and N&N's 30-egg trays have been a game-changer. Freshness every morning, WhatsApp ordering is super convenient, and they even remind me before I run low. This is the kind of supplier every small business needs.",
+    location: 'Athi River',
+    quote: "I run a small breakfast kiosk in Athi River and N&N's 30-egg trays have been a game-changer. Freshness every morning, WhatsApp ordering is super convenient, and they even remind me before I run low. This is the kind of supplier every small business needs.",
     rating: 5,
     verified: true,
     verifiedType: 'buyer' as const,

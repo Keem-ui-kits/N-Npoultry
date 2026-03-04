@@ -7,7 +7,6 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { products } from '@/cms/products';
-import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,16 +60,6 @@ const Products = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      const offset = 80;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  };
-
   const getBadgeClass = (type: string) => {
     switch (type) {
       case 'gold':
@@ -90,7 +79,7 @@ const Products = () => {
     >
       {/* Background Decoration */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-3xl pointer-events-none" />
-      
+
       <div className="container-custom relative z-10">
         {/* Section Header */}
         <div className="products-header max-w-2xl mb-16">
@@ -108,13 +97,13 @@ const Products = () => {
         </div>
 
         {/* Products Grid */}
-        <div 
+        <div
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
         >
           {products.map((product) => (
-            <article 
-              key={product.id} 
+            <article
+              key={product.id}
               className="product-card group"
             >
               {/* Image */}
@@ -143,9 +132,9 @@ const Products = () => {
                 </p>
 
                 {/* Features */}
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2">
                   {product.features.slice(0, 3).map((feature, index) => (
-                    <li 
+                    <li
                       key={index}
                       className="flex items-start gap-2 text-sm text-white/70"
                     >
@@ -154,20 +143,6 @@ const Products = () => {
                     </li>
                   ))}
                 </ul>
-
-                {/* CTA */}
-                <a
-                  href={product.ctaLink}
-                  onClick={(e) => handleNavClick(e, product.ctaLink)}
-                  className={`inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                    product.id === 'table-eggs'
-                      ? 'btn-primary btn-sm'
-                      : 'btn-dark btn-sm'
-                  }`}
-                >
-                  {product.ctaText}
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                </a>
               </div>
             </article>
           ))}

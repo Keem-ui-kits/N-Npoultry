@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { Toaster } from 'sonner';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
 
 // Layout Components
 import Header from '@/components/layout/Header';
@@ -17,7 +18,6 @@ import Footer from '@/components/layout/Footer';
 import Hero from '@/components/sections/Hero';
 import Products from '@/components/sections/Products';
 import Trust from '@/components/sections/Trust';
-import EducationHub from '@/components/sections/EducationHub';
 import Testimonials from '@/components/sections/Testimonials';
 import Order from '@/components/sections/Order';
 
@@ -26,6 +26,26 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   useEffect(() => {
+    // Initialize Lenis
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    // Update ScrollTrigger on Lenis scroll
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Add Lenis to GSAP ticker
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
     // Configure GSAP defaults
     gsap.config({
       nullTargetWarn: false,
@@ -41,6 +61,8 @@ function App() {
 
     // Cleanup on unmount
     return () => {
+      lenis.destroy();
+      gsap.ticker.remove(lenis.raf as any);
       ScrollTrigger.getAll().forEach(st => st.kill());
     };
   }, []);
@@ -48,7 +70,7 @@ function App() {
   return (
     <div className="relative min-h-screen bg-dark text-white overflow-x-hidden">
       {/* Toast Notifications */}
-      <Toaster 
+      <Toaster
         position="top-right"
         toastOptions={{
           style: {
@@ -67,7 +89,6 @@ function App() {
         <Hero />
         <Products />
         <Trust />
-        <EducationHub />
         <Testimonials />
         <Order />
       </main>

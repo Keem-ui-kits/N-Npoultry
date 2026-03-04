@@ -41,8 +41,28 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 80px;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 body {
@@ -71,20 +91,56 @@ body::after {
 }
 
 @keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  20% { transform: translate(-15%, 5%); }
-  30% { transform: translate(7%, -25%); }
-  40% { transform: translate(-5%, 25%); }
-  50% { transform: translate(-15%, 10%); }
-  60% { transform: translate(15%, 0%); }
-  70% { transform: translate(0%, 15%); }
-  80% { transform: translate(3%, 35%); }
-  90% { transform: translate(-10%, 10%); }
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-5%, -10%);
+  }
+
+  20% {
+    transform: translate(-15%, 5%);
+  }
+
+  30% {
+    transform: translate(7%, -25%);
+  }
+
+  40% {
+    transform: translate(-5%, 25%);
+  }
+
+  50% {
+    transform: translate(-15%, 10%);
+  }
+
+  60% {
+    transform: translate(15%, 0%);
+  }
+
+  70% {
+    transform: translate(0%, 15%);
+  }
+
+  80% {
+    transform: translate(3%, 35%);
+  }
+
+  90% {
+    transform: translate(-10%, 10%);
+  }
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Playfair Display', Georgia, serif;
   line-height: 1.2;
 }
@@ -121,16 +177,17 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Utility Classes */
 @layer utilities {
+
   /* Text Effects */
   .text-outline {
     color: transparent;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
   }
-  
+
   .text-glow {
     text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
   }
-  
+
   .text-gold-gradient {
     background: linear-gradient(90deg, #D4AF37, #E8CE70);
     -webkit-background-clip: text;
@@ -177,7 +234,7 @@ h1, h2, h3, h4, h5, h6 {
   .card-hover {
     @apply transition-all duration-500 ease-smooth;
   }
-  
+
   .card-hover:hover {
     @apply -translate-y-2;
     border-color: rgba(212, 175, 55, 0.3);
@@ -376,7 +433,7 @@ h1, h2, h3, h4, h5, h6 {
   body::after {
     display: none;
   }
-  
+
   .no-print {
     display: none !important;
   }
@@ -384,6 +441,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -391,7 +449,7 @@ h1, h2, h3, h4, h5, h6 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   body::after {
     animation: none;
   }

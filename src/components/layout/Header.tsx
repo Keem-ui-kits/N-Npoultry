@@ -1,82 +1,169 @@
-"use client";
+// ============================================
+// Header Component
+// ============================================
+// Fixed navigation with scroll behavior and mobile menu
 
-import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { gsap } from "gsap";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import { mainNavigation, siteSettings } from '@/cms/settings';
 
 const Header = () => {
-  const headerRef = useRef<HTMLElement>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    gsap.fromTo(
-      headerRef.current,
-      { y: -100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: "power4.out", delay: 0.5 }
-    );
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 60);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (isMenuOpen) {
-      gsap.to(menuRef.current, { x: 0, duration: 0.8, ease: "power4.out" });
-      document.body.style.overflow = "hidden";
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
     } else {
-      gsap.to(menuRef.current, { x: "100%", duration: 0.8, ease: "power4.in" });
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = '';
     }
-  }, [isMenuOpen]);
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    
+    const target = document.querySelector(href);
+    if (target) {
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
 
   return (
-    <>
-      <header
-        ref={headerRef}
-        className="fixed top-0 left-0 w-full z-50 px-6 py-8 flex justify-between items-center mix-blend-difference"
-      >
-        <Link href="/" className="text-2xl font-bold tracking-tighter text-white uppercase">
-          N&N<span className="text-gold">.</span>Poultry
-        </Link>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-smooth ${
+        isScrolled
+          ? 'bg-dark/97 backdrop-blur-xl shadow-dark'
+          : 'bg-transparent'
+      }`}
+    >
+      <nav className="container-custom">
+        <div className="flex items-center justify-between py-4 lg:py-5">
+          {/* Logo */}
+          <a 
+            href="#hero" 
+            onClick={(e) => handleNavClick(e, '#hero')}
+            className="flex items-center gap-3 group"
+          >
+            <img 
+              src={siteSettings.brand.logo} 
+              alt={siteSettings.brand.name}
+              className="h-12 lg:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="hidden sm:flex flex-col leading-tight">
+              <span className="font-serif text-gold text-sm lg:text-base font-bold tracking-wide">
+                {siteSettings.brand.name}
+              </span>
+              <span className="text-[0.6rem] lg:text-xs text-gold/70 tracking-[0.15em] uppercase">
+                {siteSettings.brand.tagline}
+              </span>
+            </div>
+          </a>
 
-        <nav className="hidden md:flex gap-12 text-sm font-medium uppercase tracking-widest text-white/70">
-          <Link href="/products" className="hover:text-gold transition-colors">Products</Link>
-          <Link href="/education" className="hover:text-gold transition-colors">Education</Link>
-          <Link href="/about" className="hover:text-gold transition-colors">Our Story</Link>
-          <Link href="/contact" className="hover:text-gold transition-colors">Connect</Link>
-        </nav>
+          {/* Desktop Navigation */}
+          <ul className="hidden lg:flex items-center gap-1">
+            {mainNavigation.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="px-4 py-2 text-sm font-medium text-white/80 rounded-md transition-all duration-300 hover:text-gold hover:bg-gold/10"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
 
-        <button
-          onClick={() => setIsMenuOpen(true)}
-          className="md:hidden text-white hover:text-gold transition-colors"
-        >
-          <Menu size={24} />
-        </button>
-      </header>
+          {/* Desktop CTAs */}
+          <div className="hidden lg:flex items-center gap-3">
+            <a
+              href="#order"
+              onClick={(e) => handleNavClick(e, '#order')}
+              className="btn-primary btn-sm"
+            >
+              Order Fresh Eggs
+            </a>
+            <a
+              href="#order"
+              onClick={(e) => handleNavClick(e, '#order')}
+              className="btn-outline-gold btn-sm"
+            >
+              Wholesale Quote
+            </a>
+          </div>
 
-      {/* Mobile Menu Overlay */}
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden p-2 text-white hover:text-gold transition-colors"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu */}
       <div
-        ref={menuRef}
-        className="fixed inset-0 z-[60] bg-brand-black translate-x-full flex flex-col items-center justify-center gap-8"
+        className={`lg:hidden fixed inset-0 top-[72px] bg-dark/98 backdrop-blur-xl transition-all duration-500 ease-smooth ${
+          isMobileMenuOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
+        }`}
       >
-        <button
-          onClick={() => setIsMenuOpen(false)}
-          className="absolute top-10 right-10 text-white hover:text-gold transition-colors"
-        >
-          <X size={32} />
-        </button>
-
-        <nav className="flex flex-col items-center gap-10">
-          <Link onClick={() => setIsMenuOpen(false)} href="/products" className="text-4xl text-white font-bold uppercase tracking-widest hover:text-gold transition-colors">Products</Link>
-          <Link onClick={() => setIsMenuOpen(false)} href="/education" className="text-4xl text-white font-bold uppercase tracking-widest hover:text-gold transition-colors">Education</Link>
-          <Link onClick={() => setIsMenuOpen(false)} href="/about" className="text-4xl text-white font-bold uppercase tracking-widest hover:text-gold transition-colors">Our Story</Link>
-          <Link onClick={() => setIsMenuOpen(false)} href="/contact" className="text-4xl text-white font-bold uppercase tracking-widest hover:text-gold transition-colors">Connect</Link>
-        </nav>
-
-        <div className="mt-20 text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold">
-          N&N Poultry Palace Limited
+        <div className="container-custom py-8">
+          <ul className="flex flex-col gap-2">
+            {mainNavigation.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="block py-3 text-lg font-medium text-white/80 border-b border-white/5 transition-colors hover:text-gold"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          
+          <div className="mt-8 flex flex-col gap-3">
+            <a
+              href="#order"
+              onClick={(e) => handleNavClick(e, '#order')}
+              className="btn-primary w-full justify-center"
+            >
+              🛒 Order Fresh Eggs
+            </a>
+            <a
+              href="#order"
+              onClick={(e) => handleNavClick(e, '#order')}
+              className="btn-outline-gold w-full justify-center"
+            >
+              📋 Wholesale Quote
+            </a>
+          </div>
         </div>
       </div>
-    </>
+    </header>
   );
 };
 

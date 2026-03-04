@@ -1,138 +1,182 @@
-"use client";
+// ============================================
+// Hero Section
+// ============================================
+// Full-screen hero with GSAP animations
 
-import React, { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { heroContent } from '@/cms/settings';
 
 const Hero = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [images, setImages] = useState<HTMLImageElement[]>([]);
-    const frameCount = 26;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-    // High-res logo path (assuming it's in public or root)
-    const logoPath = "/LOGO.png";
+  useEffect(() => {
+    const container = containerRef.current;
+    const content = contentRef.current;
+    if (!container || !content) return;
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const context = canvas.getContext("2d");
-        if (!context) return;
+    const ctx = gsap.context(() => {
+      // Initial states
+      gsap.set('.hero-micro', { opacity: 0, y: 30 });
+      gsap.set('.hero-title-line', { opacity: 0, y: 60, rotateX: -15 });
+      gsap.set('.hero-description', { opacity: 0, y: 30 });
+      gsap.set('.hero-buttons', { opacity: 0, y: 30 });
+      gsap.set('.scroll-indicator', { opacity: 0 });
 
-        // Set canvas size
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+      // Animation timeline
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+        delay: 0.3
+      });
 
-        const loadedImages: HTMLImageElement[] = [];
-        let loadCount = 0;
+      tl.to('.hero-micro', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8
+      })
+      .to('.hero-title-line', {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        duration: 1,
+        stagger: 0.15
+      }, '-=0.4')
+      .to('.hero-description', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8
+      }, '-=0.6')
+      .to('.hero-buttons', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8
+      }, '-=0.5')
+      .to('.scroll-indicator', {
+        opacity: 0.6,
+        duration: 0.8
+      }, '-=0.3');
 
-        for (let i = 1; i <= frameCount; i++) {
-            const img = new Image();
-            // Adjusting to match the frame filenames found earlier: ezgif-frame-001.jpg
-            const frameIndex = i.toString().padStart(3, "0");
-            img.src = `/hero-sequence/ezgif-frame-${frameIndex}.jpg`;
-            img.onload = () => {
-                loadCount++;
-                if (loadCount === frameCount) {
-                    setImages(loadedImages);
-                    render(0);
-                }
-            };
-            loadedImages.push(img);
+      // Parallax effect on scroll
+      gsap.to('.hero-bg-image', {
+        yPercent: 30,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
         }
+      });
 
-        const airbnb = {
-            frame: 0
-        };
+      // Content fade on scroll
+      gsap.to(content, {
+        opacity: 0,
+        y: -50,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: '50% top',
+          scrub: true
+        }
+      });
+    }, container);
 
-        const render = (index: number) => {
-            if (loadedImages[index]) {
-                context.clearRect(0, 0, canvas.width, canvas.height);
+    return () => ctx.revert();
+  }, []);
 
-                // Draw image centered and covering
-                const img = loadedImages[index];
-                const canvasAspect = canvas.width / canvas.height;
-                const imgAspect = img.width / img.height;
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) {
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
 
-                let drawWidth, drawHeight, offsetX, offsetY;
+  return (
+    <section
+      ref={containerRef}
+      id="hero"
+      className="relative min-h-screen flex items-center overflow-hidden"
+    >
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <div className="hero-bg-image absolute inset-0 scale-110">
+          <img
+            src={heroContent.backgroundImage}
+            alt="Fresh farm eggs"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/40 to-dark" />
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-dark/40 to-dark" />
+      </div>
 
-                if (canvasAspect > imgAspect) {
-                    drawWidth = canvas.width;
-                    drawHeight = canvas.width / imgAspect;
-                    offsetX = 0;
-                    offsetY = (canvas.height - drawHeight) / 2;
-                } else {
-                    drawHeight = canvas.height;
-                    drawWidth = canvas.height * imgAspect;
-                    offsetX = (canvas.width - drawWidth) / 2;
-                    offsetY = 0;
-                }
+      {/* Content */}
+      <div 
+        ref={contentRef}
+        className="container-custom relative z-10 pt-24 pb-16"
+      >
+        <div className="max-w-3xl">
+          {/* Micro Headline */}
+          <p className="hero-micro eyebrow flex items-center gap-2 mb-6">
+            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+            {heroContent.microHeadline}
+          </p>
 
-                context.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-            }
-        };
+          {/* Title */}
+          <h1 className="hero-title mb-8" style={{ perspective: '1000px' }}>
+            <span className="hero-title-line block text-white">
+              {heroContent.title.line1}
+            </span>
+            <span className="hero-title-line block text-outline">
+              {heroContent.title.line2}
+            </span>
+            <span className="hero-title-line block text-gold">
+              {heroContent.title.line3}
+            </span>
+          </h1>
 
-        gsap.to(airbnb, {
-            frame: frameCount - 1,
-            snap: "frame",
-            ease: "none",
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top top",
-                end: "+=200%", // Scroll distance
-                scrub: 1,
-                pin: true,
-            },
-            onUpdate: () => render(airbnb.frame)
-        });
+          {/* Description */}
+          <p className="hero-description text-lg md:text-xl text-white/85 max-w-xl mb-10 leading-relaxed">
+            {heroContent.description}
+          </p>
 
-        // Handle resize
-        const handleResize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            render(airbnb.frame);
-        };
+          {/* Buttons */}
+          <div className="hero-buttons flex flex-wrap gap-4">
+            <a
+              href={heroContent.primaryCta.link}
+              onClick={(e) => handleNavClick(e, heroContent.primaryCta.link)}
+              className="btn-primary"
+            >
+              {heroContent.primaryCta.text}
+            </a>
+            <a
+              href={heroContent.secondaryCta.link}
+              onClick={(e) => handleNavClick(e, heroContent.secondaryCta.link)}
+              className="btn-outline-gold"
+            >
+              {heroContent.secondaryCta.text}
+            </a>
+          </div>
+        </div>
+      </div>
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    return (
-        <section ref={containerRef} className="relative w-full h-screen bg-brand-black overflow-hidden">
-            <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover opacity-50" />
-
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 px-6">
-                <div className="overflow-hidden mb-6">
-                    <h1 className="hero-text text-5xl md:text-8xl font-black text-white leading-[0.9] tracking-tighter">
-                        Nurtured by <span className="text-gold">Nature.</span><br />
-                        Delivered to <span className="text-gold">You.</span>
-                    </h1>
-                </div>
-
-                <p className="hero-subtext text-lg md:text-xl text-white/50 max-w-xl mb-12 uppercase tracking-widest font-medium">
-                    Premium Farm-Fresh Eggs & Organic Solutions
-                </p>
-
-                <div className="flex flex-col md:flex-row gap-6">
-                    <button className="px-10 py-5 bg-gold text-black font-bold uppercase text-xs tracking-[0.2em] hover:bg-white transition-colors duration-500">
-                        Shop Products
-                    </button>
-                    <button className="px-10 py-5 border border-white/20 text-white font-bold uppercase text-xs tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500">
-                        Wholesale Inquiry
-                    </button>
-                </div>
-            </div>
-
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30">
-                <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Scroll to Explore</span>
-                <div className="w-px h-12 bg-white/20 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1/2 bg-gold animate-scroll-line"></div>
-                </div>
-            </div>
-        </section>
-    );
+      {/* Scroll Indicator */}
+      <div className="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10">
+        <div className="w-px h-16 bg-gradient-to-b from-gold to-transparent relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full bg-white animate-scroll-line" />
+        </div>
+        <span className="text-[0.65rem] font-bold tracking-[0.2em] uppercase text-white/60">
+          Scroll to Discover
+        </span>
+      </div>
+    </section>
+  );
 };
 
 export default Hero;

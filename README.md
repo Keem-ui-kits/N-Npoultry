@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# N&N Poultry Palace
 
-## Getting Started
+A modern, CMS-driven React web application featuring a premium gold-on-black design with GSAP animations.
 
-First, run the development server:
+![N&N Poultry Palace](public/images/logo.png)
+
+## Features
+
+- 🎨 **Premium Gold-on-Black Design** - Luxurious aesthetic with careful attention to detail
+- 📱 **Fully Responsive** - Optimized for all devices
+- ✨ **GSAP Animations** - Smooth scroll-triggered animations
+- 📝 **CMS-Driven Content** - Easy-to-update content files
+- 🎓 **Educational Hub** - Comprehensive guides on chicken manure and sustainable farming
+- 🛒 **Order Form** - Complete order placement system
+- ♿ **Accessible** - WCAG AA compliant
+- ⚡ **Performance Optimized** - Fast load times and smooth interactions
+
+## Tech Stack
+
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- GSAP
+- Lucide React
+
+## Quick Start
 
 ```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── cms/              # Content files (edit these!)
+├── components/       # React components
+├── hooks/            # Custom hooks
+├── types/            # TypeScript types
+└── ...
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## CMS Content
 
-## Learn More
+Edit these files to update site content:
 
-To learn more about Next.js, take a look at the following resources:
+- `src/cms/products.ts` - Product information
+- `src/cms/educational.ts` - Educational articles
+- `src/cms/settings.ts` - Site settings, contact info, testimonials
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See [HANDOFF_DOCUMENTATION.md](../HANDOFF_DOCUMENTATION.md) for complete documentation.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proprietary - N&N Poultry Palace Limited

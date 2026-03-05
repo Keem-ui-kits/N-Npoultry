@@ -15,8 +15,8 @@ export const siteSettings: SiteSettings = {
   },
 
   contact: {
-    phone: '+254 700 000 000',
-    whatsapp: '254700000000',
+    phone: '0113366723 / 0714246534',
+    whatsapp: '254113366723',
     email: 'orders@nnpoultrypalace.co.ke',
     address: 'Machakos, Kenya',
     mapUrl: 'https://maps.google.com/?q=Machakos+Kenya'
@@ -24,12 +24,12 @@ export const siteSettings: SiteSettings = {
 
   business: {
     hours: {
-      monday: '6:00 AM – 6:00 PM',
-      tuesday: '6:00 AM – 6:00 PM',
-      wednesday: '6:00 AM – 6:00 PM',
-      thursday: '6:00 AM – 6:00 PM',
-      friday: '6:00 AM – 6:00 PM',
-      saturday: '6:00 AM – 4:00 PM',
+      monday: '8:00 AM – 5:00 PM',
+      tuesday: '8:00 AM – 5:00 PM',
+      wednesday: '8:00 AM – 5:00 PM',
+      thursday: '8:00 AM – 5:00 PM',
+      friday: '8:00 AM – 5:00 PM',
+      saturday: '8:00 AM – 12:00 PM',
       sunday: 'By appointment'
     },
     deliveryAreas: ['Machakos', 'Nairobi', 'Athi River', 'Kitengela', 'Mlolongo'],
@@ -100,7 +100,7 @@ export const heroContent: HeroContent = {
     line2: 'Nutritious',
     line3: 'Eggs'
   },
-  description: 'Collected at dawn, delivered by day. Experience the premium quality of farm-fresh eggs, hygienically handled from our Machakos farm to your table.',
+  description: 'Collected from the farm, delivered the same day.',
   primaryCta: {
     text: '🛒 Order Fresh Eggs',
     link: '#order'
@@ -125,7 +125,7 @@ export const trustPillars: TrustPillar[] = [
     id: 'hygiene',
     icon: '🛡️',
     title: 'Strict Hygiene & Traceability',
-    description: 'Full chain of custody from coop to carton. Candled, graded, and packed in a clean facility every day.',
+    description: 'Full chain of custody from coop to carton. Candled, graded, and packed in hygienic trays before leaving the farm.',
     order: 2
   },
   {

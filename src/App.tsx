@@ -4,7 +4,7 @@
 // CMS-driven Next.js-inspired React application
 // with GSAP animations and gold-on-black premium theme
 
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { Toaster } from 'sonner';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -14,12 +14,14 @@ import Lenis from 'lenis';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
-// Section Components
-import Hero from '@/components/sections/Hero';
-import Products from '@/components/sections/Products';
-import Trust from '@/components/sections/Trust';
-import Testimonials from '@/components/sections/Testimonials';
-import Order from '@/components/sections/Order';
+// Eagerly Loaded
+import HeroSection from '@/components/sections/HeroSection';
+
+// Lazy Loaded Sections
+const Products = lazy(() => import('@/components/sections/Products'));
+const Trust = lazy(() => import('@/components/sections/Trust'));
+const Testimonials = lazy(() => import('@/components/sections/Testimonials'));
+const Order = lazy(() => import('@/components/sections/Order'));
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -86,11 +88,19 @@ function App() {
 
       {/* Main Content */}
       <main>
-        <Hero />
-        <Products />
-        <Trust />
-        <Testimonials />
-        <Order />
+        <HeroSection />
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center py-20 bg-dark">
+              <div className="w-8 h-8 rounded-full border-t-2 border-b-2 border-gold animate-spin" />
+            </div>
+          }
+        >
+          <Products />
+          <Trust />
+          <Testimonials />
+          <Order />
+        </Suspense>
       </main>
 
       {/* Footer */}

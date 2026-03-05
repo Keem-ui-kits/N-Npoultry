@@ -11,7 +11,7 @@ export const products: Product[] = [
     id: 'table-eggs',
     slug: 'table-eggs',
     name: 'Table Eggs',
-    description: 'Fresh eggs, daily-collected, sold by carton and bulk case — ideal for home cooks and food businesses. Inspected and hygienically packed.',
+    description: 'Fresh eggs, collected from the farm, delivered the same day. Table eggs: sold by 30pc trays — ideal for home cooks and food businesses. Inspected and hygienically packed.',
     longDescription: `Our premium table eggs are collected fresh every morning from our carefully raised laying hens. Each egg undergoes quality inspection and is hygienically packed to ensure you receive only the best.
 
 Whether you're a home cook looking for farm-fresh quality or a restaurant needing consistent supply, our table eggs deliver unmatched freshness and taste. The bright, rich yolks are a testament to the quality feed and care our hens receive daily.`,
@@ -19,7 +19,7 @@ Whether you're a home cook looking for farm-fresh quality or a restaurant needin
     badge: '⭐ Primary Product',
     badgeType: 'gold',
     features: [
-      'Available in 6, 12 & 30-egg cartons',
+      'Available in 30pc egg trays',
       'Bulk cases for commercial buyers',
       'Inspected & hygienically handled',
       'Daily collection ensures maximum freshness',
@@ -85,7 +85,7 @@ The manure is properly composted to eliminate pathogens while retaining its nutr
     features: [
       'Rich in nitrogen & phosphorus',
       'Ideal for gardens & commercial farms',
-      'Available in 25kg & 50kg bulk sacks',
+      'Available in 70kg bulk sacks and FH truck',
       'Properly composted for safety',
       'Improves soil structure naturally'
     ],

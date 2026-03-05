@@ -146,9 +146,8 @@ const Testimonials = () => {
                     {testimonial.role}, {testimonial.location}
                   </span>
                 </div>
-                <span className={`badge-verified text-[0.6rem] ${
-                  testimonial.verifiedType === 'wholesale' ? 'text-gold' : ''
-                }`}>
+                <span className={`badge-verified text-[0.6rem] ${testimonial.verifiedType === 'wholesale' ? 'text-gold' : ''
+                  }`}>
                   ✓ Verified {testimonial.verifiedType === 'wholesale' ? 'Wholesale' : 'Buyer'}
                 </span>
               </div>
@@ -168,13 +167,6 @@ const Testimonials = () => {
               className="btn-primary"
             >
               Order Fresh Eggs Now
-            </a>
-            <a
-              href="#order"
-              onClick={(e) => handleNavClick(e, '#order')}
-              className="btn-dark"
-            >
-              Get Wholesale Quote
             </a>
           </div>
         </div>

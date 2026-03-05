@@ -8,9 +8,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { siteSettings } from '@/cms/settings';
 import { products } from '@/cms/products';
-import { 
-  MessageCircle, 
-  Phone, 
+import {
+  MessageCircle,
+  Phone,
   Send,
   CheckCircle,
   Loader2
@@ -99,7 +99,7 @@ const Order = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validation
     if (!formData.name || !formData.phone || !formData.product || !formData.quantity || !formData.deliveryAddress) {
       toast.error('Please fill in all required fields');
@@ -160,14 +160,14 @@ const Order = () => {
               <span className="w-2 h-2 rounded-full bg-gold" />
               Order Now
             </p>
-            
+
             <div className="divider-gold mb-6" />
-            
+
             <h2 className="section-title text-white mb-6">
               Ready to Order? <br />
               <span className="text-outline">Get in Touch.</span>
             </h2>
-            
+
             <p className="text-white/70 mb-10 leading-relaxed">
               Fill in the form, WhatsApp us, or call directly — we make ordering as easy as possible for both retail and wholesale customers.
             </p>
@@ -207,7 +207,7 @@ const Order = () => {
                 🏢 Open a Business Account
               </h4>
               <p className="text-sm text-white/60 mb-4">
-                Wholesale buyers can apply for credit invoicing and a dedicated account manager. Get volume discounts and priority fulfillment.
+                For planning and logistics, fill the call card. Terms - COD
               </p>
               <a
                 href="#order-form"
@@ -415,14 +415,6 @@ const Order = () => {
                             Submit Order Request
                           </>
                         )}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => openWhatsApp(formData.product || 'Eggs')}
-                        className="btn-whatsapp"
-                      >
-                        <MessageCircle size={18} />
-                        WhatsApp
                       </button>
                     </div>
                   </form>

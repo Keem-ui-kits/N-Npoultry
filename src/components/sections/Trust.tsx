@@ -126,13 +126,6 @@ const Trust = () => {
               >
                 Order Fresh Eggs
               </a>
-              <a
-                href="#order"
-                onClick={(e) => handleNavClick(e, '#order')}
-                className="btn-outline-gold"
-              >
-                Wholesale Quote
-              </a>
             </div>
           </div>
 

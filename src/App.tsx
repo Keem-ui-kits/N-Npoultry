@@ -28,6 +28,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   useEffect(() => {
+    // Force scroll to top on load/reload
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     // Initialize Lenis
     const lenis = new Lenis({
       duration: 1.2,

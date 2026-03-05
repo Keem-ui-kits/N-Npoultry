@@ -196,7 +196,7 @@ export const structuredData = {
     "addressLocality": "Machakos",
     "addressCountry": "KE"
   },
-  "openingHours": "Mo-Sa 06:00-18:00",
+  "openingHours": "Mo-Fr 08:00-17:00, Sa 08:00-12:00",
   "servesCuisine": "Poultry Products",
   "hasMap": "https://maps.google.com/?q=Machakos+Kenya",
   "sameAs": [

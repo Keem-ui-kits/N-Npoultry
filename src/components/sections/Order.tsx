@@ -196,7 +196,7 @@ const Order = () => {
                 </span>
                 <div>
                   <strong className="block text-white">Call Us: {siteSettings.contact.phone}</strong>
-                  <span className="text-sm text-white/50">Mon–Sat, 6:00 AM – 6:00 PM</span>
+                  <span className="text-sm text-white/50">Mon–Fri: 8:00 AM – 5:00 PM | Sat: 8:00 AM – 12:00 PM</span>
                 </div>
               </a>
             </div>

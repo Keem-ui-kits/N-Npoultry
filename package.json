@@ -51,8 +51,10 @@
     "input-otp": "1.4.2",
     "lucide-react": "0.487.0",
     "motion": "^12.38.0",
-    "next": "^15.0.0",
+    "next": "16.1.7",
     "next-themes": "0.4.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-day-picker": "8.10.1",
     "react-dnd": "16.0.1",
     "react-dnd-html5-backend": "16.0.1",
@@ -71,13 +73,13 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",
     "@types/node": "25.5.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "postcss": "^8.5.8",
     "tailwindcss": "4.1.12",
     "typescript": "5.9.3"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
   },
   "peerDependenciesMeta": {
     "react": {

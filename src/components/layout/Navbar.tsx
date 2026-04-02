@@ -181,13 +181,7 @@ export function Navbar() {
 
           {/* Mobile Menu & CTA */}
           <div className="lg:hidden flex items-center gap-3">
-            <Link
-              href="/contact"
-              className="px-4 py-1.5 gradient-brand text-brand-dark rounded-full font-bold text-sm hover:shadow-[0_0_15px_rgba(var(--brand-gold-rgb),0.3)] transition-all flex items-center gap-1.5"
-            >
-              Order
-              <Send className="w-3.5 h-3.5" />
-            </Link>
+
             <button
               className="text-white relative z-50 p-2 cursor-pointer focus:outline-none bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors"
               onClick={() => { setMobileMenuOpen(!mobileMenuOpen); }}

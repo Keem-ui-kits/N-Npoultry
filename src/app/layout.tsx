@@ -1,24 +1,83 @@
-import type { Metadata } from "next";
-import "../styles/tailwind.css";
-import "../styles/index.css";
+import type { Metadata } from 'next';
+import '../styles/index.css';
 
-import MouseSpotlight from "./components/MouseSpotlight";
+import MouseSpotlight from '@/components/layout/MouseSpotlight';
+import { SmoothScroll } from '@/components/layout/SmoothScroll';
+import BottomBlur from '@/components/layout/BottomBlur';
+import { ThemeProvider } from '@/components/layout/ThemeProvider';
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
+
+import { Geist, Geist_Mono } from 'next/font/google';
 
 export const metadata: Metadata = {
-  title: "NnPoultry Palace",
-  description: "Farm-fresh nutritious eggs",
+  metadataBase: new URL('https://nnpoultrypalace.vercel.app'),
+  title: 'N&N Poultry Palace | Farm-Fresh Nutritious Eggs in Machakos',
+  description:
+    'Your trusted source for day-collected table eggs and organic poultry manure. Wholesome, responsibly produced products from our family-run farm in Machakos, Kenya.',
+  openGraph: {
+    title: 'N&N Poultry Palace | Farm-Fresh Nutritious Eggs',
+    description:
+      'Daily collected farm-fresh eggs and organic nutrients. Trusted quality from Machakos.',
+    url: 'https://nnpoultrypalace.vercel.app',
+    siteName: 'N&N Poultry Palace',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'N&N Poultry Palace Logo',
+      },
+    ],
+    locale: 'en_KE',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'N&N Poultry Palace | Farm-Fresh Eggs',
+    description: 'Quality poultry products straight from the farm.',
+    images: ['/og-image.png'],
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
+  adjustFontFallback: true,
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  fallback: ["monospace"],
+  adjustFontFallback: true,
+});
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning className="antialiased overflow-x-hidden">
-        <MouseSpotlight />
-        {children}
+    <html lang="en" className={`scroll-smooth ${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>
+        <a
+          href="#home"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:text-foreground"
+        >
+          Skip to content
+        </a>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
+          <SmoothScroll>
+            <MouseSpotlight />
+            <BottomBlur />
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
+            <WhatsAppButton />
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,6 +1,11 @@
 {
   "pages": {},
-  "app": {},
+  "app": {
+    "[project]/OneDrive/Tài liệu/GitHub/N-Npoultry/src/app/page": [
+      "static/media/caa3a2e1cccd8315.p.853070df.woff2",
+      "static/media/797e433ab948586e.p.dbea232f.woff2"
+    ]
+  },
   "appUsingSizeAdjust": false,
   "pagesUsingSizeAdjust": false
 }

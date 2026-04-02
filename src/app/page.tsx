@@ -1,21 +1,25 @@
-import { Hero } from "./components/Hero";
-import { Products } from "./components/Products";
-import { HowWeWork } from "./components/HowWeWork";
-import { About } from "./components/About";
-import { Testimonials } from "./components/Testimonials";
-import { Contact } from "./components/Contact";
-import { Footer } from "./components/Footer";
+import { PageWrapper } from '@/components/layout/PageWrapper';
+import { Hero } from '@/components/sections/Hero';
+import { ProductsTeaser } from '@/components/sections/ProductsTeaser';
+import { HowWeWork } from '@/components/sections/HowWeWork';
+import { TestimonialsTeaser } from '@/components/sections/TestimonialsTeaser';
+import { ContactCTA } from '@/components/sections/ContactCTA';
+import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 
-export default function App() {
+export default function Home() {
   return (
-    <div className="min-h-screen">
+    <PageWrapper>
       <Hero />
-      <Products />
-      <HowWeWork />
-      <About />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </div>
+      <ErrorBoundary>
+        <ProductsTeaser />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <HowWeWork />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <TestimonialsTeaser />
+      </ErrorBoundary>
+      <ContactCTA />
+    </PageWrapper>
   );
 }

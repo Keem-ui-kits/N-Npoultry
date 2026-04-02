@@ -61,16 +61,7 @@ export function Contact() {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-foreground dark:text-white text-3xl sm:text-4xl md:text-5xl font-black mb-6">
-                Contact us
-              </h2>
-
-              <p className="text-foreground/80 dark:text-gray-300 text-base md:text-lg mb-8">
-                We are committed to processing the information in order to contact you and talk
-                about your project.
-              </p>
-
-              <div className="space-y-6">
+              <div className="space-y-6 pt-2">
                 <div>
                   <h3 className="text-foreground dark:text-white font-bold text-lg md:text-xl mb-3 flex items-center gap-3">
                     <Mail className="w-6 h-6 text-[#FD7E1E]" />

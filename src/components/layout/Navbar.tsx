@@ -135,11 +135,7 @@ export function Navbar() {
           >
             <div
               className={`flex items-center font-bold tracking-tight uppercase text-lg md:text-xl py-1 transition-colors duration-300 ${
-                !mounted
-                  ? 'text-brand-dark'
-                  : isScrolled || resolvedTheme === 'dark'
-                    ? 'text-white'
-                    : 'text-brand-dark'
+                'text-white'
               }`}
             >
               <span>N&N POULTRY</span>

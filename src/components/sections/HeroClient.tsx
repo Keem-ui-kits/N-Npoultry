@@ -3,7 +3,7 @@
 import React, { useRef } from 'react';
 import { motion, type Variants } from 'motion/react';
 import Image from 'next/image';
-import { usePrefersReducedMotion } from '@/hooks/use-reduced-motion';
+import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -19,7 +19,7 @@ export function HeroClient({ children }: HeroClientProps) {
   const bgImageWrapRef = useRef<HTMLDivElement>(null);
   const bgImageRef = useRef<HTMLImageElement>(null);
 
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const prefersReducedMotion = useReducedMotion();
 
   useGSAP(
     () => {

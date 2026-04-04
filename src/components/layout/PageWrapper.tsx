@@ -18,6 +18,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
       <AnimatePresence mode="wait">
         <motion.main
           key={pathname}
+          id="main-content"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}

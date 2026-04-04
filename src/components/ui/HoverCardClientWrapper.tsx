@@ -47,7 +47,7 @@ export function HoverCardClientWrapper({ children, index, className }: HoverCard
       },
     });
 
-    if (!isMobile && cardRef.current) {
+    if (!isMobile) {
       const card = cardRef.current;
 
       const handleMouseEnter = () => {
@@ -94,13 +94,13 @@ export function HoverCardClientWrapper({ children, index, className }: HoverCard
 
       if (spotlightRef.current) {
         gsap.set(spotlightRef.current, {
-          background: `radial-gradient(400px circle at ${x * 100}% ${y * 100}%, rgba(var(--brand-gold-rgb),0.2), transparent 70%)`,
+          background: `radial-gradient(400px circle at ${String(x * 100)}% ${String(y * 100)}%, rgba(var(--brand-gold-rgb),0.2), transparent 70%)`,
         });
       }
 
       if (glowRef.current) {
         gsap.set(glowRef.current, {
-          background: `radial-gradient(300px circle at ${x * 100}% ${y * 100}%, rgba(var(--brand-gold-rgb),0.15), transparent 60%)`,
+          background: `radial-gradient(300px circle at ${String(x * 100)}% ${String(y * 100)}%, rgba(var(--brand-gold-rgb),0.15), transparent 60%)`,
         });
       }
     });
@@ -111,7 +111,7 @@ export function HoverCardClientWrapper({ children, index, className }: HoverCard
       ref={cardRef}
       onMouseMove={handleMouseMove}
       style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
-      className={`group relative p-6 md:p-8 rounded-2xl md:rounded-3xl bg-card dark:bg-brand-dark border border-border dark:border-white/10 hover:bg-accent dark:hover:bg-[#1a3f50] transition-colors backdrop-blur-sm cursor-pointer ${className || ''}`}
+      className={`group relative p-6 md:p-8 rounded-2xl md:rounded-3xl bg-card dark:bg-brand-dark border border-border dark:border-white/10 hover:bg-accent dark:hover:bg-[#1a3f50] transition-colors backdrop-blur-sm cursor-pointer ${className ?? ''}`}
     >
       <div
         ref={spotlightRef}

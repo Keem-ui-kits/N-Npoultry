@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { siteConfig } from '@/content/site';
 
-export function WhatsAppButton() {
+export function WhatsAppButton({ message }: { message?: string }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -21,11 +21,15 @@ export function WhatsAppButton() {
     return () => { window.removeEventListener('scroll', toggleVisibility); };
   }, []);
 
+  const whatsappUrl = `https://wa.me/${siteConfig.contacts.whatsapp}${
+    message ? `?text=${encodeURIComponent(message)}` : ''
+  }`;
+
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.a
-          href={`https://wa.me/${siteConfig.contacts.whatsapp}`}
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, scale: 0.5, y: 50 }}

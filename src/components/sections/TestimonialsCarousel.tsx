@@ -20,12 +20,12 @@ function StarRating({ rating }: { rating: number }) {
 
   return (
     <div className="flex gap-0.5">
-      {[...Array(fullStars)].map((_, i) => (
-        <Star key={`full-${i}`} className="w-4 h-4 fill-brand-gold text-brand-gold" />
+      {Array.from({ length: fullStars }).map((_, i) => (
+        <Star key={`full-${String(i)}`} className="w-4 h-4 fill-brand-gold text-brand-gold" />
       ))}
       {hasHalfStar && <StarHalf className="w-4 h-4 fill-brand-gold text-brand-gold" />}
-      {[...Array(emptyStars)].map((_, i) => (
-        <Star key={`empty-${i}`} className="w-4 h-4 text-brand-gold" />
+      {Array.from({ length: emptyStars }).map((_, i) => (
+        <Star key={`empty-${String(i)}`} className="w-4 h-4 text-brand-gold" />
       ))}
     </div>
   );
@@ -54,16 +54,16 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
         'absolute left-1/2 top-1/2 cursor-pointer p-5 sm:p-8 transition-all duration-500 ease-in-out rounded-2xl flex flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold',
         isCenter
           ? 'z-10 bg-brand-dark text-white border-2 border-brand-gold/60 shadow-2xl'
-          : 'z-0 bg-white dark:bg-[#1a3a4a] text-foreground dark:text-gray-200 border border-border dark:border-white/10 hover:border-brand-gold/40 shadow-lg',
+          : 'z-0 bg-white dark:bg-[#1a3a4a] text-white border border-border dark:border-white/10 hover:border-brand-gold/40 shadow-lg',
       )}
       style={{
         width: cardSize,
         height: isCenter ? cardSize * 1.15 : cardSize,
         transform: `
           translate(-50%, -50%) 
-          translateX(${(cardSize / 1.5) * position}px)
-          translateY(${isCenter ? -30 : position % 2 ? 15 : -15}px)
-          rotate(${isCenter ? 0 : position % 2 ? 2.5 : -2.5}deg)
+          translateX(${String((cardSize / 1.5) * position)}px)
+          translateY(${String(isCenter ? -30 : position % 2 ? 15 : -15)}px)
+          rotate(${String(isCenter ? 0 : position % 2 ? 2.5 : -2.5)}deg)
         `,
         boxShadow: isCenter
           ? '0px 8px 30px rgba(var(--brand-gold-rgb), 0.25)'
@@ -77,7 +77,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           <blockquote
             className={cn(
               'mb-6 flex-grow flex items-center leading-relaxed',
-              isCenter ? 'text-lg text-white font-medium' : 'text-base text-foreground/80 dark:text-gray-300',
+              isCenter ? 'text-lg text-white font-medium' : 'text-base text-white/70',
             )}
           >
             {testimonial.text}
@@ -94,7 +94,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           <p
             className={cn(
               'text-[10px] sm:text-sm italic mt-0.5',
-              isCenter ? 'text-white/60' : 'text-muted-foreground dark:text-gray-400',
+              isCenter ? 'text-white/60' : 'text-white/50',
             )}
           >
             {testimonial.location}

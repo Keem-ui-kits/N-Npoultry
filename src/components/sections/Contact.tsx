@@ -3,47 +3,39 @@ import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef, useState } from 'react';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { siteConfig } from '@/content/site';
+import { contactSchema, type ContactFormData } from '@/lib/schemas/contact';
 
 export function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    website: '',
-    message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormData>({ resolver: zodResolver(contactSchema) });
+
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  const onSubmit = async (data: ContactFormData) => {
     setSubmitStatus('idle');
 
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       if (!res.ok) throw new Error('Failed');
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', website: '', message: '' });
+      reset();
     } catch {
       setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
   };
 
   return (
@@ -64,20 +56,20 @@ export function Contact() {
               <div className="space-y-6 pt-2">
                 <div>
                   <h3 className="text-foreground dark:text-white font-bold text-lg md:text-xl mb-3 flex items-center gap-3">
-                    <Mail className="w-6 h-6 text-[#FD7E1E]" />
+                    <Mail className="w-6 h-6 text-brand-gold" />
                     Open a business account
                   </h3>
-                  <p className="text-muted-foreground dark:text-gray-400 text-sm md:text-base pl-9">
+                  <p className="text-muted-foreground dark:text-white/50 text-sm md:text-base pl-9">
                     For planning and logistics, fill the call card. Terms apply
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-foreground dark:text-white font-bold text-lg md:text-xl mb-3 flex items-center gap-3">
-                    <MapPin className="w-6 h-6 text-[#FD7E1E]" />
+                    <MapPin className="w-6 h-6 text-brand-gold" />
                     Business Hours
                   </h3>
-                  <p className="text-muted-foreground dark:text-gray-400 text-sm md:text-base pl-9">
+                  <p className="text-muted-foreground dark:text-white/50 text-sm md:text-base pl-9">
                     {siteConfig.businessHours.weekdays}
                     <br />
                     {siteConfig.businessHours.saturday}
@@ -86,10 +78,10 @@ export function Contact() {
 
                 <div>
                   <h3 className="text-foreground dark:text-white font-bold text-lg md:text-xl mb-3 flex items-center gap-3">
-                    <Phone className="w-6 h-6 text-[#FD7E1E]" />
+                    <Phone className="w-6 h-6 text-brand-gold" />
                     Phone
                   </h3>
-                  <p className="text-muted-foreground dark:text-gray-400 text-sm md:text-base pl-9">
+                  <p className="text-muted-foreground dark:text-white/50 text-sm md:text-base pl-9">
                     {siteConfig.contacts.phones.join(' / ')}
                   </p>
                 </div>
@@ -98,7 +90,7 @@ export function Contact() {
 
             {/* Contact Form */}
             <motion.form
-              onSubmit={handleSubmit}
+              onSubmit={(e) => { void handleSubmit(onSubmit)(e); }}
               initial={{ opacity: 0, x: 40 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -109,18 +101,16 @@ export function Contact() {
                   htmlFor="name"
                   className="block text-foreground dark:text-white text-sm md:text-base mb-2"
                 >
-                  Name <span className="text-[#eb5757]">*</span>
+                  Name <span className="text-brand-gold">*</span>
                 </label>
                 <input
                   type="text"
                   id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all"
+                  {...register('name')}
+                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all cursor-text text-left"
                   placeholder="Your name"
                 />
+                {errors.name && <p className="text-destructive text-sm mt-1">{errors.name.message}</p>}
               </div>
 
               <div>
@@ -128,18 +118,16 @@ export function Contact() {
                   htmlFor="email"
                   className="block text-foreground dark:text-white text-sm md:text-base mb-2"
                 >
-                  Email <span className="text-[#eb5757]">*</span>
+                  Email <span className="text-brand-gold">*</span>
                 </label>
                 <input
                   type="email"
                   id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all shadow-sm"
+                  {...register('email')}
+                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all shadow-sm cursor-text text-left"
                   placeholder="your@email.com"
                 />
+                {errors.email && <p className="text-destructive text-sm mt-1">{errors.email.message}</p>}
               </div>
 
               <div>
@@ -147,18 +135,16 @@ export function Contact() {
                   htmlFor="website"
                   className="block text-foreground dark:text-white text-sm md:text-base mb-2"
                 >
-                  Website <span className="text-[#eb5757]">*</span>
+                  Website <span className="text-muted-foreground text-xs">(optional)</span>
                 </label>
                 <input
                   type="url"
                   id="website"
-                  name="website"
-                  value={formData.website}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all"
+                  {...register('website')}
+                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all cursor-text text-left"
                   placeholder="https://yourwebsite.com"
                 />
+                {errors.website && <p className="text-destructive text-sm mt-1">{errors.website.message}</p>}
               </div>
 
               <div>
@@ -170,13 +156,12 @@ export function Contact() {
                 </label>
                 <textarea
                   id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
+                  {...register('message')}
                   rows={5}
-                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all resize-none"
+                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all resize-none cursor-text text-left"
                   placeholder="Tell us about your needs..."
                 />
+                {errors.message && <p className="text-destructive text-sm mt-1">{errors.message.message}</p>}
               </div>
 
               <motion.button
@@ -190,16 +175,18 @@ export function Contact() {
                 <Send className="w-5 h-5" />
               </motion.button>
 
-              {submitStatus === 'success' && (
-                <p className="text-green-600 dark:text-green-400 font-medium">
-                  Message sent successfully! We'll be in touch soon.
-                </p>
-              )}
-              {submitStatus === 'error' && (
-                <p className="text-red-600 dark:text-red-400 font-medium">
-                  Something went wrong. Please try again.
-                </p>
-              )}
+              <div aria-live="polite" aria-atomic="true" className="min-h-[1.5rem]">
+                {submitStatus === 'success' && (
+                  <p className="text-brand-gold font-medium">
+                    Message sent successfully! We'll be in touch soon.
+                  </p>
+                )}
+                {submitStatus === 'error' && (
+                  <p className="text-white/60 font-medium">
+                    Something went wrong. Please try again.
+                  </p>
+                )}
+              </div>
             </motion.form>
           </div>
         </div>

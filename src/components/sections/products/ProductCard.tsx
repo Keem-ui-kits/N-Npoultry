@@ -4,8 +4,12 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Send, MessageCircle } from 'lucide-react';
+import { siteConfig } from '@/content/site';
 import type { Product } from '@/types/product';
-
+import { lerp, mapRange, getValueFromRanges } from '@/lib/math';
+import { useReducedMotion } from '@/hooks/use-reduced-motion';
 gsap.registerPlugin(ScrollTrigger);
 
 interface ProductCardProps {
@@ -35,41 +39,11 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
   const mousePos = useRef({ x: 0, y: 0 });
   const contentRotateX = useRef(0);
   const contentRotateY = useRef(0);
+  const prefersReduced = useReducedMotion();
 
-  const lerp = (start: number, end: number, t: number) => start + (end - start) * t;
-  const mapRange = (
-    value: number,
-    inMin: number,
-    inMax: number,
-    outMin: number,
-    outMax: number,
-  ) => {
-    if (value <= inMin) return outMin;
-    if (value >= inMax) return outMax;
-    const t = (value - inMin) / (inMax - inMin);
-    return lerp(outMin, outMax, t);
-  };
-
-  const getValue = (progress: number, ranges: number[], values: number[]): number => {
-    if (!ranges.length || !values.length) return 0;
-    if (progress <= ranges[0]!) return values[0]!;
-    if (progress >= ranges[ranges.length - 1]!) return values[values.length - 1]!;
-
-    for (let i = 0; i < ranges.length - 1; i++) {
-        const minValue = ranges[i]!;
-        const maxValue = ranges[i + 1]!;
-        const outMin = values[i]!;
-        const outMax = values[i + 1]!;
-
-        if (progress >= minValue && progress <= maxValue) {
-            return mapRange(progress, minValue, maxValue, outMin, outMax);
-        }
-    }
-    return values[0]!;
-  };
 
   useEffect(() => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || prefersReduced) return;
 
     const ctx = gsap.context(() => {
       const container = cardRef.current?.closest('section');
@@ -103,26 +77,24 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
       const handleMouseMove = (e: MouseEvent) => {
         if (!cardRef.current || isMobile) return;
 
-        if (!rafId) {
-          rafId = requestAnimationFrame(() => {
-            if (!cardRef.current) return;
+        rafId ??= requestAnimationFrame(() => {
+          if (!cardRef.current) return;
 
-            const rect = cardRef.current.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
+          const rect = cardRef.current.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
 
-            mousePos.current = {
-              x: e.clientX - centerX,
-              y: e.clientY - centerY,
-            };
+          mousePos.current = {
+            x: e.clientX - centerX,
+            y: e.clientY - centerY,
+          };
 
-            targetRotateX = mapRange(mousePos.current.y, -300, 300, 5, -5);
-            targetRotateY = mapRange(mousePos.current.x, -300, 300, -5, 5);
+          targetRotateX = mapRange(mousePos.current.y, -300, 300, 5, -5);
+          targetRotateY = mapRange(mousePos.current.x, -300, 300, -5, 5);
 
-            updateMouseRotation();
-            rafId = null;
-          });
-        }
+          updateMouseRotation();
+          rafId = null;
+        });
       };
 
 
@@ -131,29 +103,30 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
         start: 'top bottom',
         end: 'bottom top',
         scrub: true,
-        onUpdate: (self: any) => {
+        onUpdate: (self: ScrollTrigger) => {
           const p = self.progress;
 
-          const opacity = getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [0, 1, 1, 0]);
+          const opacity = getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [0, 1, 1, 0]);
 
           const x = isMobile
             ? 0
-            : getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [1920, 96, -96, -1920]);
+            : getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [1920, 96, -96, -1920]);
+
           const y = isMobile
-            ? getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [100, 0, 0, -100])
-            : getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [540, 22, -22, -540]);
+            ? getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [100, 0, 0, -100])
+            : getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [540, 22, -22, -540]);
           const rotateY = isMobile
             ? 0
-            : getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [45, 5, -5, -45]);
+            : getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [45, 5, -5, -45]);
           const rotateZ = isMobile
             ? 0
-            : getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [10, 2, -2, -10]);
+            : getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [10, 2, -2, -10]);
           const z = isMobile
             ? 0
-            : getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [-1200, 0, 100, -1200]);
+            : getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [-1200, 0, 100, -1200]);
           const scale = isMobile
-            ? getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [0.9, 1, 1, 0.9])
-            : getValue(p, [enterStart, enterEnd, exitStart, exitEnd], [0.6, 1, 1.05, 0.6]);
+            ? getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [0.9, 1, 1, 0.9])
+            : getValueFromRanges(p, [enterStart, enterEnd, exitStart, exitEnd], [0.6, 1, 1.05, 0.6]);
 
           const contentParallaxX = isMobile ? 0 : mapRange(p, enterStart, exitEnd, 100, -100);
           const titleParallaxX = isMobile ? 0 : mapRange(p, enterStart, exitEnd, 200, -200);
@@ -261,6 +234,26 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
               <span>{detail}</span>
             </div>
           ))}
+        </div>
+
+        <div className="mt-8 flex gap-4 preserve-3d">
+          <Link
+            href={`/quote?product=${product.id}`}
+            className="gradient-brand text-brand-dark px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-brand-gold/20 transition-all flex items-center gap-2 group transform hover:scale-105 active:scale-95"
+          >
+            Request a Quote
+            <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" />
+          </Link>
+
+          <a
+            href={`https://wa.me/${siteConfig.contacts.whatsapp}?text=${encodeURIComponent(`Hi, I'd like to order ${product.title} ${product.titleAccent}.`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-3 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/20 rounded-full font-bold hover:bg-[#25D366]/20 transition-all flex items-center gap-2 group transform hover:scale-105 active:scale-95"
+          >
+            WhatsApp
+            <MessageCircle className="w-4 h-4" />
+          </a>
         </div>
       </div>
 

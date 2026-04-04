@@ -2,15 +2,22 @@ import '@testing-library/jest-dom/vitest';
 import { vi } from 'vitest';
 import React from 'react';
 
-
 class IntersectionObserverMock {
   readonly root: Element | null = null;
   readonly rootMargin: string = '';
   readonly thresholds: readonly number[] = [];
-  disconnect() { /* noop */ }
-  observe() { /* noop */ }
-  unobserve() { /* noop */ }
-  takeRecords() { return []; }
+  disconnect() {
+    /* noop */
+  }
+  observe() {
+    /* noop */
+  }
+  unobserve() {
+    /* noop */
+  }
+  takeRecords() {
+    return [];
+  }
 }
 
 window.IntersectionObserver = IntersectionObserverMock as unknown as typeof IntersectionObserver;
@@ -34,9 +41,20 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock next/image
 vi.mock('next/image', () => ({
   __esModule: true,
-  default: (props: React.ComponentPropsWithoutRef<'img'> & { fill?: boolean | string }) => {
-     
-    return React.createElement('img', { ...props, fill: props.fill ? 'true' : undefined });
+  default: ({
+    priority,
+    fill,
+    quality,
+    loading,
+    onLoadingComplete,
+    unoptimized,
+    ...props
+  }: any) => {
+    // eslint-disable-next-line @next/next/no-img-element
+    return React.createElement('img', {
+      ...props,
+      'data-priority': priority ? 'true' : undefined,
+    });
   },
 }));
 
@@ -80,20 +98,36 @@ vi.mock('gsap/ScrollTrigger', () => ({
 }));
 
 // Mock motion/react
-vi.mock('motion/react', () => ({
-  motion: {
-    div: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => React.createElement('div', props, children),
-    section: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => React.createElement('section', props, children),
-    form: ({ children, ...props }: React.FormHTMLAttributes<HTMLFormElement>) => React.createElement('form', props, children),
-    button: ({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) => React.createElement('button', props, children),
-    h2: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => React.createElement('h2', props, children),
-    p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => React.createElement('p', props, children),
-    span: ({ children, ...props }: React.HTMLAttributes<HTMLSpanElement>) => React.createElement('span', props, children),
-  },
-  useInView: () => true,
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-}));
+vi.mock('motion/react', () => {
+  const mockComponent = (tag: string) => {
+    return ({
+      children,
+      whileHover,
+      whileTap,
+      initial,
+      animate,
+      exit,
+      variants,
+      transition,
+      viewport,
+      ...props
+    }: any) => React.createElement(tag, props, children);
+  };
+
+  return {
+    motion: {
+      div: mockComponent('div'),
+      section: mockComponent('section'),
+      form: mockComponent('form'),
+      button: mockComponent('button'),
+      h2: mockComponent('h2'),
+      p: mockComponent('p'),
+      span: mockComponent('span'),
+    },
+    useInView: () => true,
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+  };
+});
 
 // Mock global fetch
 global.fetch = vi.fn();
-

@@ -44,15 +44,4 @@ describe('Navbar', () => {
     expect(scrollToSpy).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
   });
 
-  it('toggles theme when button is clicked', () => {
-    // Note: useTheme is mocked in setup.ts to return theme: 'light', resolvedTheme: 'light'
-    render(<Navbar />);
-    const themeButtons = screen.getAllByLabelText(/Toggle theme/i);
-    // Desktop toggle button
-    const desktopToggle = themeButtons[0];
-    expect(desktopToggle).toBeDefined();
-    
-    // Test that it can be clicked
-    fireEvent.click(desktopToggle!);
-  });
 });

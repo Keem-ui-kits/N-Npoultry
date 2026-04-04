@@ -1,4 +1,5 @@
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import { SiFacebook as Facebook, SiX as Twitter, SiInstagram as Instagram } from '@icons-pack/react-simple-icons';
 import Image from 'next/image';
 
 import { siteConfig } from '@/content/site';
@@ -22,6 +23,7 @@ export function Footer() {
                 src="/og-image.png" 
                 alt={siteConfig.name} 
                 fill 
+                sizes="(max-width: 768px) 160px, 224px"
                 priority
                 className="object-contain object-left transform transition-transform duration-300 group-hover:scale-105 origin-left"
               />
@@ -48,13 +50,6 @@ export function Footer() {
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </FadeIn>

@@ -2,7 +2,6 @@
 
 import { gsap } from 'gsap';
 import { Send } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -13,13 +12,7 @@ import { navLinks } from '@/content/navigation';
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const navRef = useRef<HTMLElement>(null);
   const hamburgerLine1Ref = useRef<HTMLSpanElement>(null);
@@ -134,9 +127,7 @@ export function Navbar() {
             aria-label="Home"
           >
             <div
-              className={`flex items-center font-bold tracking-tight uppercase text-lg md:text-xl py-1 transition-colors duration-300 ${
-                'text-white'
-              }`}
+              className={`flex items-center font-bold tracking-tight uppercase text-lg md:text-xl py-1 transition-colors duration-300 text-white`}
             >
               <span>N&N POULTRY</span>
               <span className="text-brand-gold ml-1.5">PALACE</span>
@@ -151,7 +142,7 @@ export function Navbar() {
                 href={item.href}
                 className={cn(
                     "text-sm font-semibold transition-colors relative group cursor-pointer hover:text-brand-gold",
-                    pathname === item.href ? "text-brand-gold" : (!mounted ? 'text-brand-dark' : (isScrolled || resolvedTheme === 'dark' ? 'text-white/90' : 'text-brand-dark'))
+                    pathname === item.href ? "text-brand-gold" : 'text-white/90'
                 )}
               >
                 {item.name}
@@ -208,8 +199,12 @@ export function Navbar() {
       <div
         id="mobile-menu"
         ref={mobileMenuRef}
-        className="fixed inset-0 z-40 bg-brand-dark/95 backdrop-blur-2xl flex items-center justify-center p-6"
-        style={{ display: mobileMenuOpen ? 'flex' : 'none' }}
+        className="fixed inset-0 z-40 bg-brand-dark/95 backdrop-blur-2xl flex items-center justify-center p-6 transition-[visibility]"
+        style={{
+          visibility: mobileMenuOpen ? 'visible' : 'hidden',
+          pointerEvents: mobileMenuOpen ? 'auto' : 'none',
+        }}
+        aria-hidden={!mobileMenuOpen}
       >
         <div
           ref={mobileMenuContentRef}

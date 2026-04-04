@@ -4,6 +4,7 @@ import Lenis from 'lenis';
 import type { ReactNode} from 'react';
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { useReducedMotion } from '@/hooks/use-reduced-motion';
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
@@ -16,8 +17,10 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     }
   }, [pathname]);
 
+  const prefersReduced = useReducedMotion();
+
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || prefersReduced) return;
 
     try {
       history.scrollRestoration = 'manual';

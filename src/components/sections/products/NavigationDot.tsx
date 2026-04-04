@@ -54,7 +54,7 @@ export function NavigationDot({
 
           gsap.set(dotRef.current, {
             scale: scale,
-            backgroundColor: `rgba(${r},${g},${b},${a})`,
+            backgroundColor: `rgba(${String(r)},${String(g)},${String(b)},${String(a)})`,
           });
         },
       });

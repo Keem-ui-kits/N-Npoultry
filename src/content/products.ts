@@ -20,6 +20,11 @@ export const products: Product[] = [
     color: 'var(--brand-gold)',
     colorRgb: [236, 204, 116],
     gradient: 'from-brand-gold to-brand-orange',
+    pricingTiers: [
+      { label: 'Retail', price: 'KES 450', unit: 'per tray of 30', note: 'Pickup only' },
+      { label: 'Wholesale', price: 'KES 420', unit: 'per tray (min 10)', note: 'Delivery available' },
+      { label: 'Commercial', price: 'Contact', unit: 'Daily Contract', note: 'Best for bakeries' },
+    ],
   },
   {
     id: 'poultry-manure',
@@ -44,6 +49,10 @@ export const products: Product[] = [
     color: '#4ade80',
     colorRgb: [74, 222, 128],
     gradient: 'from-[#4ade80] to-[#059669]',
+    pricingTiers: [
+      { label: 'Standard Bag', price: 'KES 350', unit: 'per 70kg sack' },
+      { label: 'Bulk Loader', price: 'KES 15K', unit: 'per FH truck' },
+    ],
   },
   {
     id: 'ex-layer-hens',
@@ -68,5 +77,9 @@ export const products: Product[] = [
     color: '#ef4444',
     colorRgb: [239, 68, 68],
     gradient: 'from-[#ef4444] to-[#e11d48]',
+    pricingTiers: [
+      { label: 'Single Bird', price: 'KES 400', unit: 'per live hen' },
+      { label: 'Batch (50+)', price: 'KES 350', unit: 'per bird' },
+    ],
   },
 ];

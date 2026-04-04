@@ -46,7 +46,7 @@ export function HowWeWork() {
                 display: 'inline-block',
                 transformStyle: 'preserve-3d',
               }}
-              className="relative z-10 text-foreground dark:text-white"
+              className="relative z-10 text-white"
             >
               Farm to table.
             </span>
@@ -57,7 +57,7 @@ export function HowWeWork() {
                 display: 'inline-block',
                 transformStyle: 'preserve-3d',
               }}
-              className="relative z-10 text-foreground dark:text-white"
+              className="relative z-10 text-white"
             >
               <span className="relative inline-block">
                 <span className="gradient-brand-text">Done right.</span>
@@ -67,7 +67,7 @@ export function HowWeWork() {
           <p
             data-hww-para
             style={{ transformStyle: 'preserve-3d' }}
-            className="text-base sm:text-lg md:text-xl text-muted-foreground dark:text-gray-400 max-w-2xl mx-auto px-4"
+            className="text-base sm:text-lg md:text-xl text-white/50 max-w-2xl mx-auto px-4"
           >
             A simple, transparent process from your first inquiry to doorstep delivery.
           </p>

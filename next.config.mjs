@@ -1,4 +1,5 @@
-/** @type {import('next').NextConfig} */
+import { withSentryConfig } from "@sentry/nextjs";
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -38,11 +39,11 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self' data:",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self'",
+              "connect-src 'self' https://vitals.vercel-insights.com https://*.ingest.sentry.io",
               "frame-ancestors 'none'",
             ].join('; ')
           }
@@ -52,4 +53,36 @@ const nextConfig = {
   },
 }
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options
+
+  // Suppresses source map uploading logs during bundling
+  silent: true,
+  org: "nn-poultry-palace",
+  project: "javascript-nextjs",
+}, {
+  // For all available options, see:
+  // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+
+  // Upload a larger set of source-maps for prettier stack traces (increases build time)
+  widenClientFileUpload: true,
+
+  // Transpiles SDK to be compatible with IE11 (increases bundle size)
+  transpileClientSDK: false,
+
+  // Routes HTTP requests through "Sentry.init"
+  tunnelRoute: "/monitoring",
+
+  // Hides source maps from visitors
+  hideSourceMaps: true,
+
+  // Automatically tree-shake Sentry logger statements to reduce bundle size
+  disableLogger: true,
+
+  // Enables automatic instrumentation of Vercel Cron Monitors.
+  // See the following for more information:
+  // https://docs.sentry.io/product/crons/
+  // https://vercel.com/docs/cron-jobs
+  automaticVercelMonitors: true,
+});

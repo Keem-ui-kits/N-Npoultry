@@ -38,7 +38,7 @@ export function ProductsTeaser() {
               transition={{ delay: index * 0.1 }}
               className="sticky md:static group relative bg-card dark:bg-brand-dark/60 rounded-3xl border border-border dark:border-white/10 overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-row md:flex-col items-center"
               style={{
-                top: `calc(100px + ${index * 20}px)`, // Stacking offset for mobile sticky
+                top: `calc(100px + ${String(index * 20)}px)`, // Stacking offset for mobile sticky
                 zIndex: index
               }}
             >
@@ -64,6 +64,7 @@ export function ProductsTeaser() {
                   src={product.image}
                   alt={product.title}
                   fill
+                  sizes="(max-width: 768px) 33vw, 25vw"
                   className="object-contain p-2 md:p-8 group-hover:scale-110 transition-transform duration-500 scale-125 md:scale-100 -translate-x-2 md:translate-x-0"
                 />
               </div>

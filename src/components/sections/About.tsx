@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { ShieldCheck, Truck, Users } from 'lucide-react';
 import { siteConfig } from '@/content/site';
@@ -24,6 +27,20 @@ const pillarContent = [
 ];
 
 export function About() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry?.isIntersecting) void video.play(); },
+      { threshold: 0.1 }
+    );
+    observer.observe(video);
+    return () => { observer.disconnect(); };
+  }, []);
+
   return (
     <AboutClientWrapper>
       {/* Background grain texture */}
@@ -52,13 +69,17 @@ export function About() {
           
           <div data-hero-bg className="absolute inset-0 pointer-events-none -z-10 bg-gradient-to-b from-transparent via-[#030213]/80 to-[#030213]">
             <video 
-              src="/upscaled-video.mp4" 
-              autoPlay 
+              ref={videoRef}
               loop 
               muted 
               playsInline 
+              preload="none"
+              aria-hidden="true"
               className="w-full h-full object-cover opacity-20 mix-blend-screen"
-            />
+            >
+              <source src="/upscaled-video.webm" type="video/webm" />
+              <source src="/upscaled-video.mp4" type="video/mp4" />
+            </video>
           </div>
         </section>
 
@@ -72,6 +93,7 @@ export function About() {
                  src={farmPlaceholder}
                  alt="N&N Poultry Palace Logo"
                  fill
+                 sizes="(max-width: 1024px) 100vw, 50vw"
                  data-story-image
                  className="object-contain p-12 lg:p-24 drop-shadow-2xl opacity-90"
                />
@@ -82,7 +104,7 @@ export function About() {
               <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tight">
                 Our <span className="text-brand-gold italic font-serif font-light">Roots</span>
               </h2>
-              <div className="text-lg md:text-xl lg:text-2xl text-gray-300 font-light leading-relaxed space-y-8">
+              <div className="text-lg md:text-xl lg:text-2xl text-white/70 font-light leading-relaxed space-y-8">
                 <p>
                   <strong className="text-white font-medium">{siteConfig.name}</strong> is a family-run poultry business rooted in Machakos, built on a commitment to quality, trust, and community.
                 </p>
@@ -104,7 +126,7 @@ export function About() {
           <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 w-full">
               <div data-mission-item className="space-y-8 relative">
-                <div className="text-brand-orange font-mono tracking-[0.2em] text-sm uppercase flex items-center gap-4">
+                <div className="text-brand-gold font-mono tracking-[0.2em] text-sm uppercase flex items-center gap-4">
                   <span className="w-8 h-[1px] bg-brand-orange"></span>
                   01 // The Vision
                 </div>
@@ -120,7 +142,7 @@ export function About() {
                   <span className="w-8 h-[1px] bg-brand-gold"></span>
                   02 // The Mission
                  </div>
-                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.2] text-gray-300">
+                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.2] text-white/70">
                     {siteConfig.companyInfo.mission}
                  </h3>
               </div>
@@ -136,7 +158,7 @@ export function About() {
             <h2 className="text-5xl md:text-7xl font-bold mb-8 tracking-tight">
               Pillars of <span className="gradient-brand-text">Excellence</span>
             </h2>
-            <p className="text-xl md:text-2xl text-gray-400 font-light">The foundational principles that drive our standard everyday.</p>
+            <p className="text-xl md:text-2xl text-white/50 font-light">The foundational principles that drive our standard everyday.</p>
           </div>
 
           {/* Uniform Grid (Mobile Style) */}
@@ -168,9 +190,9 @@ export function About() {
                   <div className="absolute inset-0 bg-gradient-to-tr from-brand-gold/0 via-brand-gold/0 to-brand-gold/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                   
                   <div className="relative z-10 translate-y-4 group-hover:translate-y-0 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]">
-                    <div className="text-brand-orange/60 font-mono text-xs mb-3 tracking-[0.3em] uppercase">Value 0{i + 1}</div>
+                    <div className="text-brand-gold/60 font-mono text-xs mb-3 tracking-[0.3em] uppercase">Value 0{i + 1}</div>
                     <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">{item.title}</h3>
-                    <p className="text-gray-400 text-lg md:text-xl lg:text-2xl leading-relaxed max-w-xl font-light">{item.description}</p>
+                    <p className="text-white/50 text-lg md:text-xl lg:text-2xl leading-relaxed max-w-xl font-light">{item.description}</p>
                   </div>
                 </div>
               );

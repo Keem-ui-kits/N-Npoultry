@@ -80,6 +80,7 @@ export function ProductsDetailed() {
                     src={product.image}
                     alt=""
                     fill
+                    sizes="100vw"
                     className="object-contain opacity-15 scale-110 blur-[2px]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
@@ -101,7 +102,7 @@ export function ProductsDetailed() {
                     <span className="text-brand-gold">{product.titleAccent}</span>
                   </h2>
                   <p className="text-lg md:text-xl text-gray-300 leading-relaxed italic">
-                    {product.fullDescription || product.description}
+                    {product.fullDescription ?? product.description}
                   </p>
                 </div>
 

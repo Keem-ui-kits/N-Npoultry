@@ -7,11 +7,12 @@ import BottomBlur from '@/components/layout/BottomBlur';
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
+import { siteConfig } from '@/content/site';
 
 import { Geist, Geist_Mono } from 'next/font/google';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nnpoultrypalace.vercel.app'),
+  metadataBase: new URL(siteConfig.baseUrl),
   title: 'N&N Poultry Palace | Farm-Fresh Nutritious Eggs in Machakos',
   description:
     'Your trusted source for day-collected table eggs and organic poultry manure. Wholesome, responsibly produced products from our family-run farm in Machakos, Kenya.',
@@ -19,8 +20,8 @@ export const metadata: Metadata = {
     title: 'N&N Poultry Palace | Farm-Fresh Nutritious Eggs',
     description:
       'Daily collected farm-fresh eggs and organic nutrients. Trusted quality from Machakos.',
-    url: 'https://nnpoultrypalace.vercel.app',
-    siteName: 'N&N Poultry Palace',
+    url: siteConfig.baseUrl,
+    siteName: siteConfig.name,
     images: [
       {
         url: '/og-image.png',
@@ -58,12 +59,15 @@ const geistMono = Geist_Mono({
   adjustFontFallback: true,
 });
 
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`scroll-smooth ${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>
         <a
-          href="#home"
+          href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:text-foreground"
         >
           Skip to content
@@ -78,6 +82,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <WhatsAppButton />
           </SmoothScroll>
         </ThemeProvider>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

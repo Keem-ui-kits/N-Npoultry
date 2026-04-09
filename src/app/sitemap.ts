@@ -5,17 +5,31 @@ import { products } from '@/content/products';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.baseUrl;
 
+  const priorities: Record<string, number> = {
+    '': 1.0,
+    '/products': 0.9,
+    '/about': 0.7,
+    '/contact': 0.7,
+    '/quote': 0.7,
+    '/education-hub': 0.5,
+    '/terms': 0.1,
+    '/privacy': 0.1,
+  };
+
   const staticRoutes: MetadataRoute.Sitemap = [
     '',
-    '/about',
     '/products',
+    '/about',
     '/contact',
     '/quote',
+    '/education-hub',
+    '/terms',
+    '/privacy',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: (route === '' ? 'weekly' : 'monthly') as 'weekly' | 'monthly',
-    priority: route === '' ? 1 : 0.8,
+    changeFrequency: (route === '' || route === '/products' ? 'weekly' : (route === '/terms' || route === '/privacy' ? 'yearly' : 'monthly')) as 'weekly' | 'monthly' | 'yearly',
+    priority: priorities[route] ?? 0.5,
   }));
 
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({

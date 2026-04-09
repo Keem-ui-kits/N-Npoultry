@@ -46,7 +46,7 @@ export const products: Product[] = [
       'Available in 70kg bulk sacks and FH truck',
     ],
     image: '/manure-bags.png',
-    color: '#4ade80',
+    color: 'var(--product-green)',
     colorRgb: [74, 222, 128],
     gradient: 'from-[#4ade80] to-[#059669]',
     pricingTiers: [
@@ -74,7 +74,7 @@ export const products: Product[] = [
       'Bulk lots available for businesses',
     ],
     image: '/ex-layer-hen.png',
-    color: '#ef4444',
+    color: 'var(--product-red)',
     colorRgb: [239, 68, 68],
     gradient: 'from-[#ef4444] to-[#e11d48]',
     pricingTiers: [

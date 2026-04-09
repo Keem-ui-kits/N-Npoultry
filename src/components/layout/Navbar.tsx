@@ -22,6 +22,15 @@ export function Navbar() {
   const mobileMenuContentRef = useRef<HTMLDivElement>(null);
   const mobileMenuLinksRef = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) setMobileMenuOpen(false);
+    };
+    document.addEventListener('keydown', handler);
+    return () => { document.removeEventListener('keydown', handler); };
+  }, [mobileMenuOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -37,6 +46,13 @@ export function Navbar() {
   }, []);
 
   // Removed initial navbar animation hook
+
+  // Initialise mobile menu as hidden so GSAP owns visibility from the start
+  useEffect(() => {
+    if (mobileMenuRef.current) {
+      gsap.set(mobileMenuRef.current, { opacity: 0, clipPath: 'circle(0% at 100% 0%)' });
+    }
+  }, []);
 
   useEffect(() => {
     if (!hamburgerLine1Ref.current || !hamburgerLine2Ref.current || !hamburgerLine3Ref.current)
@@ -162,7 +178,7 @@ export function Navbar() {
               className="px-6 py-2.5 gradient-brand text-brand-dark rounded-full font-bold hover:shadow-[0_0_20px_rgba(var(--brand-gold-rgb),0.4)] transition-all flex items-center gap-2 group transform hover:scale-105"
             >
               Order Now
-              <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <Send suppressHydrationWarning className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
@@ -246,7 +262,7 @@ export function Navbar() {
               }}
               className="flex justify-center items-center gap-3 w-full py-4 gradient-brand text-brand-dark rounded-full font-bold text-lg shadow-xl"
             >
-              Place an Order <Send className="w-5 h-5" />
+              Place an Order <Send suppressHydrationWarning className="w-5 h-5" />
             </Link>
           </div>
         </div>

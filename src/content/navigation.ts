@@ -1,7 +1,8 @@
 export const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Products', href: '/products' },
-  { name: 'About', href: '/about' },
+  { name: 'About Us', href: '/about' },
+  { name: 'Education Hub', href: '/education-hub' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -10,6 +11,7 @@ export const footerLinks = {
     { name: 'Home', href: '/' },
     { name: 'Products', href: '/products' },
     { name: 'About Us', href: '/about' },
+    { name: 'Education Hub', href: '/education-hub' },
     { name: 'Contact', href: '/contact' },
   ],
   products: [

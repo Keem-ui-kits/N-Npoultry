@@ -33,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// Not async — generateStaticParams must be synchronous
 export function generateStaticParams() {
   return products.map((product) => ({
     id: product.id,

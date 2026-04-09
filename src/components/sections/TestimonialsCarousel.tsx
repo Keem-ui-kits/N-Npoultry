@@ -60,7 +60,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
         width: cardSize,
         height: isCenter ? cardSize * 1.15 : cardSize,
         transform: `
-          translate(-50%, -50%) 
+          translate(-50%, -50%)
           translateX(${String((cardSize / 1.5) * position)}px)
           translateY(${String(isCenter ? -30 : position % 2 ? 15 : -15)}px)
           rotate(${String(isCenter ? 0 : position % 2 ? 2.5 : -2.5)}deg)
@@ -133,7 +133,7 @@ export function TestimonialsCarousel({ testimonials }: { testimonials: Testimoni
       const { matches } = window.matchMedia('(min-width: 640px)');
       setCardSize(matches ? 365 : Math.min(window.innerWidth - 60, 320));
     };
-    
+
     const debouncedUpdateSize = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(updateSize, 100);

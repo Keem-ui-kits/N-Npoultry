@@ -34,11 +34,29 @@ export function About() {
     if (!video) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry?.isIntersecting) void video.play(); },
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          // Play only if not already playing, handle promise to avoid AbortError
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch((error) => {
+              if (error.name !== 'AbortError') {
+                console.error('Video play error:', error);
+              }
+            });
+          }
+        } else {
+          video.pause();
+        }
+      },
       { threshold: 0.1 }
     );
     observer.observe(video);
-    return () => { observer.disconnect(); };
+    
+    return () => { 
+      observer.disconnect(); 
+      if (video) video.pause();
+    };
   }, []);
 
   return (
@@ -77,7 +95,6 @@ export function About() {
               aria-hidden="true"
               className="w-full h-full object-cover opacity-20 mix-blend-screen"
             >
-              <source src="/upscaled-video.webm" type="video/webm" />
               <source src="/upscaled-video.mp4" type="video/mp4" />
             </video>
           </div>

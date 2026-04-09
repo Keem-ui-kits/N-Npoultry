@@ -9,10 +9,8 @@ export default function MouseSpotlight() {
   const rafId = useRef<number | null>(null);
   const mousePosition = useRef({ x: 0, y: 0 });
 
-  if (prefersReduced) return null;
-
-
   useEffect(() => {
+    if (prefersReduced) return;
     const updateBackground = () => {
       if (ref.current) {
         ref.current.style.background = `radial-gradient(800px circle at ${mousePosition.current.x.toFixed(1)}px ${mousePosition.current.y.toFixed(1)}px, rgba(var(--brand-gold-rgb), 0.05), rgba(var(--brand-gold-rgb), 0) 150px)`;
@@ -33,7 +31,9 @@ export default function MouseSpotlight() {
         cancelAnimationFrame(rafId.current);
       }
     };
-  }, []);
+  }, [prefersReduced]);
+
+  if (prefersReduced) return null;
 
   return (
     <div

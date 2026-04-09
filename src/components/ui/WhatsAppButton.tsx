@@ -21,9 +21,8 @@ export function WhatsAppButton({ message }: { message?: string }) {
     return () => { window.removeEventListener('scroll', toggleVisibility); };
   }, []);
 
-  const whatsappUrl = `https://wa.me/${siteConfig.contacts.whatsapp}${
-    message ? `?text=${encodeURIComponent(message)}` : ''
-  }`;
+  const defaultMessage = `Hi! I'd like to learn more about your products at ${siteConfig.name}.`;
+  const whatsappUrl = `https://wa.me/${siteConfig.contacts.whatsapp}?text=${encodeURIComponent(message ?? defaultMessage)}`;
 
   return (
     <AnimatePresence>

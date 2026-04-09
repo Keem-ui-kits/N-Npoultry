@@ -17,13 +17,28 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     }
   }, [pathname]);
 
+  // Handle hash-link navigation so Lenis intercepts #anchor scrolls
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash && lenisRef.current) {
+        const target = document.querySelector(hash);
+        if (target) lenisRef.current.scrollTo(target as HTMLElement);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => { window.removeEventListener('hashchange', handleHashChange); };
+  }, []);
+
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     if (typeof window === 'undefined' || prefersReduced) return;
 
     try {
-      history.scrollRestoration = 'manual';
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
       window.scrollTo(0, 0);
 
       const lenis = new Lenis({

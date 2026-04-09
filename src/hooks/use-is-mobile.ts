@@ -3,25 +3,17 @@ import { useState, useEffect } from 'react';
 const MOBILE_BREAKPOINT = 768;
 
 export function useIsMobile(breakpoint = MOBILE_BREAKPOINT): boolean {
-  const [isMobile, setIsMobile] = useState(false);
+  const query = `(max-width: ${breakpoint - 1}px)`;
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' ? window.matchMedia(query).matches : false
+  );
 
   useEffect(() => {
-    const check = () => { setIsMobile(window.innerWidth < breakpoint); };
-    check();
-
-    // Debounce resize for performance
-    let timeoutId: ReturnType<typeof setTimeout>;
-    const handleResize = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(check, 100);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearTimeout(timeoutId);
-    };
-  }, [breakpoint]);
+    const mq = window.matchMedia(query);
+    const handler = (e: MediaQueryListEvent) => { setIsMobile(e.matches); };
+    mq.addEventListener('change', handler);
+    return () => { mq.removeEventListener('change', handler); };
+  }, [query]);
 
   return isMobile;
 }

@@ -3,6 +3,7 @@ import '../styles/index.css';
 
 import MouseSpotlight from '@/components/layout/MouseSpotlight';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
+import { PageTransition } from '@/components/layout/PageTransition';
 import BottomBlur from '@/components/layout/BottomBlur';
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
@@ -62,9 +63,45 @@ const geistMono = Geist_Mono({
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: siteConfig.name,
+  description: siteConfig.description,
+  url: siteConfig.baseUrl,
+  telephone: siteConfig.contacts.phones[0],
+  email: siteConfig.contacts.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Machakos',
+    addressCountry: 'KE',
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '17:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '08:00',
+      closes: '12:00',
+    },
+  ],
+  priceRange: 'KES',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`scroll-smooth ${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
+      </head>
       <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>
         <a
           href="#main-content"
@@ -77,7 +114,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <MouseSpotlight />
             <BottomBlur />
             <ErrorBoundary>
-              {children}
+              <PageTransition>
+                {children}
+              </PageTransition>
             </ErrorBoundary>
             <WhatsAppButton />
           </SmoothScroll>

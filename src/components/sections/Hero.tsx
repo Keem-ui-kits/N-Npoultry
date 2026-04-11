@@ -1,5 +1,4 @@
 import { Sparkles } from 'lucide-react';
-import { siteConfig } from '@/content/site';
 import { HeroClient } from './HeroClient';
 import { HeroMotion } from './HeroMotion';
 import { HeroContactButton } from './HeroContactButton';

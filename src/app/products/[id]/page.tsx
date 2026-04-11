@@ -1,12 +1,13 @@
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { PageHeader } from '@/components/layout/PageHeader';
-import { products } from '@/content/products';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { ArrowLeft, CheckCircle2, Send } from 'lucide-react';
+import { CheckCircle2, Send } from 'lucide-react';
 import Link from 'next/link';
-import { PricingTable } from '@/components/sections/products/PricingTable';
 import type { Metadata } from 'next';
+import { siteConfig } from '@/content/site';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { getProducts, getProductById } from '@/sanity/lib/queries';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -14,7 +15,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const product = products.find((p) => p.id === id);
+  const product = await getProductById(id);
 
   if (!product) {
     return {
@@ -33,37 +34,58 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// Not async — generateStaticParams must be synchronous
-export function generateStaticParams() {
-  return products.map((product) => ({
-    id: product.id,
-  }));
+export async function generateStaticParams() {
+  const products = await getProducts();
+  return products.map((product) => ({ id: product.id }));
 }
 
 export default async function ProductDetailPage({ params }: Props) {
   const { id } = await params;
-  const product = products.find((p) => p.id === id);
+  const [product, allProducts] = await Promise.all([
+    getProductById(id),
+    getProducts(),
+  ]);
 
   if (!product) {
     notFound();
   }
 
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: `${product.title} ${product.titleAccent}`,
+    description: product.fullDescription ?? product.description,
+    image: `${siteConfig.baseUrl}${product.image}`,
+    brand: { '@type': 'Brand', name: 'N&N Poultry Palace' },
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      priceCurrency: 'KES',
+      seller: { '@type': 'Organization', name: 'N&N Poultry Palace' },
+    },
+  };
+
   return (
     <PageWrapper>
-      <PageHeader 
-        title={product.title} 
-        accent={product.titleAccent} 
-        subtitle={product.description} 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
-      
+      <PageHeader
+        title={product.title}
+        accent={product.titleAccent}
+        subtitle={product.description}
+      />
+
       <div className="py-16 md:py-24 bg-white dark:bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link 
-            href="/products" 
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-brand-gold transition-colors mb-12 font-bold"
-          >
-            <ArrowLeft className="w-5 h-5" /> Back to Products
-          </Link>
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Products', href: '/products' },
+              { label: `${product.title} ${product.titleAccent}` },
+            ]}
+          />
 
           <div className="flex flex-col gap-12">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -117,17 +139,6 @@ export default async function ProductDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {product.pricingTiers && (
-              <div className="pt-12 border-t border-border dark:border-white/10">
-                <h3 className="text-2xl font-black uppercase tracking-tight mb-8">
-                  Pricing <span className="text-brand-gold">& Availability</span>
-                </h3>
-                <PricingTable tiers={product.pricingTiers} />
-                <p className="text-xs text-muted-foreground mt-6 italic">
-                  * All prices are subject to change and bulk discount availability. Please submit a quote request for the most accurate and up-to-date pricing.
-                </p>
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -138,7 +149,7 @@ export default async function ProductDetailPage({ params }: Props) {
             Related <span className="text-brand-gold">Products</span>
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products
+            {allProducts
               .filter((p) => p.id !== product.id)
               .map((related) => (
                 <Link

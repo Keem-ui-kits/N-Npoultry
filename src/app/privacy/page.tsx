@@ -1,14 +1,15 @@
-import { PageWrapper } from '@/components/layout/PageWrapper';
+import { StaticPageWrapper } from '@/components/layout/StaticPageWrapper';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | N&N Poultry Palace',
   description: 'Data protection and privacy policy for N&N Poultry Palace.',
+  robots: { index: false, follow: false },
 };
 
 export default function PrivacyPage() {
   return (
-    <PageWrapper>
+    <StaticPageWrapper>
       <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto min-h-screen">
         <h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Privacy <span className="text-brand-gold italic font-serif font-light">Policy</span></h1>
         
@@ -92,6 +93,6 @@ export default function PrivacyPage() {
           <p><strong>Email:</strong> info@nnpoultry.co.ke</p>
         </div>
       </div>
-    </PageWrapper>
+    </StaticPageWrapper>
   );
 }

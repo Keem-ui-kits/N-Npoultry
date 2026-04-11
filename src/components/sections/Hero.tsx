@@ -1,4 +1,3 @@
-import React from 'react';
 import { Sparkles } from 'lucide-react';
 import { siteConfig } from '@/content/site';
 import { HeroClient } from './HeroClient';
@@ -34,21 +33,6 @@ export function Hero() {
         <HeroContactButton />
       </HeroMotion>
 
-      <HeroMotion className="mt-10 sm:mt-20 flex flex-wrap justify-center items-center gap-8 sm:gap-12 text-sm text-foreground/60">
-        {siteConfig.stats.map((stat, i) => (
-          <React.Fragment key={stat.label}>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-black text-foreground mb-1">
-                {stat.value}
-              </div>
-              <div className="tracking-widest uppercase font-bold text-xs">{stat.label}</div>
-            </div>
-            {i < siteConfig.stats.length - 1 && (
-              <div className="hidden sm:block h-12 w-px bg-border" />
-            )}
-          </React.Fragment>
-        ))}
-      </HeroMotion>
     </HeroClient>
   );
 }

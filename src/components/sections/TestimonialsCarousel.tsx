@@ -6,9 +6,10 @@ import { motion } from 'motion/react';
 import { cn } from '@/components/ui/utils';
 
 interface Testimonial {
-  id: number;
+  id: string | number;
   name: string;
-  location: string;
+  company?: string;
+  location?: string;
   rating: number;
   text: string;
 }
@@ -91,14 +92,26 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           >
             {testimonial.name}
           </p>
-          <p
-            className={cn(
-              'text-[10px] sm:text-sm italic mt-0.5',
-              isCenter ? 'text-white/60' : 'text-white/50',
-            )}
-          >
-            {testimonial.location}
-          </p>
+          {testimonial.company && (
+            <p
+              className={cn(
+                'text-[10px] sm:text-xs font-semibold mt-0.5',
+                isCenter ? 'text-brand-gold/80' : 'text-white/50',
+              )}
+            >
+              {testimonial.company}
+            </p>
+          )}
+          {testimonial.location && (
+            <p
+              className={cn(
+                'text-[10px] sm:text-sm italic mt-0.5',
+                isCenter ? 'text-white/60' : 'text-white/50',
+              )}
+            >
+              {testimonial.location}
+            </p>
+          )}
         </div>
       </div>
     </button>

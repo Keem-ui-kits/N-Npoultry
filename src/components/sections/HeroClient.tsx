@@ -31,46 +31,51 @@ export function HeroClient({ children }: HeroClientProps) {
       )
         return;
 
-      gsap.set(bgImageRef.current, {
-        opacity: 0,
-        scale: 0.8,
-        y: 50,
-        rotate: -5,
-      });
+      const bgImage = bgImageRef.current;
+      const bgImageWrap = bgImageWrapRef.current;
+      const container = containerRef.current;
 
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.to(
-        bgImageRef.current,
-        { opacity: 0.25, scale: 1, y: 0, duration: 2, ease: 'power4.out' },
-        0.5,
-      );
-
-      gsap.to(bgImageRef.current, {
-        y: 20,
-        rotate: 5,
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-
-      const handleMouseMove = (e: MouseEvent) => {
-        if (!containerRef.current || !bgImageWrapRef.current) return;
-        const rect = containerRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        gsap.to(bgImageWrapRef.current, {
-          rotateY: x / 150,
-          rotateX: -y / 150,
-          duration: 1,
-          ease: 'power2.out',
-          transformPerspective: 1500,
+      window.requestIdleCallback(() => {
+        gsap.set(bgImage, {
+          opacity: 0,
+          scale: 0.8,
+          y: 50,
+          rotate: -5,
         });
-      };
 
-      window.addEventListener('mousemove', handleMouseMove);
-      return () => { window.removeEventListener('mousemove', handleMouseMove); };
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        tl.to(
+          bgImage,
+          { opacity: 0.25, scale: 1, y: 0, duration: 2, ease: 'power4.out' },
+          0.5,
+        );
+
+        gsap.to(bgImage, {
+          y: 20,
+          rotate: 5,
+          duration: 3,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+
+        const handleMouseMove = (e: MouseEvent) => {
+          const rect = container.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+
+          gsap.to(bgImageWrap, {
+            rotateY: x / 150,
+            rotateX: -y / 150,
+            duration: 1,
+            ease: 'power2.out',
+            transformPerspective: 1500,
+          });
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => { window.removeEventListener('mousemove', handleMouseMove); };
+      });
     },
     { scope: containerRef, dependencies: [prefersReducedMotion] },
   );
@@ -81,7 +86,7 @@ export function HeroClient({ children }: HeroClientProps) {
       opacity: 1,
       transition: {
         staggerChildren: 0.15,
-        delayChildren: 0.1,
+        delayChildren: 0,
       },
     },
   };
@@ -108,7 +113,8 @@ export function HeroClient({ children }: HeroClientProps) {
           fill
           sizes="100vw"
           quality={60}
-          priority
+          priority={false}
+          placeholder="empty"
           className="object-contain filter brightness-110 p-12 md:p-24 blur-[2px]"
           style={{ transform: 'translateZ(-50px)' }}
         />

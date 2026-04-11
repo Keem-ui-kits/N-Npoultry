@@ -1,10 +1,3 @@
-export interface ProductPricingTier {
-  label: string;
-  price: string;
-  unit: string;
-  note?: string;
-}
-
 export interface Product {
   id: string;
   title: string;
@@ -17,5 +10,4 @@ export interface Product {
   color: string;
   colorRgb: [number, number, number];
   gradient: string;
-  pricingTiers?: ProductPricingTier[];
 }

@@ -1,0 +1,132 @@
+import type { Product } from '@/types/product'
+import type { Testimonial } from '@/content/testimonials'
+import type { EducationArticle } from '@/content/education'
+
+// ---------------------------------------------------------------------------
+// GROQ queries
+// ---------------------------------------------------------------------------
+
+export const PRODUCTS_QUERY = `*[_type == "product"] {
+  "id": id.current,
+  title,
+  titleAccent,
+  description,
+  fullDescription,
+  features,
+  details,
+  "image": image.asset->url,
+  color,
+  colorRgb,
+  gradient
+} | order(title asc)`
+
+export const PRODUCT_BY_SLUG_QUERY = `*[_type == "product" && id.current == $id][0] {
+  "id": id.current,
+  title,
+  titleAccent,
+  description,
+  fullDescription,
+  features,
+  details,
+  "image": image.asset->url,
+  color,
+  colorRgb,
+  gradient
+}`
+
+export const TESTIMONIALS_QUERY = `*[_type == "testimonial"] {
+  "id": _id,
+  name,
+  company,
+  location,
+  rating,
+  text
+}`
+
+export const EDUCATION_ARTICLES_QUERY = `*[_type == "educationArticle"] {
+  "id": id.current,
+  title,
+  category,
+  "image": image.asset->url,
+  excerpt,
+  content
+}`
+
+export const EDUCATION_ARTICLE_BY_SLUG_QUERY = `*[_type == "educationArticle" && id.current == $slug][0] {
+  "id": id.current,
+  title,
+  category,
+  "image": image.asset->url,
+  excerpt,
+  content
+}`
+
+export const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0]`
+
+// ---------------------------------------------------------------------------
+// Fetch helper — returns null when Sanity is not configured or the query fails
+// ---------------------------------------------------------------------------
+
+export async function fetchFromSanity<T>(
+  query: string,
+  params?: Record<string, unknown>
+): Promise<T | null> {
+  if (
+    !process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+    !process.env.NEXT_PUBLIC_SANITY_DATASET
+  ) {
+    return null
+  }
+  try {
+    const { client } = await import('./client')
+    return await client.fetch<T>(query, params ?? {})
+  } catch {
+    return null
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Typed convenience wrappers
+// ---------------------------------------------------------------------------
+
+export async function getProducts(): Promise<Product[]> {
+  const data = await fetchFromSanity<Product[]>(PRODUCTS_QUERY)
+  if (data && data.length > 0) {
+    return data.map((p) => ({
+      ...p,
+      colorRgb: (p.colorRgb ?? [0, 0, 0]) as [number, number, number],
+    }))
+  }
+  const { products } = await import('@/content/products')
+  return products
+}
+
+export async function getProductById(id: string): Promise<Product | null> {
+  const data = await fetchFromSanity<Product>(PRODUCT_BY_SLUG_QUERY, { id })
+  if (data) {
+    return { ...data, colorRgb: (data.colorRgb ?? [0, 0, 0]) as [number, number, number] }
+  }
+  const { products } = await import('@/content/products')
+  return products.find((p) => p.id === id) ?? null
+}
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  const data = await fetchFromSanity<Testimonial[]>(TESTIMONIALS_QUERY)
+  if (data && data.length > 0) return data
+  const { testimonials } = await import('@/content/testimonials')
+  return testimonials
+}
+
+export async function getEducationArticles(): Promise<EducationArticle[]> {
+  const data = await fetchFromSanity<EducationArticle[]>(EDUCATION_ARTICLES_QUERY)
+  if (data && data.length > 0) return data
+  const { educationArticles } = await import('@/content/education')
+  return educationArticles
+}
+
+export async function getEducationArticleBySlug(slug: string): Promise<EducationArticle | null> {
+  const data = await fetchFromSanity<EducationArticle>(EDUCATION_ARTICLE_BY_SLUG_QUERY, { slug })
+  if (data) return data
+  const { educationArticles } = await import('@/content/education')
+  return educationArticles.find((a) => a.id === slug) ?? null
+}

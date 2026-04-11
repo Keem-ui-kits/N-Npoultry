@@ -1,12 +1,12 @@
 'use client';
 
-import { products } from '@/content/products';
+import type { Product } from '@/types/product';
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
 
-export function ProductsDetailed() {
+export function ProductsDetailed({ products }: { products: Product[] }) {
   useEffect(() => {
     const handleScroll = () => {
       const hash = window.location.hash;

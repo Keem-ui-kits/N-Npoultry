@@ -8,6 +8,25 @@ import { getRatelimit } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
 
+async function persistToSupabase(data: {
+  name: string;
+  email: string;
+  website?: string;
+  message?: string;
+}) {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !supabaseKey) return;
+
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    await supabase.from('contact_submissions').insert([data]);
+  } catch (err) {
+    console.error('Supabase insert failed (contact):', err);
+  }
+}
+
 export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
@@ -47,11 +66,14 @@ export async function POST(request: Request) {
 
     const { name, email, website, message } = validatedData.data;
 
-    // 3. Process the form - Send Email via Resend
+    // 3. Persist to Supabase (before email — DB write is independent of email success)
+    await persistToSupabase({ name, email, website, message });
+
+    // 4. Process the form - Send Email via Resend
     if (process.env.RESEND_API_KEY) {
       await resend.emails.send({
-        from: 'N&N Poultry Palace <noreply@nnpoultrypalace.vercel.app>',
-        to: 'info@nnpoultry.co.ke',
+        from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+        to: 'palacepoultryn.n@gmail.com',
         subject: `New enquiry from ${name}`,
         html: `
           <h2>New Contact Form Submission</h2>
@@ -64,6 +86,15 @@ export async function POST(request: Request) {
           </div>
         `,
         replyTo: email,
+      });
+
+      // 5. Customer auto-reply
+      await resend.emails.send({
+        from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+        to: email,
+        subject: 'We received your message — N&N Poultry Palace',
+        html: `<p>Hi ${name},</p><p>Thank you for reaching out. We've received your message and will get back to you within 24 hours.</p><p>— N&N Poultry Palace</p>`,
+        replyTo: 'palacepoultryn.n@gmail.com',
       });
     } else {
       console.warn('RESEND_API_KEY is not defined. Skipping email sending.');

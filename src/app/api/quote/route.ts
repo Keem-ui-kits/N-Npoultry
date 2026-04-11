@@ -6,6 +6,30 @@ import { quoteSchema } from '@/lib/schemas/quote';
 
 export const dynamic = 'force-dynamic';
 
+async function persistToSupabase(data: {
+  company_name: string;
+  contact_name: string;
+  email: string;
+  phone: string;
+  product: string;
+  quantity: string;
+  delivery_area: string;
+  frequency: string;
+  message?: string;
+}) {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !supabaseKey) return;
+
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    await supabase.from('quote_submissions').insert([data]);
+  } catch (err) {
+    console.error('Supabase insert failed (quote):', err);
+  }
+}
+
 export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
@@ -52,11 +76,24 @@ export async function POST(request: Request) {
       message,
     } = validatedData.data;
 
-    // 3. Process the form - Send Email via Resend
+    // 3. Persist to Supabase (before email — DB write is independent of email success)
+    await persistToSupabase({
+      company_name: companyName,
+      contact_name: contactName,
+      email,
+      phone,
+      product,
+      quantity,
+      delivery_area: deliveryArea,
+      frequency,
+      message,
+    });
+
+    // 4. Process the form - Send Email via Resend
     if (process.env.RESEND_API_KEY) {
       await resend.emails.send({
-        from: 'N&N Poultry Palace <noreply@nnpoultrypalace.vercel.app>',
-        to: 'info@nnpoultry.co.ke',
+        from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+        to: 'palacepoultryn.n@gmail.com',
         subject: `New Quote Request from ${companyName}`,
         html: `
           <h2>New Quote Request Submission</h2>
@@ -74,6 +111,15 @@ export async function POST(request: Request) {
           </div>
         `,
         replyTo: email,
+      });
+
+      // 5. Customer auto-reply
+      await resend.emails.send({
+        from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+        to: email,
+        subject: 'We received your quote request — N&N Poultry Palace',
+        html: `<p>Hi ${contactName},</p><p>Thank you for your interest in our <strong>${product}</strong>. We've received your quote request and will be in touch within 24 hours.</p><p>— N&N Poultry Palace</p>`,
+        replyTo: 'palacepoultryn.n@gmail.com',
       });
     } else {
       console.warn('RESEND_API_KEY is not defined. Skipping email sending.');

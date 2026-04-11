@@ -1,14 +1,15 @@
-import { PageWrapper } from '@/components/layout/PageWrapper';
+import { StaticPageWrapper } from '@/components/layout/StaticPageWrapper';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Terms & Conditions | N&N Poultry Palace',
   description: 'Terms and conditions for using the N&N Poultry Palace website and services.',
+  robots: { index: false, follow: false },
 };
 
 export default function TermsPage() {
   return (
-    <PageWrapper>
+    <StaticPageWrapper>
       <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto min-h-screen">
         <h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Terms and <span className="text-brand-gold italic font-serif font-light">Conditions</span></h1>
         
@@ -78,6 +79,6 @@ export default function TermsPage() {
 
         </div>
       </div>
-    </PageWrapper>
+    </StaticPageWrapper>
   );
 }

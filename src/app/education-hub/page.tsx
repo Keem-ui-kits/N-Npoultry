@@ -1,17 +1,20 @@
 import { PageWrapper } from '@/components/layout/PageWrapper';
-import { educationArticles, educationCategories } from '@/content/education';
+import { educationCategories } from '@/content/education';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { getEducationArticles } from '@/sanity/lib/queries';
 
 export const metadata: Metadata = {
   title: 'Education Hub | N&N Poultry Palace',
   description: 'Learn about our farming practices, the poultry lifecycle, and how we guarantee fresh and nutritious eggs daily.',
 };
 
-export default function EducationHubPage() {
+export default async function EducationHubPage() {
+  const educationArticles = await getEducationArticles();
+
   return (
     <PageWrapper>
       {/* Hero Section */}
@@ -22,7 +25,7 @@ export default function EducationHubPage() {
           {/* Subtle Glow */}
           <div className="absolute top-0 right-1/4 w-[40vw] h-[40vw] bg-brand-gold/10 blur-[100px] rounded-full pointer-events-none" />
         </div>
-        
+
         <div className="max-w-6xl mx-auto relative z-10 text-center pt-10">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white drop-shadow-lg">
             Education <span className="gradient-brand-text italic font-serif">Hub</span>
@@ -33,10 +36,10 @@ export default function EducationHubPage() {
         </div>
       </section>
 
-      {/* Main Content Grid */}
+      {/* Category Cards Grid */}
       <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto relative z-10">
         <ErrorBoundary>
-          <div className="space-y-32">
+          <div className="space-y-24">
             {educationCategories.map((category) => {
               const categoryArticles = educationArticles.filter((a) => a.category === category.id);
               if (categoryArticles.length === 0) return null;
@@ -49,31 +52,32 @@ export default function EducationHubPage() {
                     <p className="text-xl text-brand-gold/80 font-light">{category.description}</p>
                   </div>
 
-                  {/* Articles */}
-                  <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
-                    {categoryArticles.map((article, idx) => (
-                      <article key={article.id} className={`flex flex-col ${idx % 2 !== 0 && 'lg:translate-y-16'}`}>
-                        <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden mb-8 group glass shadow-2xl">
+                  {/* Article Cards */}
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {categoryArticles.map((article) => (
+                      <Link
+                        key={article.id}
+                        href={`/education-hub/${article.id}`}
+                        className="group flex flex-col bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-brand-gold/40 hover:shadow-[0_0_30px_rgba(var(--brand-gold-rgb),0.1)] transition-all duration-300"
+                      >
+                        <div className="relative aspect-[4/3] overflow-hidden">
                           <Image
                             src={article.image}
                             alt={article.title}
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
-                            sizes="(max-width: 1024px) 100vw, 50vw"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/20 to-transparent opacity-80" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-brand-dark/20 to-transparent" />
                         </div>
-                        
-                        <div className="px-2">
-                          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{article.title}</h3>
-                          <p className="text-brand-orange font-medium mb-6">{article.excerpt}</p>
-                          <div className="space-y-4 text-white/70 font-light leading-relaxed">
-                            {article.content.map((paragraph, i) => (
-                              <p key={i}>{paragraph}</p>
-                            ))}
-                          </div>
+                        <div className="p-6 flex flex-col flex-grow">
+                          <h3 className="text-lg font-bold text-white mb-2 group-hover:text-brand-gold transition-colors">{article.title}</h3>
+                          <p className="text-white/60 text-sm font-light leading-relaxed flex-grow">{article.excerpt}</p>
+                          <span className="inline-flex items-center gap-1 mt-4 text-brand-gold text-sm font-semibold">
+                            Read article <ArrowRight className="w-4 h-4" />
+                          </span>
                         </div>
-                      </article>
+                      </Link>
                     ))}
                   </div>
                 </div>

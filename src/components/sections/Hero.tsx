@@ -1,4 +1,5 @@
 import { Sparkles } from 'lucide-react';
+
 import { HeroClient } from './HeroClient';
 import { HeroMotion } from './HeroMotion';
 import { HeroContactButton } from './HeroContactButton';

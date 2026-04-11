@@ -11,3 +11,10 @@ export interface Product {
   colorRgb: [number, number, number];
   gradient: string;
 }
+
+export interface ProductPricingTier {
+  label: string;
+  price: string;
+  unit: string;
+  note?: string;
+}

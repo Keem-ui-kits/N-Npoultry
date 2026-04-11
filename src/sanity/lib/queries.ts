@@ -79,7 +79,9 @@ export async function fetchFromSanity<T>(
   }
   try {
     const { client } = await import('./client')
-    return await client.fetch<T>(query, params ?? {})
+    return await client.fetch<T>(query, params ?? {}, {
+      next: { revalidate: 0 },
+    })
   } catch {
     return null
   }

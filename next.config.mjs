@@ -45,11 +45,12 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com`,
-              "style-src 'self' 'unsafe-inline'",
-              "font-src 'self' data:",
+              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://*.sanity.io https://*.sanity-cdn.com https://core.sanity-cdn.com`,
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' data: https://fonts.gstatic.com",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self' https://vitals.vercel-insights.com https://*.ingest.sentry.io",
+              "connect-src 'self' https: wss: blob: data:",
+              "frame-src 'self' https://*.sanity.io",
               "frame-ancestors 'none'",
             ].join('; ')
           }

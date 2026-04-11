@@ -13,7 +13,7 @@ const itemVariants: Variants = {
 
 export function HeroMotion({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <motion.div variants={itemVariants} className={className}>
+    <motion.div variants={itemVariants} initial={false} className={className}>
       {children}
     </motion.div>
   );

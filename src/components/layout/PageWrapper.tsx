@@ -15,7 +15,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={pathname}
           id="main-content"

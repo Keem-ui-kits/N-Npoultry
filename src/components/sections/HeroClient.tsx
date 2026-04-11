@@ -113,7 +113,7 @@ export function HeroClient({ children }: HeroClientProps) {
           fill
           sizes="100vw"
           quality={60}
-          priority={false}
+          priority={true}
           placeholder="empty"
           className="object-contain filter brightness-110 p-12 md:p-24 blur-[2px]"
           style={{ transform: 'translateZ(-50px)' }}
@@ -122,7 +122,7 @@ export function HeroClient({ children }: HeroClientProps) {
 
       <motion.div
         variants={containerVariants}
-        initial="hidden"
+        initial={false}
         animate="visible"
         className="relative z-10 flex w-full flex-col items-center justify-center px-4 py-4 sm:py-12 text-center max-w-5xl mx-auto"
       >

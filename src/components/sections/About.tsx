@@ -69,7 +69,7 @@ export function About() {
 
       <div className="relative z-10 w-full text-white pb-32">
         {/* Section 1: The N&N Standard (Hero Reveal) */}
-        <section data-section="hero" className="min-h-[90vh] flex flex-col items-center justify-center relative overflow-hidden px-4 md:px-8 bg-transparent">
+        <section data-section="hero" className="min-h-[70vh] md:min-h-[90vh] flex flex-col items-center justify-center relative overflow-hidden px-4 md:px-8 bg-transparent">
           <div className="text-center w-full max-w-5xl relative z-10 pt-20">
             <h1 data-hero-text className="text-5xl md:text-7xl lg:text-8xl xl:text-[9rem] font-black mb-6 uppercase tracking-tighter leading-[0.9]">
               <span className="block italic text-brand-gold/60 text-2xl md:text-4xl lg:text-5xl mb-4 lowercase opacity-80 font-serif font-light tracking-wide">the</span>
@@ -101,7 +101,7 @@ export function About() {
         </section>
 
         {/* Section 2: Our Roots (The Machakos Story) */}
-        <section data-section="story" className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 max-w-[90rem] mx-auto relative z-10">
+        <section data-section="story" className="py-12 md:py-32 px-4 sm:px-6 lg:px-8 max-w-[90rem] mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             {/* Split layout: parallax image on one side, side-scrolling text on the other */}
             <div data-story-image-container className="relative h-[50vh] lg:h-[70vh] rounded-[2.5rem] overflow-hidden glass shadow-[0_0_50px_rgba(0,0,0,0.5)] order-2 lg:order-1 flex items-center justify-center p-12">
@@ -138,7 +138,7 @@ export function About() {
         </section>
 
         {/* Section 3: Vision & Mission (The Core Pillars) */}
-        <section data-section="mission" className="py-32 md:py-48 relative overflow-hidden my-16 bg-[#0a0a0a]">
+        <section data-section="mission" className="py-16 md:py-48 relative overflow-hidden my-16 bg-[#0a0a0a]">
           <div className="absolute inset-0 border-y border-white/5 pointer-events-none"></div>
           <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 w-full">
@@ -159,8 +159,10 @@ export function About() {
                   <span className="w-8 h-[1px] bg-brand-gold"></span>
                   02 // The Mission
                  </div>
-                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.2] text-white/70">
-                    {siteConfig.companyInfo.mission}
+                 <h3 className="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.2] text-white">
+                    {siteConfig.companyInfo.mission.split(' ').map((word, i) => (
+                      <span key={i} className="inline-block mr-[0.3em] opacity-30 transition-opacity duration-300" data-mission-word>{word}</span>
+                    ))}
                  </h3>
               </div>
             </div>
@@ -170,7 +172,7 @@ export function About() {
         </section>
 
         {/* Section 4: The Pillars of Excellence (Core Values) */}
-        <section data-section="values" className="py-24 md:py-32 px-4 sm:px-6 lg:px-8 max-w-[90rem] mx-auto relative z-10">
+        <section data-section="values" className="py-12 md:py-32 px-4 sm:px-6 lg:px-8 max-w-[90rem] mx-auto relative z-10">
           <div className="mb-20 md:mb-28 text-center max-w-3xl mx-auto">
             <h2 className="text-5xl md:text-7xl font-bold mb-8 tracking-tight">
               Pillars of <span className="gradient-brand-text">Excellence</span>

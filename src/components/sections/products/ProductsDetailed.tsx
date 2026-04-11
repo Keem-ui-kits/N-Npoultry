@@ -38,8 +38,8 @@ export function ProductsDetailed({ products }: { products: Product[] }) {
   }, []);
 
   return (
-    <section id="products" className="py-16 md:py-24 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-36">
+    <section id="products" className="py-12 md:py-24 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 md:space-y-36">
         {products.map((product, index) => {
           const isEven = index % 2 === 0;
           return (
@@ -73,7 +73,7 @@ export function ProductsDetailed({ products }: { products: Product[] }) {
               </div>
 
               {/* Content / Mobile Background */}
-              <div className="relative space-y-8 p-8 md:p-12 lg:p-0 rounded-[2.5rem] overflow-hidden lg:overflow-visible">
+              <div className="relative space-y-8 p-6 md:p-12 lg:p-0 rounded-[2.5rem] overflow-hidden lg:overflow-visible">
                 {/* Mobile Background Image (Only visible < lg) */}
                 <div className="absolute inset-0 lg:hidden -z-10">
                   <Image

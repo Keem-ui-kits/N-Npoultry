@@ -88,4 +88,16 @@ export const educationArticles: EducationArticle[] = [
       'We continually monitor feed-to-egg conversion rates and eggshell quality, making minor nutritional adjustments as needed to keep the flock at peak performance.'
     ]
   },
+  {
+    id: 'poultry-manure-benefits',
+    title: 'Sustainable Farming with Organic Manure',
+    category: 'product-excellence',
+    image: '/assets/education/poultry-manure.png',
+    excerpt: 'How our high-quality organic manure supports regenerative agriculture.',
+    content: [
+      'At N&N Poultry Palace, we believe in a circular agricultural economy. Our organic poultry manure is a potent source of essential nutrients—nitrogen, phosphorus, and potassium (NPK)—which are vital for healthy plant growth and soil restoration.',
+      'Unlike synthetic fertilizers, poultry manure improves soil structure by adding organic matter, which enhances water retention and supports beneficial soil microorganisms. This leads to long-term soil health and more resilient crop yields.',
+      'Whether you are a small-scale gardener or a large-scale farmer, our carefully managed and naturally aged manure provides an eco-friendly alternative that helps reduce the chemical footprint on our land while delivering superior nutritional value to crops.'
+    ]
+  },
 ];

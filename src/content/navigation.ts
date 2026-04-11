@@ -3,7 +3,6 @@ export const navLinks = [
   { name: 'Products', href: '/products' },
   { name: 'About Us', href: '/about' },
   { name: 'Education Hub', href: '/education-hub' },
-  { name: 'Contact', href: '/contact' },
 ];
 
 export const footerLinks = {

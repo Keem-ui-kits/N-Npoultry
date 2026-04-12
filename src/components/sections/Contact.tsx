@@ -1,12 +1,13 @@
 'use client';
-import { motion } from 'motion/react';
-import { useInView } from 'motion/react';
+import { motion } from 'framer-motion';
+import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { siteConfig } from '@/content/site';
 import { contactSchema, type ContactFormData } from '@/lib/schemas/contact';
+import { Input } from '@/components/ui/input';
 
 export function Contact() {
   const ref = useRef(null);
@@ -15,8 +16,14 @@ export function Contact() {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>({ resolver: zodResolver(contactSchema) });
+
+  const nameValue = watch('name') || '';
+  const emailValue = watch('email') || '';
+  const websiteValue = watch('website') || '';
 
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -97,52 +104,39 @@ export function Contact() {
               className="space-y-6"
             >
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-foreground dark:text-white text-sm md:text-base mb-2"
-                >
-                  Name <span className="text-brand-gold">*</span>
-                </label>
-                <input
-                  type="text"
+                <Input
                   id="name"
+                  label="Name *"
+                  value={nameValue}
                   {...register('name')}
-                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all cursor-text text-left"
-                  placeholder="Your name"
+                  onChange={(e) => { setValue('name', e.target.value, { shouldValidate: true }); }}
+                  className="w-full"
                 />
                 {errors.name && <p className="text-destructive text-sm mt-1">{errors.name.message}</p>}
               </div>
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-foreground dark:text-white text-sm md:text-base mb-2"
-                >
-                  Email <span className="text-brand-gold">*</span>
-                </label>
-                <input
-                  type="email"
+                <Input
                   id="email"
+                  label="Email *"
+                  type="email"
+                  value={emailValue}
                   {...register('email')}
-                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all shadow-sm cursor-text text-left"
-                  placeholder="your@email.com"
+                  onChange={(e) => { setValue('email', e.target.value, { shouldValidate: true }); }}
+                  className="w-full"
                 />
                 {errors.email && <p className="text-destructive text-sm mt-1">{errors.email.message}</p>}
               </div>
 
               <div>
-                <label
-                  htmlFor="website"
-                  className="block text-foreground dark:text-white text-sm md:text-base mb-2"
-                >
-                  Website <span className="text-muted-foreground text-xs">(optional)</span>
-                </label>
-                <input
-                  type="url"
+                <Input
                   id="website"
+                  label="Website (optional)"
+                  type="url"
+                  value={websiteValue}
                   {...register('website')}
-                  className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all cursor-text text-left"
-                  placeholder="https://yourwebsite.com"
+                  onChange={(e) => { setValue('website', e.target.value, { shouldValidate: true }); }}
+                  className="w-full"
                 />
                 {errors.website && <p className="text-destructive text-sm mt-1">{errors.website.message}</p>}
               </div>

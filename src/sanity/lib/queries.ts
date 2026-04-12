@@ -80,7 +80,7 @@ export async function fetchFromSanity<T>(
   try {
     const { client } = await import('./client')
     return await client.fetch<T>(query, params ?? {}, {
-      next: { revalidate: 0 },
+      next: { revalidate: 3600 }, // 1 hour — products don't change frequently
     })
   } catch {
     return null
@@ -96,7 +96,7 @@ export async function getProducts(): Promise<Product[]> {
   if (data && data.length > 0) {
     return data.map((p) => ({
       ...p,
-      colorRgb: (p.colorRgb ?? [0, 0, 0]) as [number, number, number],
+      colorRgb: (p.colorRgb ?? [0, 0, 0]),
     }))
   }
   const { products } = await import('@/content/products')
@@ -106,7 +106,7 @@ export async function getProducts(): Promise<Product[]> {
 export async function getProductById(id: string): Promise<Product | null> {
   const data = await fetchFromSanity<Product>(PRODUCT_BY_SLUG_QUERY, { id })
   if (data) {
-    return { ...data, colorRgb: (data.colorRgb ?? [0, 0, 0]) as [number, number, number] }
+    return { ...data, colorRgb: (data.colorRgb ?? [0, 0, 0]) }
   }
   const { products } = await import('@/content/products')
   return products.find((p) => p.id === id) ?? null

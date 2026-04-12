@@ -1,8 +1,8 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { cn } from './utils';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 interface ProductData {
@@ -23,10 +23,10 @@ const Card = ({ i, product }: { i: number; product: ProductData }) => {
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
         style={{
-          top: `calc(2vh + ${String(i * 25)}px)`,
+          top: `calc(2vh + ${(i * 25).toString()}px)`,
         }}
         className={cn(
-          'relative flex overflow-hidden flex-col h-[520px] w-[94%] sm:w-[85%] rounded-[2.5rem] p-8 sm:p-12 origin-top shadow-2xl bg-[#fdfdfd] dark:bg-brand-dark text-white border border-white/10',
+          'relative flex overflow-hidden flex-col h-[520px] w-[94%] sm:w-[85%] rounded-[2.5rem] p-8 sm:p-12 origin-top shadow-2xl bg-[#fdfdfd] dark:bg-brand-dark text-foreground dark:text-white border border-white/10',
         )}
       >
         <div className="relative z-20 flex flex-col h-full bg-transparent">
@@ -42,7 +42,7 @@ const Card = ({ i, product }: { i: number; product: ProductData }) => {
             </h2>
 
             <div className="flex flex-col gap-3">
-              <p className="text-base sm:text-lg text-white/70 font-medium leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg text-foreground/80 dark:text-gray-300 font-medium leading-relaxed max-w-xl">
                 {product.description}
               </p>
 
@@ -50,7 +50,7 @@ const Card = ({ i, product }: { i: number; product: ProductData }) => {
                 {product.details.map((detail, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-3 text-white/60 text-sm sm:text-base font-medium"
+                    className="flex items-start gap-3 text-foreground/70 dark:text-gray-400 text-sm sm:text-base font-medium"
                   >
                     <span style={{ color: product.color }}>✦</span>
                     <span>{detail}</span>
@@ -110,7 +110,7 @@ export default function StackingCards({ products }: { products: ProductData[] })
   return (
     <div className="relative w-full">
       {products.map((product, i) => (
-        <Card key={`p_${String(i)}`} i={i} product={product} />
+        <Card key={`p_${i.toString()}`} i={i} product={product} />
       ))}
     </div>
   );

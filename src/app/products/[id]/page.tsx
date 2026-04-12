@@ -9,9 +9,9 @@ import { siteConfig } from '@/content/site';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { getProducts, getProductById } from '@/sanity/lib/queries';
 
-type Props = {
+interface Props {
   params: Promise<{ id: string }>;
-};
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;

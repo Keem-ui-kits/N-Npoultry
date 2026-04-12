@@ -2,8 +2,9 @@
 
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { InfiniteRibbon } from '@/components/ui/infinite-ribbon';
 
 interface PageWrapperProps {
   children: React.ReactNode;
@@ -13,7 +14,10 @@ export function PageWrapper({ children }: PageWrapperProps) {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative">
+      {/* Global Background Ribbon */}
+      <InfiniteRibbon />
+      
       <Navbar />
       <AnimatePresence mode="wait" initial={false}>
         <motion.main

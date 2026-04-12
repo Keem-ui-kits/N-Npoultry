@@ -1,14 +1,10 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
 import type { LucideIcon } from 'lucide-react';
 import type { MouseEvent} from 'react';
 import { useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-is-mobile';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface Step {
   icon: LucideIcon;

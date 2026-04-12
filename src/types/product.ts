@@ -8,7 +8,7 @@ export interface Product {
   details: string[];
   image: string;
   color: string;
-  colorRgb: [number, number, number];
+  colorRgb?: [number, number, number];
   gradient: string;
 }
 

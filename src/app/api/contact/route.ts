@@ -8,6 +8,15 @@ import { getRatelimit } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 async function persistToSupabase(data: {
   name: string;
   email: string;
@@ -77,12 +86,12 @@ export async function POST(request: Request) {
         subject: `New enquiry from ${name}`,
         html: `
           <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Website:</strong> ${website ?? 'N/A'}</p>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Website:</strong> ${escapeHtml(website ?? 'N/A')}</p>
           <p><strong>Message:</strong></p>
           <div style="background: #f4f4f4; padding: 15px; border-radius: 8px;">
-            ${message ?? 'No message provided'}
+            ${escapeHtml(message ?? 'No message provided')}
           </div>
         `,
         replyTo: email,
@@ -93,7 +102,7 @@ export async function POST(request: Request) {
         from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
         to: email,
         subject: 'We received your message — N&N Poultry Palace',
-        html: `<p>Hi ${name},</p><p>Thank you for reaching out. We've received your message and will get back to you within 24 hours.</p><p>— N&N Poultry Palace</p>`,
+        html: `<p>Hi ${escapeHtml(name)},</p><p>Thank you for reaching out. We've received your message and will get back to you within 24 hours.</p><p>— N&N Poultry Palace</p>`,
         replyTo: 'palacepoultryn.n@gmail.com',
       });
     } else {

@@ -7,9 +7,9 @@ import { ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 import { getEducationArticles, getEducationArticleBySlug } from '@/sanity/lib/queries';
 
-type Props = {
+interface Props {
   params: Promise<{ slug: string }>;
-};
+}
 
 export async function generateStaticParams() {
   const articles = await getEducationArticles();

@@ -33,6 +33,16 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
+    // Cleanup any existing instance first
+    if (rafIdRef.current !== null) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+    if (lenisRef.current) {
+      lenisRef.current.destroy();
+      lenisRef.current = null;
+    }
+
     if (typeof window === 'undefined' || prefersReduced) return;
 
     try {
@@ -75,7 +85,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         lenisRef.current = null;
       }
     };
-  }, []);
+  }, [prefersReduced]);
 
   return <>{children}</>;
 }

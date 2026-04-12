@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Star, StarHalf } from 'lucide-react';
-import { motion } from 'motion/react';
-import { cn } from '@/components/ui/utils';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface Testimonial {
   id: string | number;

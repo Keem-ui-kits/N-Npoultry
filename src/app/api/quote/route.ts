@@ -6,6 +6,15 @@ import { quoteSchema } from '@/lib/schemas/quote';
 
 export const dynamic = 'force-dynamic';
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 async function persistToSupabase(data: {
   company_name: string;
   contact_name: string;
@@ -97,17 +106,17 @@ export async function POST(request: Request) {
         subject: `New Quote Request from ${companyName}`,
         html: `
           <h2>New Quote Request Submission</h2>
-          <p><strong>Company:</strong> ${companyName}</p>
-          <p><strong>Contact Name:</strong> ${contactName}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Product:</strong> ${product}</p>
-          <p><strong>Quantity:</strong> ${quantity}</p>
-          <p><strong>Delivery Area:</strong> ${deliveryArea}</p>
-          <p><strong>Frequency:</strong> ${frequency}</p>
+          <p><strong>Company:</strong> ${escapeHtml(companyName)}</p>
+          <p><strong>Contact Name:</strong> ${escapeHtml(contactName)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+          <p><strong>Product:</strong> ${escapeHtml(product)}</p>
+          <p><strong>Quantity:</strong> ${escapeHtml(quantity)}</p>
+          <p><strong>Delivery Area:</strong> ${escapeHtml(deliveryArea)}</p>
+          <p><strong>Frequency:</strong> ${escapeHtml(frequency)}</p>
           <p><strong>Message:</strong></p>
           <div style="background: #f4f4f4; padding: 15px; border-radius: 8px;">
-            ${message ?? 'No message provided'}
+            ${escapeHtml(message ?? 'No message provided')}
           </div>
         `,
         replyTo: email,
@@ -118,7 +127,7 @@ export async function POST(request: Request) {
         from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
         to: email,
         subject: 'We received your quote request — N&N Poultry Palace',
-        html: `<p>Hi ${contactName},</p><p>Thank you for your interest in our <strong>${product}</strong>. We've received your quote request and will be in touch within 24 hours.</p><p>— N&N Poultry Palace</p>`,
+        html: `<p>Hi ${escapeHtml(contactName)},</p><p>Thank you for your interest in our <strong>${escapeHtml(product)}</strong>. We've received your quote request and will be in touch within 24 hours.</p><p>— N&N Poultry Palace</p>`,
         replyTo: 'palacepoultryn.n@gmail.com',
       });
     } else {

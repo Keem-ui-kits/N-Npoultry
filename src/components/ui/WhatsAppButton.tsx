@@ -1,7 +1,7 @@
 'use client';
 
 import { MessageCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { siteConfig } from '@/content/site';
 

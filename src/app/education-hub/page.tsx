@@ -1,11 +1,10 @@
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { educationCategories } from '@/content/education';
-import Image from 'next/image';
 import type { Metadata } from 'next';
-import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { getEducationArticles } from '@/sanity/lib/queries';
+import { EducationTabsClient } from '@/components/sections/EducationTabsClient';
 
 export const metadata: Metadata = {
   title: 'Education Hub | N&N Poultry Palace',
@@ -36,56 +35,8 @@ export default async function EducationHubPage() {
         </div>
       </section>
 
-      {/* Category Cards Grid */}
-      <section className="py-20 px-4 md:px-8 max-w-7xl mx-auto relative z-10">
-        <ErrorBoundary>
-          <div className="space-y-24">
-            {educationCategories.map((category) => {
-              const categoryArticles = educationArticles.filter((a) => a.category === category.id);
-              if (categoryArticles.length === 0) return null;
-
-              return (
-                <div key={category.id} className="scroll-mt-32" id={category.id}>
-                  {/* Category Header */}
-                  <div className="mb-12 border-b border-white/10 pb-8">
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">{category.name}</h2>
-                    <p className="text-xl text-brand-gold/80 font-light">{category.description}</p>
-                  </div>
-
-                  {/* Article Cards */}
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {categoryArticles.map((article) => (
-                      <Link
-                        key={article.id}
-                        href={`/education-hub/${article.id}`}
-                        className="group flex flex-col bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-brand-gold/40 hover:shadow-[0_0_30px_rgba(var(--brand-gold-rgb),0.1)] transition-all duration-300"
-                      >
-                        <div className="relative aspect-[4/3] overflow-hidden">
-                          <Image
-                            src={article.image}
-                            alt={article.title}
-                            fill
-                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-brand-dark/20 to-transparent" />
-                        </div>
-                        <div className="p-6 flex flex-col flex-grow">
-                          <h3 className="text-lg font-bold text-white mb-2 group-hover:text-brand-gold transition-colors">{article.title}</h3>
-                          <p className="text-white/60 text-sm font-light leading-relaxed flex-grow">{article.excerpt}</p>
-                          <span className="inline-flex items-center gap-1 mt-4 text-brand-gold text-sm font-semibold">
-                            Read article <ArrowRight className="w-4 h-4" />
-                          </span>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </ErrorBoundary>
-      </section>
+      {/* Tabbed Mini-Pages */}
+      <EducationTabsClient categories={educationCategories} articles={educationArticles} />
 
       {/* Footer CTA */}
       <section className="py-32 relative px-4 text-center">

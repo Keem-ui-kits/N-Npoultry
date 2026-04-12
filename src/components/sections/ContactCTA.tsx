@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Send } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 export function ContactCTA() {
   return (

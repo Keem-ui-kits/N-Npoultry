@@ -1,12 +1,8 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
+import { gsap, useGSAP } from '@/lib/gsap';
 import type { ReactNode } from 'react';
 import { useRef } from 'react';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface AboutClientWrapperProps {
   children: ReactNode;

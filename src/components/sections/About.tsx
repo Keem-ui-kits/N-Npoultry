@@ -38,13 +38,11 @@ export function About() {
         if (entry?.isIntersecting) {
           // Play only if not already playing, handle promise to avoid AbortError
           const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.catch((error) => {
-              if (error.name !== 'AbortError') {
-                console.error('Video play error:', error);
-              }
-            });
-          }
+          playPromise.catch((error: unknown) => {
+            if (error instanceof Error && error.name !== 'AbortError') {
+              console.error('Video play error:', error);
+            }
+          });
         } else {
           video.pause();
         }
@@ -55,7 +53,7 @@ export function About() {
     
     return () => { 
       observer.disconnect(); 
-      if (video) video.pause();
+      video.pause();
     };
   }, []);
 

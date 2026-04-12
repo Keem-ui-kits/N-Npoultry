@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
+import type { Mock } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useIsMobile } from '../use-is-mobile';
 
 describe('useIsMobile', () => {
@@ -41,8 +42,8 @@ describe('useIsMobile', () => {
     expect(result.current).toBe(true);
 
     act(() => {
-      if (listeners['change']) {
-        listeners['change'].forEach((handler) => handler({ matches: false }));
+      if (listeners.change) {
+        listeners.change.forEach((handler) => handler({ matches: false }));
       }
     });
 

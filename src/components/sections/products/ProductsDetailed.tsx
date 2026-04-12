@@ -3,42 +3,15 @@
 import type { Product } from '@/types/product';
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
-import { motion } from 'motion/react';
-import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { HashScrollHandler } from './HashScrollHandler';
 
 export function ProductsDetailed({ products }: { products: Product[] }) {
-  useEffect(() => {
-    const handleScroll = () => {
-      const hash = window.location.hash;
-      if (hash) {
-        const targetElement = document.querySelector(hash);
-        if (targetElement) {
-          // Calculate offset: navbar height (80px) + extra padding (40px)
-          const offset = 120;
-          const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }
-    };
-
-    // Run on mount
-    const timeoutId = setTimeout(handleScroll, 500);
-    
-    // Also listen for hash changes
-    window.addEventListener('hashchange', handleScroll);
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('hashchange', handleScroll);
-    };
-  }, []);
 
   return (
     <section id="products" className="py-12 md:py-24 bg-background">
+      <HashScrollHandler />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 md:space-y-36">
         {products.map((product, index) => {
           const isEven = index % 2 === 0;

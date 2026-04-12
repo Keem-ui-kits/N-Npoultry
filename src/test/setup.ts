@@ -50,7 +50,7 @@ vi.mock('next/image', () => ({
     unoptimized,
     ...props
   }: any) => {
-    // eslint-disable-next-line @next/next/no-img-element
+     
     return React.createElement('img', {
       ...props,
       'data-priority': priority ? 'true' : undefined,
@@ -97,8 +97,8 @@ vi.mock('gsap/ScrollTrigger', () => ({
   },
 }));
 
-// Mock motion/react
-vi.mock('motion/react', () => {
+// Mock framer-motion
+vi.mock('framer-motion', () => {
   const mockComponent = (tag: string) => {
     return ({
       children,

@@ -28,14 +28,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: (route === '' || route === '/products' ? 'weekly' : (route === '/terms' || route === '/privacy' ? 'yearly' : 'monthly')) as 'weekly' | 'monthly' | 'yearly',
+    changeFrequency: (route === '' || route === '/products' ? 'weekly' : (route === '/terms' || route === '/privacy' ? 'yearly' : 'monthly')),
     priority: priorities[route] ?? 0.5,
   }));
 
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
     url: `${baseUrl}/products/${product.id}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly' as 'monthly',
+    changeFrequency: 'monthly' as const,
     priority: 0.6,
   }));
 

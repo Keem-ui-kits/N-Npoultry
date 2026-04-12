@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Send, FileText, Package, Truck, Calendar, Phone, Activity } from 'lucide-react';

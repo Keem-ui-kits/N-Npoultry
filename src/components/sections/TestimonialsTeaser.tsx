@@ -1,7 +1,7 @@
 'use client';
 
 import { testimonials } from '@/content/testimonials';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Quote } from 'lucide-react';
 

@@ -3,8 +3,8 @@ import '../styles/index.css';
 
 import MouseSpotlight from '@/components/layout/MouseSpotlight';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
-import { PageTransition } from '@/components/layout/PageTransition';
-import BottomBlur from '@/components/layout/BottomBlur';
+
+
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
@@ -112,11 +112,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
           <SmoothScroll>
             <MouseSpotlight />
-            <BottomBlur />
             <ErrorBoundary>
-              <PageTransition>
-                {children}
-              </PageTransition>
+              {children}
             </ErrorBoundary>
             <WhatsAppButton />
           </SmoothScroll>

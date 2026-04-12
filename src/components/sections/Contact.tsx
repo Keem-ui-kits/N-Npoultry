@@ -21,9 +21,9 @@ export function Contact() {
     formState: { errors, isSubmitting },
   } = useForm<ContactFormData>({ resolver: zodResolver(contactSchema) });
 
-  const nameValue = watch('name') || '';
-  const emailValue = watch('email') || '';
-  const websiteValue = watch('website') || '';
+  const nameValue = watch('name');
+  const emailValue = watch('email');
+  const websiteValue = watch('website') ?? '';
 
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 

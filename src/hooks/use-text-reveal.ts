@@ -70,7 +70,7 @@ export function useTextReveal<T extends HTMLElement>(
 
     return () => {
       observer.disconnect();
-      if (el) el.innerHTML = originalHTML;
+      el.innerHTML = originalHTML;
     };
   }, [prefersReducedMotion, delay, once]);
 

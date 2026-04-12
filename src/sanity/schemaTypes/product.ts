@@ -69,7 +69,7 @@ export default defineType({
   preview: {
     select: { title: 'title', subtitle: 'titleAccent', media: 'image' },
     prepare({ title, subtitle, media }: { title?: string; subtitle?: string; media?: unknown }) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
       return { title: `${title ?? ''} ${subtitle ?? ''}`.trim(), media: media as any }
     },
   },

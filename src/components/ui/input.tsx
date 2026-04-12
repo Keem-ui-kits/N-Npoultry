@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  value: string;
+  value?: string;
   className?: string;
 }
 
@@ -42,7 +42,7 @@ export const Input = ({
   ...props
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  const showLabel = isFocused || value.length > 0;
+  const showLabel = isFocused || (value?.length ?? 0) > 0;
 
   return (
     <div className={cn("relative", className)}>

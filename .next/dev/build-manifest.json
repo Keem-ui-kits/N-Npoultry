@@ -1,31 +1,6 @@
 {
   "pages": {
-    "/_app": [
-      "static/chunks/160ec_next_dist_compiled_c9852d67._.js",
-      "static/chunks/160ec_next_dist_shared_lib_714f9718._.js",
-      "static/chunks/160ec_next_dist_client_a24feb81._.js",
-      "static/chunks/160ec_next_dist_2ec5b772._.js",
-      "static/chunks/160ec_next_app_1df7bdaf.js",
-      "static/chunks/[next]_entry_page-loader_ts_772b086f._.js",
-      "static/chunks/160ec_react-dom_73167213._.js",
-      "static/chunks/160ec_ac245ebc._.js",
-      "static/chunks/[root-of-the-server]__9b62fb66._.js",
-      "static/chunks/OneDrive_Tài liệu_GitHub_N-Npoultry_pages__app_2da965e7._.js",
-      "static/chunks/turbopack-OneDrive_Tài liệu_GitHub_N-Npoultry_pages__app_1927abd3._.js"
-    ],
-    "/_error": [
-      "static/chunks/160ec_next_dist_compiled_c9852d67._.js",
-      "static/chunks/160ec_next_dist_shared_lib_ee2eefd7._.js",
-      "static/chunks/160ec_next_dist_client_a24feb81._.js",
-      "static/chunks/160ec_next_dist_fae79368._.js",
-      "static/chunks/160ec_next_error_410cd85f.js",
-      "static/chunks/[next]_entry_page-loader_ts_1098f2a1._.js",
-      "static/chunks/160ec_react-dom_73167213._.js",
-      "static/chunks/160ec_ac245ebc._.js",
-      "static/chunks/[root-of-the-server]__383b7260._.js",
-      "static/chunks/OneDrive_Tài liệu_GitHub_N-Npoultry_pages__error_2da965e7._.js",
-      "static/chunks/turbopack-OneDrive_Tài liệu_GitHub_N-Npoultry_pages__error_c05cc753._.js"
-    ]
+    "/_app": []
   },
   "devFiles": [],
   "polyfillFiles": [

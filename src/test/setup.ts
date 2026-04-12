@@ -43,13 +43,13 @@ vi.mock('next/image', () => ({
   __esModule: true,
   default: ({
     priority,
-    fill,
-    quality,
-    loading,
-    onLoadingComplete,
-    unoptimized,
+    fill: _fill,
+    quality: _quality,
+    loading: _loading,
+    onLoadingComplete: _onLoadingComplete,
+    unoptimized: _unoptimized,
     ...props
-  }: any) => {
+  }: Record<string, unknown>) => {
      
     return React.createElement('img', {
       ...props,
@@ -102,16 +102,16 @@ vi.mock('framer-motion', () => {
   const mockComponent = (tag: string) => {
     return ({
       children,
-      whileHover,
-      whileTap,
-      initial,
-      animate,
-      exit,
-      variants,
-      transition,
-      viewport,
+      whileHover: _whileHover,
+      whileTap: _whileTap,
+      initial: _initial,
+      animate: _animate,
+      exit: _exit,
+      variants: _variants,
+      transition: _transition,
+      viewport: _viewport,
       ...props
-    }: any) => React.createElement(tag, props, children);
+    }: Record<string, unknown>) => React.createElement(tag, props, children as React.ReactNode);
   };
 
   return {

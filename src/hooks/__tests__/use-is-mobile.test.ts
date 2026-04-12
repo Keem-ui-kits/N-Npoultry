@@ -5,18 +5,18 @@ import { useIsMobile } from '../use-is-mobile';
 
 describe('useIsMobile', () => {
   let matchMediaMock: Mock;
-  let listeners: Record<string, Function[]> = {};
+  let listeners: Record<string, ((...args: unknown[]) => void)[]> = {};
 
   beforeEach(() => {
     listeners = {};
-    matchMediaMock = vi.fn().mockImplementation((query) => ({
+    matchMediaMock = vi.fn().mockImplementation((query: string) => ({
       matches: query.includes('767'),
       media: query,
-      addEventListener: vi.fn((event, handler) => {
-        if (!listeners[event]) listeners[event] = [];
+      addEventListener: vi.fn((event: string, handler: (...args: unknown[]) => void) => {
+        listeners[event] ??= [];
         listeners[event].push(handler);
       }),
-      removeEventListener: vi.fn((event, handler) => {
+      removeEventListener: vi.fn((event: string, handler: (...args: unknown[]) => void) => {
         if (listeners[event]) {
           listeners[event] = listeners[event].filter((h) => h !== handler);
         }
@@ -43,7 +43,9 @@ describe('useIsMobile', () => {
 
     act(() => {
       if (listeners.change) {
-        listeners.change.forEach((handler) => handler({ matches: false }));
+        listeners.change.forEach((handler) => {
+          (handler as (e: { matches: boolean }) => void)({ matches: false });
+        });
       }
     });
 

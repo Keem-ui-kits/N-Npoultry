@@ -84,12 +84,13 @@ export function About() {
           </div>
           
           <div data-hero-bg className="absolute inset-0 pointer-events-none -z-10 bg-gradient-to-b from-transparent via-[#030213]/80 to-[#030213]">
-            <video 
+            <video
               ref={videoRef}
-              loop 
-              muted 
-              playsInline 
+              loop
+              muted
+              playsInline
               preload="none"
+              poster="/assets/video-poster.jpg"
               aria-hidden="true"
               className="w-full h-full object-cover opacity-20 mix-blend-screen"
             >

@@ -9,11 +9,7 @@ export function HashScrollHandler() {
       if (!hash) return;
       const target = document.querySelector(hash);
       if (!target) return;
-      // Calculate offset: navbar height (80px) + extra padding (40px)
-      const offset = 120;
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      
+      const offsetPosition = target.getBoundingClientRect().top + window.pageYOffset - 120;
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     };
 

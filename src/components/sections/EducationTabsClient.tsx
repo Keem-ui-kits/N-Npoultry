@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import type { EducationArticle } from '@/content/education';
 
+import { useSiteLoaded } from '@/hooks/use-site-loaded';
+
 interface Category {
   id: string;
   name: string;
@@ -18,9 +20,18 @@ interface Props {
 
 export function EducationTabsClient({ categories, articles }: Props) {
   const [activeTab, setActiveTab] = useState(categories[0]?.id ?? '');
+  const isLoaded = useSiteLoaded();
 
   const activeCategory = categories.find((c) => c.id === activeTab);
   const activeArticles = articles.filter((a) => a.category === activeTab);
+
+  if (!isLoaded) {
+    return (
+      <div className="w-full min-h-[50vh] flex items-center justify-center">
+        <div className="text-white/50 animate-pulse">Loading content...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">

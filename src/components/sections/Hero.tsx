@@ -9,7 +9,11 @@ const FloatingEgg3DScene = dynamic(() => import('@/components/ui/floating-egg-3d
   loading: () => <div className="w-full h-full min-h-[400px]" />
 });
 
+import { useSiteLoaded } from '@/hooks/use-site-loaded';
+
 export function Hero() {
+  const isLoaded = useSiteLoaded();
+
   return (
     <div className="w-full min-h-screen flex items-center justify-center py-20 px-4 md:px-8 bg-background relative">
       
@@ -34,7 +38,7 @@ export function Hero() {
               window.location.href = '/contact';
             }
           }}
-          customImageElement={<FloatingEgg3DScene />}
+          customImageElement={isLoaded ? <FloatingEgg3DScene /> : null}
           imageAlt="Farm-fresh nutritious eggs"
           headingLevel="h1"
           className="w-full border-none bg-transparent shadow-none"

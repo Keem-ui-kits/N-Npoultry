@@ -7,9 +7,27 @@ import { siteConfig } from '@/content/site';
 import { footerLinks } from '@/content/navigation';
 import { FadeIn } from '@/components/ui/fade-in';
 
+const FacebookIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+);
+
+const XIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
+
+const InstagramIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+  </svg>
+);
+
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  
+
   return (
     <footer className="relative bg-brand-dark dark:bg-black bg-gradient-to-tr from-[#0f2935] via-[var(--brand-dark)] to-[#1a4153] dark:from-black dark:to-[#050505] text-white overflow-hidden border-t border-white/5 transition-colors duration-500">
       {/* Gradient accent */}
@@ -20,17 +38,39 @@ export function Footer() {
           {/* Brand */}
           <FadeIn delay={0}>
             <div className="flex items-center mb-4 md:mb-6 group cursor-pointer w-40 h-16 md:w-56 md:h-24 relative">
-              <Image 
-                src="/og-image.png" 
-                alt={siteConfig.name} 
-                fill 
+              <Image
+                src="/og-image.png"
+                alt={siteConfig.name}
+                fill
                 sizes="(max-width: 768px) 160px, 224px"
                 priority
                 className="object-contain object-left transform transition-transform duration-300 group-hover:scale-105 origin-left"
               />
             </div>
             <p className="text-white/70 text-sm md:text-base mb-4">{siteConfig.description}</p>
-            {/* Social links: add href values once accounts are live */}
+            <div className="flex gap-4">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
+                aria-label="Facebook"
+              >
+                <FacebookIcon />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
+                aria-label="Twitter"
+              >
+                <XIcon />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
+                aria-label="Instagram"
+              >
+                <InstagramIcon />
+              </a>
+            </div>
           </FadeIn>
 
           {/* Quick Links */}
@@ -120,4 +160,3 @@ export function Footer() {
     </footer>
   );
 }
-

@@ -4,13 +4,34 @@ import { Resend } from 'resend';
 
 import { contactSchema } from '@/lib/schemas/contact';
 import { escapeHtml, persistToSupabase } from '@/lib/server-utils';
+import { getRatelimit } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   try {
-    // 1. Data Validation
+    // 1. Rate Limiting (Upstash Persistent)
+    let ip = request.headers.get('x-forwarded-for') ?? 'anonymous';
+    if (ip.includes(',')) {
+      const firstIp = ip.split(',')[0];
+      if (firstIp) ip = firstIp.trim();
+    }
+
+    const rl = getRatelimit();
+    if (rl) {
+      const { success } = await rl.limit(ip);
+      if (!success) {
+        return NextResponse.json(
+          { error: 'Too many requests. Please try again later.' },
+          { status: 429 }
+        );
+      }
+    } else {
+      console.warn('UPSTASH environment variables not defined. Skipping rate limiting.');
+    }
+
+    // 2. Data Validation
     const body = await request.json() as unknown;
     const validatedData = contactSchema.safeParse(body);
 
@@ -55,7 +76,6 @@ export async function POST(request: Request) {
       });
     } else {
       console.warn('RESEND_API_KEY is not defined. Skipping email sending.');
-      // Simulate network delay for testing locally
       await new Promise((resolve) => setTimeout(resolve, 800));
     }
 

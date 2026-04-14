@@ -20,7 +20,7 @@ function getRatelimit(): Ratelimit | null {
   return ratelimit;
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const rl = getRatelimit();
   if (!rl) return NextResponse.next();
 

@@ -22,6 +22,11 @@ export function Navbar() {
   const mobileMenuContentRef = useRef<HTMLDivElement>(null);
   const mobileMenuLinksRef = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   // Close mobile menu on Escape key
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {

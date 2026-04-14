@@ -2,21 +2,17 @@
 
 import { useState, useEffect } from 'react';
 
+/**
+ * Returns true after the component has mounted on the client.
+ * Use this to avoid SSR/hydration mismatches for client-only content,
+ * NOT as a gate on window.load (which blocks content until everything loads).
+ */
 export function useSiteLoaded() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (typeof document === 'undefined') return undefined;
-    
-    if (document.readyState === 'complete') {
-      setIsLoaded(true);
-      return undefined;
-    } else {
-      const handleLoad = () => setIsLoaded(true);
-      window.addEventListener('load', handleLoad);
-      return () => window.removeEventListener('load', handleLoad);
-    }
+    setMounted(true);
   }, []);
 
-  return isLoaded;
+  return mounted;
 }

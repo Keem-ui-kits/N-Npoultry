@@ -17,16 +17,16 @@ export function PageWrapper({ children }: PageWrapperProps) {
     <div className="flex flex-col min-h-screen relative">
       {/* Global Background Ribbon */}
       <InfiniteRibbon />
-      
+
       <Navbar />
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={pathname}
           id="main-content"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.4, ease: 'easeInOut' }}
+          initial={{ opacity: 0, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, filter: 'blur(4px)' }}
+          transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
           className="flex-grow"
         >
           {children}

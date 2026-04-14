@@ -97,6 +97,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`scroll-smooth ${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
+        {/* Preload hero image at highest priority — browser fetches before any JS/CSS */}
+        <link rel="preload" as="image" href="/images/hero-bg.jpeg" fetchPriority="high" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}

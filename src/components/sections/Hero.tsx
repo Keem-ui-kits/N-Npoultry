@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Sparkles } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -81,11 +82,17 @@ export function Hero() {
       className="relative w-full min-h-screen overflow-hidden flex items-center justify-center"
     >
       {/* Cinematic background */}
-      <div
-        ref={bgRef}
-        className="absolute inset-0 bg-cover bg-center will-change-transform"
-        style={{ backgroundImage: "url('/images/hero-bg.jpeg')" }}
-      />
+      <div ref={bgRef} className="absolute inset-0 will-change-transform">
+        <Image
+          src="/images/hero-bg.jpeg"
+          alt=""
+          fill
+          priority
+          fetchPriority="high"
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
 
       {/* Dark gradient overlay for text legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" />

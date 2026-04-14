@@ -2,24 +2,17 @@
 
 import { gsap } from 'gsap';
 import { Send } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/components/ui/utils';
+import { cn } from '@/lib/utils';
 
 import { navLinks } from '@/content/navigation';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const navRef = useRef<HTMLElement>(null);
   const hamburgerLine1Ref = useRef<HTMLSpanElement>(null);
@@ -28,6 +21,15 @@ export function Navbar() {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuContentRef = useRef<HTMLDivElement>(null);
   const mobileMenuLinksRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) setMobileMenuOpen(false);
+    };
+    document.addEventListener('keydown', handler);
+    return () => { document.removeEventListener('keydown', handler); };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +46,13 @@ export function Navbar() {
   }, []);
 
   // Removed initial navbar animation hook
+
+  // Initialise mobile menu as hidden so GSAP owns visibility from the start
+  useEffect(() => {
+    if (mobileMenuRef.current) {
+      gsap.set(mobileMenuRef.current, { opacity: 0, clipPath: 'circle(0% at 100% 0%)' });
+    }
+  }, []);
 
   useEffect(() => {
     if (!hamburgerLine1Ref.current || !hamburgerLine2Ref.current || !hamburgerLine3Ref.current)
@@ -134,13 +143,7 @@ export function Navbar() {
             aria-label="Home"
           >
             <div
-              className={`flex items-center font-bold tracking-tight uppercase text-lg md:text-xl py-1 transition-colors duration-300 ${
-                !mounted
-                  ? 'text-brand-dark'
-                  : isScrolled || resolvedTheme === 'dark'
-                    ? 'text-white'
-                    : 'text-brand-dark'
-              }`}
+              className={`flex items-center font-bold tracking-tight uppercase text-lg md:text-xl py-1 transition-colors duration-300 text-white`}
             >
               <span>N&N POULTRY</span>
               <span className="text-brand-gold ml-1.5">PALACE</span>
@@ -155,7 +158,7 @@ export function Navbar() {
                 href={item.href}
                 className={cn(
                     "text-sm font-semibold transition-colors relative group cursor-pointer hover:text-brand-gold",
-                    pathname === item.href ? "text-brand-gold" : (!mounted ? 'text-brand-dark' : (isScrolled || resolvedTheme === 'dark' ? 'text-white/90' : 'text-brand-dark'))
+                    pathname === item.href ? "text-brand-gold" : 'text-white/90'
                 )}
               >
                 {item.name}
@@ -175,19 +178,13 @@ export function Navbar() {
               className="px-6 py-2.5 gradient-brand text-brand-dark rounded-full font-bold hover:shadow-[0_0_20px_rgba(var(--brand-gold-rgb),0.4)] transition-all flex items-center gap-2 group transform hover:scale-105"
             >
               Order Now
-              <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <Send suppressHydrationWarning className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
           {/* Mobile Menu & CTA */}
           <div className="lg:hidden flex items-center gap-3">
-            <Link
-              href="/contact"
-              className="px-4 py-1.5 gradient-brand text-brand-dark rounded-full font-bold text-sm hover:shadow-[0_0_15px_rgba(var(--brand-gold-rgb),0.3)] transition-all flex items-center gap-1.5"
-            >
-              Order
-              <Send className="w-3.5 h-3.5" />
-            </Link>
+
             <button
               className="text-white relative z-50 p-2 cursor-pointer focus:outline-none bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors"
               onClick={() => { setMobileMenuOpen(!mobileMenuOpen); }}
@@ -218,8 +215,12 @@ export function Navbar() {
       <div
         id="mobile-menu"
         ref={mobileMenuRef}
-        className="fixed inset-0 z-40 bg-brand-dark/95 backdrop-blur-2xl flex items-center justify-center p-6"
-        style={{ display: mobileMenuOpen ? 'flex' : 'none' }}
+        className="fixed inset-0 z-40 bg-brand-dark/95 backdrop-blur-2xl flex items-center justify-center p-6 transition-[visibility]"
+        style={{
+          visibility: mobileMenuOpen ? 'visible' : 'hidden',
+          pointerEvents: mobileMenuOpen ? 'auto' : 'none',
+        }}
+        aria-hidden={!mobileMenuOpen}
       >
         <div
           ref={mobileMenuContentRef}
@@ -261,7 +262,7 @@ export function Navbar() {
               }}
               className="flex justify-center items-center gap-3 w-full py-4 gradient-brand text-brand-dark rounded-full font-bold text-lg shadow-xl"
             >
-              Place an Order <Send className="w-5 h-5" />
+              Place an Order <Send suppressHydrationWarning className="w-5 h-5" />
             </Link>
           </div>
         </div>

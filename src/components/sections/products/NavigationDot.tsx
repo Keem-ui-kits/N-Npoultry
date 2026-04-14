@@ -45,7 +45,7 @@ export function NavigationDot({
           const scale = lerp(1, 1.5, easedProgress);
           
           // Using colorRgb from the Product interface to fix hex parsing bug
-          const [r1, g1, b1] = product.colorRgb;
+          const [r1, g1, b1] = product.colorRgb ?? [0, 0, 0];
 
           const r = Math.round(lerp(200, r1, easedProgress));
           const g = Math.round(lerp(200, g1, easedProgress));
@@ -54,7 +54,7 @@ export function NavigationDot({
 
           gsap.set(dotRef.current, {
             scale: scale,
-            backgroundColor: `rgba(${r},${g},${b},${a})`,
+            backgroundColor: `rgba(${String(r)},${String(g)},${String(b)},${String(a)})`,
           });
         },
       });

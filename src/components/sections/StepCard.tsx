@@ -1,14 +1,10 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
 import type { LucideIcon } from 'lucide-react';
 import type { MouseEvent} from 'react';
 import { useRef } from 'react';
 import { useIsMobile } from '@/hooks/use-is-mobile';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface Step {
   icon: LucideIcon;
@@ -53,7 +49,7 @@ export function StepCard({ step, index }: StepCardProps) {
       },
     });
 
-    if (!isMobile && cardRef.current) {
+    if (!isMobile) {
       const card = cardRef.current;
 
       const handleMouseEnter = () => {
@@ -100,13 +96,13 @@ export function StepCard({ step, index }: StepCardProps) {
 
       if (spotlightRef.current) {
         gsap.set(spotlightRef.current, {
-          background: `radial-gradient(400px circle at ${x * 100}% ${y * 100}%, rgba(var(--brand-gold-rgb),0.2), transparent 70%)`,
+          background: `radial-gradient(400px circle at ${(x * 100).toFixed(1)}% ${(y * 100).toFixed(1)}%, rgba(var(--brand-gold-rgb),0.2), transparent 70%)`,
         });
       }
 
       if (glowRef.current) {
         gsap.set(glowRef.current, {
-          background: `radial-gradient(300px circle at ${x * 100}% ${y * 100}%, rgba(var(--brand-gold-rgb),0.15), transparent 60%)`,
+          background: `radial-gradient(300px circle at ${(x * 100).toFixed(1)}% ${(y * 100).toFixed(1)}%, rgba(var(--brand-gold-rgb),0.15), transparent 60%)`,
         });
       }
     });
@@ -133,10 +129,10 @@ export function StepCard({ step, index }: StepCardProps) {
         <div className="w-12 h-12 bg-gradient-to-br from-brand-gold/20 to-brand-orange/20 rounded-2xl flex items-center justify-center text-brand-gold mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
           <step.icon className="w-6 h-6" />
         </div>
-        <h3 className="text-lg md:text-xl font-black mb-2 md:mb-3 text-foreground dark:text-white">
+        <h3 className="text-lg md:text-xl font-black mb-2 md:mb-3 text-white">
           {step.title}
         </h3>
-        <p className="text-sm md:text-base text-muted-foreground dark:text-gray-400 leading-relaxed">
+        <p className="text-sm md:text-base text-white/50 leading-relaxed">
           {step.description}
         </p>
       </div>

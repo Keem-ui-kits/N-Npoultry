@@ -1,45 +1,18 @@
 'use client';
 
-import { products } from '@/content/products';
+import type { Product } from '@/types/product';
 import Image from 'next/image';
 import { CheckCircle2 } from 'lucide-react';
-import { motion } from 'motion/react';
-import { useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { HashScrollHandler } from './HashScrollHandler';
 
-export function ProductsDetailed() {
-  useEffect(() => {
-    const handleScroll = () => {
-      const hash = window.location.hash;
-      if (hash) {
-        const targetElement = document.querySelector(hash);
-        if (targetElement) {
-          // Calculate offset: navbar height (80px) + extra padding (40px)
-          const offset = 120;
-          const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
+export function ProductsDetailed({ products }: { products: Product[] }) {
 
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }
-    };
-
-    // Run on mount
-    const timeoutId = setTimeout(handleScroll, 500);
-    
-    // Also listen for hash changes
-    window.addEventListener('hashchange', handleScroll);
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('hashchange', handleScroll);
-    };
-  }, []);
 
   return (
-    <section id="products" className="py-16 md:py-24 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-36">
+    <section id="products" className="py-12 md:py-24 bg-background">
+      <HashScrollHandler />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 md:space-y-36">
         {products.map((product, index) => {
           const isEven = index % 2 === 0;
           return (
@@ -73,13 +46,14 @@ export function ProductsDetailed() {
               </div>
 
               {/* Content / Mobile Background */}
-              <div className="relative space-y-8 p-8 md:p-12 lg:p-0 rounded-[2.5rem] overflow-hidden lg:overflow-visible">
+              <div className="relative space-y-8 p-6 md:p-12 lg:p-0 rounded-[2.5rem] overflow-hidden lg:overflow-visible">
                 {/* Mobile Background Image (Only visible < lg) */}
                 <div className="absolute inset-0 lg:hidden -z-10">
                   <Image
                     src={product.image}
                     alt=""
                     fill
+                    sizes="100vw"
                     className="object-contain opacity-15 scale-110 blur-[2px]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
@@ -101,7 +75,7 @@ export function ProductsDetailed() {
                     <span className="text-brand-gold">{product.titleAccent}</span>
                   </h2>
                   <p className="text-lg md:text-xl text-gray-300 leading-relaxed italic">
-                    {product.fullDescription || product.description}
+                    {product.fullDescription ?? product.description}
                   </p>
                 </div>
 

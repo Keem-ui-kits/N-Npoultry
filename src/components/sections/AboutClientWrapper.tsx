@@ -1,12 +1,8 @@
 'use client';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
+import { gsap, useGSAP } from '@/lib/gsap';
 import type { ReactNode } from 'react';
 import { useRef } from 'react';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface AboutClientWrapperProps {
   children: ReactNode;
@@ -104,35 +100,36 @@ export function AboutClientWrapper({ children }: AboutClientWrapperProps) {
       // Mission Section Scroll Reveal
       const missionContainer = containerRef.current.querySelector('[data-section="mission"]');
       if (missionContainer) {
-        const words = missionContainer.querySelectorAll('[data-mission-word]');
-        const items = missionContainer.querySelectorAll('[data-mission-item]:not(:has([data-mission-word]))');
+        const missionItems = missionContainer.querySelectorAll('[data-mission-item]');
         
-        if (words.length > 0) {
-          gsap.to(words, {
-            opacity: 1,
-            stagger: 0.1,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: words[0],
-              start: 'top 75%',
-              end: 'bottom 40%',
-              scrub: true
-            }
-          });
-        }
-        
-        if (items.length > 0) {
-          gsap.fromTo(items,
-            { opacity: 0, y: 50 },
-            { opacity: 1, y: 0, duration: 1, stagger: 0.3, ease: 'power3.out',
+        missionItems.forEach((item) => {
+          const words = item.querySelectorAll('[data-mission-word]');
+          if (words.length > 0) {
+            gsap.to(words, {
+              opacity: 1,
+              stagger: 0.1,
+              ease: 'none',
               scrollTrigger: {
-                trigger: items[0],
+                trigger: item,
                 start: 'top 80%',
-                toggleActions: 'play none none reverse'
+                end: 'bottom 60%',
+                scrub: true
               }
-            }
-          );
-        }
+            });
+          } else {
+            // Standard fade if no words
+            gsap.fromTo(item,
+              { opacity: 0, y: 50 },
+              { opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: item,
+                  start: 'top 85%',
+                  toggleActions: 'play none none reverse'
+                }
+              }
+            );
+          }
+        });
 
         const missionBg = missionContainer.querySelector('[data-mission-bg]');
         if (missionBg) {

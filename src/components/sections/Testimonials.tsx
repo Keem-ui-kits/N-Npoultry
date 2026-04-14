@@ -1,8 +1,8 @@
-import { testimonials } from '@/content/testimonials';
+import type { Testimonial } from '@/content/testimonials';
 import { TestimonialsCarousel } from './TestimonialsCarousel';
 import { FadeIn } from '@/components/ui/fade-in';
 
-export function Testimonials() {
+export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
   return (
     <section
       id="testimonials"
@@ -21,7 +21,7 @@ export function Testimonials() {
         </FadeIn>
       </div>
 
-      {/* Stagger Cards Area */}
+      {/* Marquee */}
       <TestimonialsCarousel testimonials={testimonials} />
     </section>
   );

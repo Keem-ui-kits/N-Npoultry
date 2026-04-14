@@ -1,5 +1,7 @@
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
+
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { siteConfig } from '@/content/site';
 import { footerLinks } from '@/content/navigation';
@@ -7,7 +9,7 @@ import { FadeIn } from '@/components/ui/fade-in';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-
+  
   return (
     <footer className="relative bg-brand-dark dark:bg-black bg-gradient-to-tr from-[#0f2935] via-[var(--brand-dark)] to-[#1a4153] dark:from-black dark:to-[#050505] text-white overflow-hidden border-t border-white/5 transition-colors duration-500">
       {/* Gradient accent */}
@@ -22,41 +24,13 @@ export function Footer() {
                 src="/og-image.png" 
                 alt={siteConfig.name} 
                 fill 
+                sizes="(max-width: 768px) 160px, 224px"
                 priority
                 className="object-contain object-left transform transition-transform duration-300 group-hover:scale-105 origin-left"
               />
             </div>
             <p className="text-white/70 text-sm md:text-base mb-4">{siteConfig.description}</p>
-            <div className="flex gap-4">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-            </div>
+            {/* Social links: add href values once accounts are live */}
           </FadeIn>
 
           {/* Quick Links */}
@@ -65,13 +39,13 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a
+                  <Link
                     href={link.href}
                     className="relative group text-white/70 transition-colors text-sm md:text-base cursor-pointer inline-block hover:text-brand-gold"
                   >
                     {link.name}
                     <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-brand-gold group-hover:w-full transition-all duration-300" />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -83,13 +57,13 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.products.map((link) => (
                 <li key={link.name}>
-                  <a
+                  <Link
                     href={link.href}
                     className="relative group text-white/70 transition-colors text-sm md:text-base cursor-pointer inline-block hover:text-brand-gold"
                   >
                     {link.name}
                     <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-brand-gold group-hover:w-full transition-all duration-300" />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -132,12 +106,12 @@ export function Footer() {
                 © {currentYear} {siteConfig.name}. All rights reserved.
               </p>
               <div className="flex gap-6 text-sm">
-                <a href="#" className="text-white/50 hover:text-brand-gold transition-colors">
+                <Link href="/privacy" className="text-white/50 hover:text-brand-gold transition-colors">
                   Privacy Policy
-                </a>
-                <a href="#" className="text-white/50 hover:text-brand-gold transition-colors">
+                </Link>
+                <Link href="/terms" className="text-white/50 hover:text-brand-gold transition-colors">
                   Terms of Service
-                </a>
+                </Link>
               </div>
             </div>
           </div>

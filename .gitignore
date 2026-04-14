@@ -138,3 +138,10 @@ dist
 # Cleanup
 tmp_*.txt
 scripts/one-off/
+lint_out.txt
+eslint.txt
+eslint_out.txt
+*_errors.txt
+*_out.txt
+*_out_clean.txt
+typecheck.txt

@@ -1,11 +1,11 @@
 'use client';
 
 import { MessageCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { siteConfig } from '@/content/site';
 
-export function WhatsAppButton() {
+export function WhatsAppButton({ message }: { message?: string }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -21,11 +21,14 @@ export function WhatsAppButton() {
     return () => { window.removeEventListener('scroll', toggleVisibility); };
   }, []);
 
+  const defaultMessage = `Hi! I'd like to learn more about your products at ${siteConfig.name}.`;
+  const whatsappUrl = `https://wa.me/${siteConfig.contacts.whatsapp}?text=${encodeURIComponent(message ?? defaultMessage)}`;
+
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.a
-          href={`https://wa.me/${siteConfig.contacts.whatsapp}`}
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, scale: 0.5, y: 50 }}

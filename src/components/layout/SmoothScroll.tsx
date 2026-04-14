@@ -4,6 +4,7 @@ import Lenis from 'lenis';
 import type { ReactNode} from 'react';
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { useReducedMotion } from '@/hooks/use-reduced-motion';
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
@@ -16,11 +17,38 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     }
   }, [pathname]);
 
+  // Handle hash-link navigation so Lenis intercepts #anchor scrolls
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash && lenisRef.current) {
+        const target = document.querySelector(hash);
+        if (target) lenisRef.current.scrollTo(target as HTMLElement);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => { window.removeEventListener('hashchange', handleHashChange); };
+  }, []);
+
+  const prefersReduced = useReducedMotion();
+
+  useEffect(() => {
+    // Cleanup any existing instance first
+    if (rafIdRef.current !== null) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+    if (lenisRef.current) {
+      lenisRef.current.destroy();
+      lenisRef.current = null;
+    }
+
+    if (typeof window === 'undefined' || prefersReduced) return;
 
     try {
-      history.scrollRestoration = 'manual';
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
       window.scrollTo(0, 0);
 
       const lenis = new Lenis({
@@ -57,7 +85,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
         lenisRef.current = null;
       }
     };
-  }, []);
+  }, [prefersReduced]);
 
   return <>{children}</>;
 }

@@ -1,4 +1,5 @@
 export const siteConfig = {
+  baseUrl: 'https://nnpoultrypalace.vercel.app',
   name: 'N&N Poultry Palace',
   fullName: 'N&N POULTRY PALACE',
   description: 'Fresh and Nutritious — your trusted source for farm-fresh eggs in Machakos.',

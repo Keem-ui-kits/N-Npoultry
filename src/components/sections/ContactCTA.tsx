@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Send } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 export function ContactCTA() {
   return (
@@ -23,15 +23,15 @@ export function ContactCTA() {
               Ready <span className="gradient-brand-text">to experience</span> <br className="hidden md:block" /> the palace quality?
             </h2>
             <p className="text-xl md:text-2xl text-white/70 max-w-2xl mx-auto mb-12 font-medium">
-              We deliver daily across Machakos and surrounding areas. Start your order today for farm-fresh excellence.
+              We deliver daily across Machakos and surrounding areas. Request our current price list via WhatsApp for instant access.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link
                 href="/contact"
-                className="w-full sm:w-auto px-12 py-5 bg-white text-brand-dark rounded-full font-bold text-xl hover:scale-105 transition-all shadow-2xl flex items-center justify-center gap-3"
+                className="w-full sm:w-auto px-12 py-5 bg-white text-[#128C7E] rounded-full font-bold text-xl hover:scale-105 transition-all shadow-2xl flex items-center justify-center gap-3"
               >
-                Place Order <Send className="w-6 h-6" />
+                Get Price List on WhatsApp <Send className="w-6 h-6" />
               </Link>
             </div>
           </motion.div>

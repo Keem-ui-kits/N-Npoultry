@@ -1,7 +1,7 @@
 'use client';
 
 import { testimonials } from '@/content/testimonials';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Quote } from 'lucide-react';
 
@@ -40,7 +40,12 @@ export function TestimonialsTeaser() {
                 </div>
                 <div>
                   <p className="font-bold text-base">{item.name}</p>
-                  <p className="text-muted-foreground italic text-xs">{item.location}</p>
+                  {item.company && (
+                    <p className="text-brand-gold text-xs font-semibold">{item.company}</p>
+                  )}
+                  {item.location && (
+                    <p className="text-muted-foreground italic text-xs">{item.location}</p>
+                  )}
                 </div>
               </div>
             </motion.div>

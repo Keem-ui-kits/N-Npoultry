@@ -1,58 +1,63 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { Resend } from 'resend';
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters").max(100),
-  email: z.string().email("Invalid email address"),
-  website: z.string().url("Invalid URL").optional().or(z.literal('')),
-  message: z.string().max(1000).optional(),
-});
+import { contactSchema } from '@/lib/schemas/contact';
+import { escapeHtml, persistToSupabase } from '@/lib/server-utils';
 
-// Simple in-memory rate limiting
-const rateLimit = new Map<string, { count: number; timestamp: number }>();
-const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
-const MAX_REQUESTS = 5; // 5 requests per window
+export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
-    // 1. Rate Limiting
-    const ip = request.headers.get('x-forwarded-for') || 'anonymous';
-    const now = Date.now();
-    const windowStart = now - WINDOW_MS;
-
-    const rateData = rateLimit.get(ip) || { count: 0, timestamp: now };
-
-    if (rateData.timestamp < windowStart) {
-      rateData.count = 0;
-      rateData.timestamp = now;
-    }
-
-    rateData.count++;
-    rateLimit.set(ip, rateData);
-
-    if (rateData.count > MAX_REQUESTS) {
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429 }
-      );
-    }
-
-    // 2. Data Validation
-    const body = await request.json();
+    // 1. Data Validation
+    const body = await request.json() as unknown;
     const validatedData = contactSchema.safeParse(body);
 
     if (!validatedData.success) {
       return NextResponse.json(
-        { error: 'Invalid data', details: validatedData.error.format() },
+        { error: 'Invalid data', details: z.treeifyError(validatedData.error) },
         { status: 400 }
       );
     }
 
-    // 3. Process the form
-    // (Actual processing like sending an email would happen here)
+    const { name, email, website, message } = validatedData.data;
 
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // 3. Persist to Supabase (before email — DB write is independent of email success)
+    await persistToSupabase('contact_submissions', { name, email, website, message });
+
+    // 4. Process the form - Send Email via Resend
+    if (process.env.RESEND_API_KEY) {
+      await resend.emails.send({
+        from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+        to: 'palacepoultryn.n@gmail.com',
+        subject: `New enquiry from ${name}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Website:</strong> ${escapeHtml(website ?? 'N/A')}</p>
+          <p><strong>Message:</strong></p>
+          <div style="background: #f4f4f4; padding: 15px; border-radius: 8px;">
+            ${escapeHtml(message ?? 'No message provided')}
+          </div>
+        `,
+        replyTo: email,
+      });
+
+      // 5. Customer auto-reply
+      await resend.emails.send({
+        from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+        to: email,
+        subject: 'We received your message — N&N Poultry Palace',
+        html: `<p>Hi ${escapeHtml(name)},</p><p>Thank you for reaching out. We've received your message and will get back to you within 24 hours.</p><p>— N&N Poultry Palace</p>`,
+        replyTo: 'palacepoultryn.n@gmail.com',
+      });
+    } else {
+      console.warn('RESEND_API_KEY is not defined. Skipping email sending.');
+      // Simulate network delay for testing locally
+      await new Promise((resolve) => setTimeout(resolve, 800));
+    }
 
     return NextResponse.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {

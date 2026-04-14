@@ -3,15 +3,17 @@ import '../styles/index.css';
 
 import MouseSpotlight from '@/components/layout/MouseSpotlight';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
-import BottomBlur from '@/components/layout/BottomBlur';
+
+
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
+import { siteConfig } from '@/content/site';
 
 import { Geist, Geist_Mono } from 'next/font/google';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nnpoultrypalace.vercel.app'),
+  metadataBase: new URL(siteConfig.baseUrl),
   title: 'N&N Poultry Palace | Farm-Fresh Nutritious Eggs in Machakos',
   description:
     'Your trusted source for day-collected table eggs and organic poultry manure. Wholesome, responsibly produced products from our family-run farm in Machakos, Kenya.',
@@ -19,8 +21,8 @@ export const metadata: Metadata = {
     title: 'N&N Poultry Palace | Farm-Fresh Nutritious Eggs',
     description:
       'Daily collected farm-fresh eggs and organic nutrients. Trusted quality from Machakos.',
-    url: 'https://nnpoultrypalace.vercel.app',
-    siteName: 'N&N Poultry Palace',
+    url: siteConfig.baseUrl,
+    siteName: siteConfig.name,
     images: [
       {
         url: '/og-image.png',
@@ -58,12 +60,51 @@ const geistMono = Geist_Mono({
   adjustFontFallback: true,
 });
 
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: siteConfig.name,
+  description: siteConfig.description,
+  url: siteConfig.baseUrl,
+  telephone: siteConfig.contacts.phones[0],
+  email: siteConfig.contacts.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Machakos',
+    addressCountry: 'KE',
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '17:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '08:00',
+      closes: '12:00',
+    },
+  ],
+  priceRange: 'KES',
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`scroll-smooth ${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
+      </head>
       <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>
         <a
-          href="#home"
+          href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-background focus:text-foreground"
         >
           Skip to content
@@ -71,13 +112,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
           <SmoothScroll>
             <MouseSpotlight />
-            <BottomBlur />
             <ErrorBoundary>
               {children}
             </ErrorBoundary>
             <WhatsAppButton />
           </SmoothScroll>
         </ThemeProvider>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

@@ -1,54 +1,135 @@
-import React from 'react';
+'use client';
+
+import { useEffect, useRef } from 'react';
 import { Sparkles } from 'lucide-react';
-import { siteConfig } from '@/content/site';
-import { HeroClient } from './HeroClient';
-import { HeroMotion } from './HeroMotion';
-import { HeroContactButton } from './HeroContactButton';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useReducedMotion } from '@/hooks/use-reduced-motion';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function Hero() {
-  return (
-    <HeroClient>
-      <HeroMotion className="mb-4">
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-4 py-1.5 text-sm font-medium text-muted-foreground backdrop-blur-md">
-          <Sparkles className="h-4 w-4 text-brand-gold" />
-          PREMIUM QUALITY SUPPLIERS
-        </span>
-      </HeroMotion>
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const preheaderRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLAnchorElement>(null);
+  const prefersReduced = useReducedMotion();
 
-      <HeroMotion>
-        <h1 className="mb-6 text-5xl font-black tracking-tight md:text-7xl lg:text-[5.5rem] w-full uppercase break-words leading-[0.9]">
-          Farm-Fresh
-          <br />
+  useEffect(() => {
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      // Ken Burns: slow scale-up of background image
+      gsap.fromTo(
+        bgRef.current,
+        { scale: 1.08 },
+        {
+          scale: 1,
+          duration: 2.4,
+          ease: 'power2.out',
+        }
+      );
+
+      // Parallax on scroll
+      gsap.to(bgRef.current, {
+        yPercent: 20,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      // Staggered text reveals
+      const tl = gsap.timeline({ delay: 0.3 });
+
+      tl.fromTo(
+        preheaderRef.current,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.4)' }
+      )
+        .fromTo(
+          headingRef.current,
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.9, ease: 'back.out(1.2)' },
+          '-=0.4'
+        )
+        .fromTo(
+          descRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.7, ease: 'back.out(1.2)' },
+          '-=0.5'
+        )
+        .fromTo(
+          ctaRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.4)' },
+          '-=0.4'
+        );
+    }, containerRef);
+
+    return () => { ctx.revert(); };
+  }, [prefersReduced]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full min-h-screen overflow-hidden flex items-center justify-center"
+    >
+      {/* Cinematic background */}
+      <div
+        ref={bgRef}
+        className="absolute inset-0 bg-cover bg-center will-change-transform"
+        style={{ backgroundImage: "url('/images/hero-bg.jpeg')" }}
+      />
+
+      {/* Dark gradient overlay for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/40" />
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 md:px-12 py-28 flex flex-col items-center text-center">
+        {/* Preheader */}
+        <div
+          ref={preheaderRef}
+          className="flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 backdrop-blur-sm"
+        >
+          <Sparkles className="w-4 h-4 text-brand-gold" />
+          <span className="text-sm font-semibold tracking-widest text-brand-gold uppercase">
+            Premium Quality Suppliers
+          </span>
+        </div>
+
+        {/* Heading */}
+        <h1
+          ref={headingRef}
+          className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight mb-6"
+        >
+          Farm-Fresh<br />
           <span className="gradient-brand-text">Nutritious Eggs</span>
         </h1>
-      </HeroMotion>
 
-      <HeroMotion>
-        <p className="mb-10 max-w-2xl text-lg md:text-xl text-foreground/70">
-          From day-collected table eggs to organic farm nutrients, everything you need from a
-          supplier you can rely on. Built with premium quality in mind.
+        {/* Description */}
+        <p
+          ref={descRef}
+          className="text-lg md:text-xl text-white/75 max-w-2xl mb-10 leading-relaxed"
+        >
+          From day-collected table eggs to organic farm nutrients, everything you need
+          from a supplier you can rely on. Built with premium quality in mind.
         </p>
-      </HeroMotion>
 
-      <HeroMotion className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-        <HeroContactButton />
-      </HeroMotion>
-
-      <HeroMotion className="mt-10 sm:mt-20 flex flex-wrap justify-center items-center gap-8 sm:gap-12 text-sm text-foreground/60">
-        {siteConfig.stats.map((stat, i) => (
-          <React.Fragment key={stat.label}>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-black text-foreground mb-1">
-                {stat.value}
-              </div>
-              <div className="tracking-widest uppercase font-bold text-xs">{stat.label}</div>
-            </div>
-            {i < siteConfig.stats.length - 1 && (
-              <div className="hidden sm:block h-12 w-px bg-border" />
-            )}
-          </React.Fragment>
-        ))}
-      </HeroMotion>
-    </HeroClient>
+        {/* CTA */}
+        <a
+          ref={ctaRef}
+          href="/contact"
+          className="inline-flex items-center gap-2 px-8 py-4 rounded-full gradient-brand text-brand-dark font-bold text-base tracking-wide transition-all duration-300 hover:shadow-[0_0_32px_rgba(236,204,116,0.5)] hover:scale-105"
+        >
+          Contact Us
+        </a>
+      </div>
+    </div>
   );
 }

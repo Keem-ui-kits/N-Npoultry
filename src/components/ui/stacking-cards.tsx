@@ -1,8 +1,8 @@
 'use client';
 
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { cn } from './utils';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 interface ProductData {
@@ -15,8 +15,6 @@ interface ProductData {
 }
 
 const Card = ({ i, product }: { i: number; product: ProductData }) => {
-  if (!product) return null;
-
   return (
     <div className="min-h-[560px] flex items-center justify-center sticky top-20 sm:top-24">
       <motion.div
@@ -25,7 +23,7 @@ const Card = ({ i, product }: { i: number; product: ProductData }) => {
         viewport={{ once: false, amount: 0.3 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
         style={{
-          top: `calc(2vh + ${i * 25}px)`,
+          top: `calc(2vh + ${(i * 25).toString()}px)`,
         }}
         className={cn(
           'relative flex overflow-hidden flex-col h-[520px] w-[94%] sm:w-[85%] rounded-[2.5rem] p-8 sm:p-12 origin-top shadow-2xl bg-[#fdfdfd] dark:bg-brand-dark text-foreground dark:text-white border border-white/10',
@@ -49,7 +47,7 @@ const Card = ({ i, product }: { i: number; product: ProductData }) => {
               </p>
 
               <div className="flex flex-col gap-2 mt-1">
-                {product.details?.map((detail, idx) => (
+                {product.details.map((detail, idx) => (
                   <div
                     key={idx}
                     className="flex items-start gap-3 text-foreground/70 dark:text-gray-400 text-sm sm:text-base font-medium"
@@ -105,14 +103,14 @@ export default function StackingCards({ products }: { products: ProductData[] })
     setMounted(true);
   }, []);
 
-  if (!mounted || !products || products.length === 0) {
+  if (!mounted || products.length === 0) {
     return null;
   }
 
   return (
     <div className="relative w-full">
       {products.map((product, i) => (
-        <Card key={`p_${i}`} i={i} product={product} />
+        <Card key={`p_${i.toString()}`} i={i} product={product} />
       ))}
     </div>
   );

@@ -9,7 +9,7 @@ describe('Contact section', () => {
 
   it('renders correctly', () => {
     render(<Contact />);
-    expect(screen.getByText(/Contact us/i)).toBeInTheDocument();
+    expect(screen.getByText(/Open a business account/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Website/i)).toBeInTheDocument();
@@ -19,14 +19,14 @@ describe('Contact section', () => {
     render(<Contact />);
     const nameInput = screen.getByLabelText(/Name/i);
     fireEvent.change(nameInput, { target: { value: 'John Doe', name: 'name' } });
-    expect(nameInput.value).toBe('John Doe');
+    expect((nameInput as HTMLInputElement).value).toBe('John Doe');
   });
 
   it('submits the form successfully', async () => {
     const mockFetch = vi.mocked(global.fetch);
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ success: true }),
+      json: () => Promise.resolve({ success: true }),
     } as Response);
 
     render(<Contact />);

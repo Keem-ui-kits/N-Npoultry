@@ -15,15 +15,18 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     const hash = window.location.hash;
     let id: ReturnType<typeof setTimeout> | undefined;
     if (hash) {
-      // Cross-page hash navigation: wait for the new page to render,
-      // then scroll to the target. Delay accounts for framer-motion
-      // initial animation + Next.js hydration.
-      id = setTimeout(() => {
+      // Cross-page hash navigation: poll until the target element is in the DOM,
+      // then jump immediately so the user lands exactly on the section.
+      let attempts = 0;
+      const tryScroll = () => {
         const target = document.querySelector(hash) as HTMLElement | null;
         if (target && lenisRef.current) {
-          lenisRef.current.scrollTo(target, { offset: -120, immediate: false });
+          lenisRef.current.scrollTo(target, { offset: -88, immediate: true });
+        } else if (++attempts < 20) {
+          id = setTimeout(tryScroll, 50);
         }
-      }, 900);
+      };
+      id = setTimeout(tryScroll, 50);
     } else if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
     }

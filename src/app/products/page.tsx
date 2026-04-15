@@ -1,7 +1,6 @@
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { ProductsDetailed } from '@/components/sections/products/ProductsDetailed';
-import { HashScrollHandler } from '@/components/sections/products/HashScrollHandler';
 import { getProducts } from '@/sanity/lib/queries';
 import type { Metadata } from 'next';
 
@@ -16,7 +15,6 @@ export default async function ProductsPage() {
 
   return (
     <PageWrapper>
-      <HashScrollHandler />
       <PageHeader
         title="Our"
         accent="Products"

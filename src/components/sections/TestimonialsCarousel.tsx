@@ -78,6 +78,14 @@ export function TestimonialsCarousel({ testimonials }: { testimonials: Testimoni
         .marquee-track:hover {
           animation-play-state: paused;
         }
+        @media (prefers-reduced-motion: reduce) {
+          .marquee-track {
+            animation: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+          }
+        }
       `}</style>
 
       <div className="marquee-track">

@@ -164,7 +164,9 @@
   input:focus-visible,
   textarea:focus-visible,
   select:focus-visible {
-    outline: none;
+    outline: 2px solid var(--brand-gold);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
   body {

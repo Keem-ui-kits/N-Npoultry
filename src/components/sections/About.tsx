@@ -73,7 +73,7 @@ export function About() {
               <span className="block italic text-brand-gold/60 text-2xl md:text-4xl lg:text-5xl mb-4 lowercase opacity-80 font-serif font-light tracking-wide">the</span>
               <span className="relative inline-block">
                 <span className="gradient-brand-text">N&N</span>
-                <span data-hero-glow className="absolute inset-0 gradient-brand-text blur-3xl opacity-60">N&N</span>
+                <span aria-hidden="true" data-hero-glow className="absolute inset-0 gradient-brand-text blur-3xl opacity-60">N&N</span>
               </span>
               <br />
               <span className="text-white drop-shadow-2xl">STANDARD</span>

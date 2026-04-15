@@ -40,7 +40,6 @@ export default function MouseSpotlight() {
       ref={ref}
       className="pointer-events-none fixed inset-0 z-[100] hidden md:block"
       style={{
-        willChange: 'background',
         contain: 'layout style paint',
       }}
     />

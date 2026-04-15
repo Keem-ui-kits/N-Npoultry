@@ -99,6 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Preload hero image at highest priority — browser fetches before any JS/CSS */}
         <link rel="preload" as="image" href="/images/hero-bg.jpeg" fetchPriority="high" />
+        <link rel="preload" as="font" type="font/woff2" href="/fonts/made-tommy/MadeTommy-Regular.woff2" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}

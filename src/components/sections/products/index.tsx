@@ -2,13 +2,14 @@
 
 import { gsap } from 'gsap';
 import { useRef, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import { useIsMobile } from '@/hooks/use-is-mobile';
 import type { Product } from '@/types/product';
 import { products } from '@/content/products';
 import { ProductCard } from './ProductCard';
 import { NavigationDot } from './NavigationDot';
 import { ScrollingTextWrapper } from './ScrollingTextWrapper';
+
+import dynamic from 'next/dynamic';
 
 const StackingCards = dynamic(() => import('@/components/ui/stacking-cards'), { ssr: false });
 

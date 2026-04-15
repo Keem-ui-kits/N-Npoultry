@@ -12,9 +12,22 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (lenisRef.current) {
+    const hash = window.location.hash;
+    let id: ReturnType<typeof setTimeout> | undefined;
+    if (hash) {
+      // Cross-page hash navigation: wait for the new page to render,
+      // then scroll to the target. Delay accounts for framer-motion
+      // initial animation + Next.js hydration.
+      id = setTimeout(() => {
+        const target = document.querySelector(hash) as HTMLElement | null;
+        if (target && lenisRef.current) {
+          lenisRef.current.scrollTo(target, { offset: -120, immediate: false });
+        }
+      }, 900);
+    } else if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
     }
+    return () => clearTimeout(id);
   }, [pathname]);
 
   // Handle hash-link navigation so Lenis intercepts #anchor scrolls

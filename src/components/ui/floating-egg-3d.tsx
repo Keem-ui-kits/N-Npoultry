@@ -1,7 +1,7 @@
 'use client';
 
 import * as THREE from 'three';
-import { useMemo, useEffect, Suspense } from 'react';
+import { useMemo, useEffect, useState, Suspense } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import { Environment, Float, ContactShadows, PresentationControls } from '@react-three/drei';
 
@@ -67,6 +67,24 @@ function EggMesh() {
 }
 
 export function FloatingEgg3DScene() {
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => { setReducedMotion(e.matches); };
+    mq.addEventListener('change', handler);
+    return () => { mq.removeEventListener('change', handler); };
+  }, []);
+
+  if (reducedMotion) {
+    return (
+      <div className="w-full h-[350px] md:h-[750px] relative flex items-center justify-center">
+        <img src="/table-eggs.png" alt="Fresh eggs" className="w-48 h-48 md:w-64 md:h-64 object-contain" />
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-[350px] md:h-[750px] relative pointer-events-none md:pointer-events-auto overflow-hidden">
       <Suspense fallback={<div className="w-full h-full bg-transparent flex items-center justify-center text-muted-foreground/20">Loading...</div>}>

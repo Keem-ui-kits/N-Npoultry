@@ -6,5 +6,5 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: false, // Disabled so edits appear immediately; use revalidation tags for caching
+  useCdn: true,
 })

@@ -72,8 +72,8 @@ export default withSentryConfig(nextConfig, {
 
   // Suppresses source map uploading logs during bundling
   silent: true,
-  org: "nn-poultry-palace",
-  project: "javascript-nextjs",
+  org: "trove-ltd",
+  project: "n-npoultry",
 }, {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/

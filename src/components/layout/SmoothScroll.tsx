@@ -19,7 +19,13 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       // then jump immediately so the user lands exactly on the section.
       let attempts = 0;
       const tryScroll = () => {
-        const target = document.querySelector(hash) as HTMLElement | null;
+        let target: HTMLElement | null = null;
+        try {
+          target = document.querySelector(hash) as HTMLElement | null;
+        } catch {
+          // hash is not a valid CSS selector (e.g. tracking params like #sid=…)
+          return;
+        }
         if (target && lenisRef.current) {
           lenisRef.current.scrollTo(target, { offset: -88, immediate: true });
         } else if (++attempts < 20) {
@@ -38,7 +44,12 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     const handleHashChange = () => {
       const hash = window.location.hash;
       if (hash && lenisRef.current) {
-        const target = document.querySelector(hash);
+        let target: Element | null = null;
+        try {
+          target = document.querySelector(hash);
+        } catch {
+          return;
+        }
         if (target) lenisRef.current.scrollTo(target as HTMLElement);
       }
     };

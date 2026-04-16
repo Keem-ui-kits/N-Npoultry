@@ -19,7 +19,10 @@ export function Contact() {
     setValue,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<ContactFormData>({ resolver: zodResolver(contactSchema) });
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: { name: '', email: '', website: '', message: '' },
+  });
 
   const nameValue = watch('name');
   const emailValue = watch('email');

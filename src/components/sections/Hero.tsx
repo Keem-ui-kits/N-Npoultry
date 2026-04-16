@@ -9,7 +9,7 @@ import { useReducedMotion } from '@/hooks/use-reduced-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Hero() {
+export function Hero({ heroImageUrl }: { heroImageUrl?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -64,7 +64,7 @@ export function Hero() {
       {/* Cinematic background — priority + fetchPriority so browser preloads immediately */}
       <div ref={bgRef} className="absolute inset-0 will-change-transform">
         <Image
-          src="/images/hero-bg.jpeg"
+          src={heroImageUrl ?? '/images/hero-bg.jpeg'}
           alt=""
           fill
           priority

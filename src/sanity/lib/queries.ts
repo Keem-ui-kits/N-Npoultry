@@ -61,7 +61,10 @@ export const EDUCATION_ARTICLE_BY_SLUG_QUERY = `*[_type == "educationArticle" &&
   content
 }`
 
-export const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0]`
+export const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0] {
+  ...,
+  "heroImageUrl": heroImage.asset->url
+}`
 
 // ---------------------------------------------------------------------------
 // Fetch helper — returns null when Sanity is not configured or the query fails
@@ -135,4 +138,8 @@ export async function getEducationArticleBySlug(slug: string): Promise<Education
   if (data) return data
   const { educationArticles } = await import('@/content/education')
   return educationArticles.find((a) => a.id === slug) ?? null
+}
+
+export async function getSiteConfig(): Promise<{ heroImageUrl?: string } | null> {
+  return fetchFromSanity<{ heroImageUrl?: string }>(SITE_CONFIG_QUERY)
 }

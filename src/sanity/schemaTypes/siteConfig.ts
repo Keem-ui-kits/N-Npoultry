@@ -7,6 +7,12 @@ export default defineType({
   // Singleton — only one document should exist
   fields: [
     defineField({
+      name: 'heroImage',
+      title: 'Hero Background Image',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'baseUrl',
       title: 'Base URL',
       type: 'url',

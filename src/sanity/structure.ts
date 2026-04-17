@@ -25,4 +25,12 @@ export const structure: StructureResolver = (S) =>
             .schemaType('siteConfig')
             .documentId('siteConfig')
         ),
+
+      S.listItem()
+        .title('About Page')
+        .child(
+          S.document()
+            .schemaType('aboutConfig')
+            .documentId('aboutConfig')
+        ),
     ])

@@ -60,6 +60,7 @@ export function TestimonialsCarousel({ testimonials }: { testimonials: Testimoni
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, delay: 0.2 }}
+      style={{ touchAction: 'pan-y' }}
       className="relative w-full overflow-hidden py-4 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
       role="region"
       aria-label="Customer Testimonials"
@@ -75,8 +76,10 @@ export function TestimonialsCarousel({ testimonials }: { testimonials: Testimoni
           width: max-content;
           animation: marquee 35s linear infinite;
         }
-        .marquee-track:hover {
-          animation-play-state: paused;
+        @media (hover: hover) and (pointer: fine) {
+          .marquee-track:hover {
+            animation-play-state: paused;
+          }
         }
         @media (prefers-reduced-motion: reduce) {
           .marquee-track {

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ShieldCheck, Truck, Users } from 'lucide-react';
 import { siteConfig } from '@/content/site';
 import { AboutClientWrapper } from './AboutClientWrapper';
+import type { AboutConfig } from '@/sanity/lib/queries';
 
 const farmPlaceholder = '/nn-poultry-logo.png'; // Updated to use logo as requested
 
@@ -26,7 +27,7 @@ const pillarContent = [
   }
 ];
 
-export function About() {
+export function About({ aboutConfig }: { aboutConfig?: AboutConfig | null }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -88,8 +89,9 @@ export function About() {
               ref={videoRef}
               loop
               muted
+              autoPlay
               playsInline
-              preload="none"
+              preload="metadata"
               poster="/assets/video-poster.jpg"
               aria-hidden="true"
               className="w-full h-full object-cover opacity-20 mix-blend-screen"
@@ -106,7 +108,7 @@ export function About() {
             <div data-story-image-container className="relative h-[50vh] lg:h-[70vh] rounded-[2.5rem] overflow-hidden glass shadow-[0_0_50px_rgba(0,0,0,0.5)] order-2 lg:order-1 flex items-center justify-center p-12">
                <div className="absolute inset-0 bg-gradient-to-t from-[#030213]/90 via-brand-dark/20 to-transparent"></div>
                <Image
-                 src={farmPlaceholder}
+                 src={aboutConfig?.rootsImageUrl ?? farmPlaceholder}
                  alt="N&N Poultry Palace Logo"
                  fill
                  sizes="(max-width: 1024px) 100vw, 50vw"
@@ -122,14 +124,14 @@ export function About() {
               </h2>
               <div className="text-lg md:text-xl lg:text-2xl text-white/70 font-light leading-relaxed space-y-8">
                 <p>
-                  <strong className="text-white font-medium">{siteConfig.name}</strong> is a family-run poultry business rooted in Machakos, built on a commitment to quality, trust, and community.
+                  {aboutConfig?.rootsParagraph1 ?? <><strong className="text-white font-medium">{siteConfig.name}</strong> is a family-run poultry business rooted in Machakos, built on a commitment to quality, trust, and community.</>}
                 </p>
                 <div className="w-16 h-1 bg-brand-gold/50 rounded-full"></div>
                 <p className="mb-8">
-                  Guided by a clear vision to lead in sustainable poultry production, we combine modern husbandry practices, rigorous quality control, and environmentally responsible methods to ensure every product meets our exacting standards.
+                  {aboutConfig?.rootsParagraph2 ?? 'Guided by a clear vision to lead in sustainable poultry production, we combine modern husbandry practices, rigorous quality control, and environmentally responsible methods to ensure every product meets our exacting standards.'}
                 </p>
                 <p className="italic border-l-4 border-brand-orange pl-8 text-white/90 text-xl font-serif">
-                  &ldquo;Fresh and Nutritious&rdquo; isn't just a tagline &mdash; it's our promise to deliver wholesome, responsibly produced products that people can trust.
+                  {aboutConfig?.rootsQuote ?? <>&ldquo;Fresh and Nutritious&rdquo; isn&apos;t just a tagline &mdash; it&apos;s our promise to deliver wholesome, responsibly produced products that people can trust.</>}
                 </p>
               </div>
             </div>

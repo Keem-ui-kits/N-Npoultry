@@ -6,7 +6,7 @@ export function InfiniteRibbon() {
 
   return (
     <div 
-      className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none opacity-30 mix-blend-plus-lighter"
+      className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none opacity-20"
       aria-hidden="true"
     >
       <svg 
@@ -24,7 +24,7 @@ export function InfiniteRibbon() {
         </defs>
         
         {/* Soft blur copy for a glow effect */}
-        <text className="text-[36px] md:text-[48px] font-extrabold uppercase tracking-widest fill-brand-gold/20" filter="blur(8px)">
+        <text className="text-[36px] md:text-[48px] font-extrabold uppercase tracking-widest fill-brand-gold/40" filter="blur(8px)">
           <textPath href="#squiggly-ribbon-path" startOffset="0%">
             {repeatedText}
             <animate 
@@ -39,7 +39,7 @@ export function InfiniteRibbon() {
         </text>
 
         {/* Sharp core text */}
-        <text className="text-[16px] md:text-[28px] font-extrabold uppercase tracking-widest fill-brand-gold/30">
+        <text className="text-[16px] md:text-[28px] font-extrabold uppercase tracking-widest fill-brand-gold/50">
           <textPath href="#squiggly-ribbon-path" startOffset="0%">
             {repeatedText}
             <animate 

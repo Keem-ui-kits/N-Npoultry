@@ -66,6 +66,13 @@ export const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0] {
   "heroImageUrl": heroImage.asset->url
 }`
 
+export const ABOUT_CONFIG_QUERY = `*[_type == "aboutConfig"][0] {
+  rootsParagraph1,
+  rootsParagraph2,
+  rootsQuote,
+  "rootsImageUrl": rootsImage.asset->url
+}`
+
 // ---------------------------------------------------------------------------
 // Fetch helper — returns null when Sanity is not configured or the query fails
 // ---------------------------------------------------------------------------
@@ -142,4 +149,15 @@ export async function getEducationArticleBySlug(slug: string): Promise<Education
 
 export async function getSiteConfig(): Promise<{ heroImageUrl?: string } | null> {
   return fetchFromSanity<{ heroImageUrl?: string }>(SITE_CONFIG_QUERY)
+}
+
+export type AboutConfig = {
+  rootsImageUrl?: string
+  rootsParagraph1?: string
+  rootsParagraph2?: string
+  rootsQuote?: string
+}
+
+export async function getAboutConfig(): Promise<AboutConfig | null> {
+  return fetchFromSanity<AboutConfig>(ABOUT_CONFIG_QUERY)
 }

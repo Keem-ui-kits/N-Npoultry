@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import type { Product } from '@/types/product'
 import type { Testimonial } from '@/content/testimonials'
 import type { EducationArticle } from '@/content/education'
@@ -63,16 +64,8 @@ export const EDUCATION_ARTICLE_BY_SLUG_QUERY = `*[_type == "educationArticle" &&
 
 export const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0] {
   "heroImageUrl": heroImage.asset->url,
-  contacts {
-    email,
-    phones,
-    address,
-    whatsapp
-  },
-  businessHours {
-    weekdays,
-    saturday
-  }
+  contacts { email, phones, address, whatsapp },
+  businessHours { weekdays, saturday }
 }`
 
 export const ABOUT_CONFIG_QUERY = `*[_type == "aboutConfig"][0] {
@@ -81,6 +74,33 @@ export const ABOUT_CONFIG_QUERY = `*[_type == "aboutConfig"][0] {
   rootsQuote,
   "rootsImageUrl": rootsImage.asset->url
 }`
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+export type SanityContacts = {
+  email?: string
+  phones?: string[]
+  address?: string
+  whatsapp?: string
+}
+
+export type SiteConfig = {
+  heroImageUrl?: string
+  contacts?: SanityContacts
+  businessHours?: {
+    weekdays?: string
+    saturday?: string
+  }
+}
+
+export type AboutConfig = {
+  rootsImageUrl?: string
+  rootsParagraph1?: string
+  rootsParagraph2?: string
+  rootsQuote?: string
+}
 
 // ---------------------------------------------------------------------------
 // Fetch helper — returns null when Sanity is not configured or the query fails
@@ -99,7 +119,7 @@ export async function fetchFromSanity<T>(
   try {
     const { client } = await import('./client')
     return await client.fetch<T>(query, params ?? {}, {
-      next: { revalidate: 3600 }, // 1 hour — products don't change frequently
+      next: { revalidate: 3600 },
     })
   } catch {
     return null
@@ -156,32 +176,10 @@ export async function getEducationArticleBySlug(slug: string): Promise<Education
   return educationArticles.find((a) => a.id === slug) ?? null
 }
 
-export type SanityContacts = {
-  email?: string
-  phones?: string[]
-  address?: string
-  whatsapp?: string
-}
-
-export type SiteConfig = {
-  heroImageUrl?: string
-  contacts?: SanityContacts
-  businessHours?: {
-    weekdays?: string
-    saturday?: string
-  }
-}
-
-export async function getSiteConfig(): Promise<SiteConfig | null> {
+// cache() deduplicates calls within a single render pass across layout, footer, pages
+export const getSiteConfig = cache(function getSiteConfig(): Promise<SiteConfig | null> {
   return fetchFromSanity<SiteConfig>(SITE_CONFIG_QUERY)
-}
-
-export type AboutConfig = {
-  rootsImageUrl?: string
-  rootsParagraph1?: string
-  rootsParagraph2?: string
-  rootsQuote?: string
-}
+})
 
 export async function getAboutConfig(): Promise<AboutConfig | null> {
   return fetchFromSanity<AboutConfig>(ABOUT_CONFIG_QUERY)

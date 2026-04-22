@@ -8,8 +8,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { siteConfig } from '@/content/site';
 import { contactSchema, type ContactFormData } from '@/lib/schemas/contact';
 import { Input } from '@/components/ui/input';
+import type { SiteConfig } from '@/sanity/lib/queries';
 
-export function Contact() {
+interface ContactProps {
+  contactInfo?: Pick<SiteConfig, 'contacts' | 'businessHours'> | null
+}
+
+export function Contact({ contactInfo }: ContactProps) {
+  const phones = contactInfo?.contacts?.phones ?? siteConfig.contacts.phones;
+  const weekdays = contactInfo?.businessHours?.weekdays ?? siteConfig.businessHours.weekdays;
+  const saturday = contactInfo?.businessHours?.saturday ?? siteConfig.businessHours.saturday;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
   const {
@@ -80,9 +88,9 @@ export function Contact() {
                     Business Hours
                   </h3>
                   <p className="text-muted-foreground dark:text-white/50 text-sm md:text-base pl-9">
-                    {siteConfig.businessHours.weekdays}
+                    {weekdays}
                     <br />
-                    {siteConfig.businessHours.saturday}
+                    {saturday}
                   </p>
                 </div>
 
@@ -92,7 +100,7 @@ export function Contact() {
                     Phone
                   </h3>
                   <p className="text-muted-foreground dark:text-white/50 text-sm md:text-base pl-9">
-                    {siteConfig.contacts.phones.join(' / ')}
+                    {phones.join(' / ')}
                   </p>
                 </div>
               </div>

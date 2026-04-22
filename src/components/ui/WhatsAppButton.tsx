@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { siteConfig } from '@/content/site';
 
-export function WhatsAppButton({ message }: { message?: string }) {
+export function WhatsAppButton({ message, whatsapp }: { message?: string; whatsapp?: string }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,8 @@ export function WhatsAppButton({ message }: { message?: string }) {
   }, []);
 
   const defaultMessage = `Hi! I'd like to learn more about your products at ${siteConfig.name}.`;
-  const whatsappUrl = `https://wa.me/${siteConfig.contacts.whatsapp}?text=${encodeURIComponent(message ?? defaultMessage)}`;
+  const whatsappNumber = whatsapp ?? siteConfig.contacts.whatsapp;
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message ?? defaultMessage)}`;
 
   return (
     <AnimatePresence>

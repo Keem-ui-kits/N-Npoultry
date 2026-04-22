@@ -1,10 +1,10 @@
 'use client';
 
+import Lenis from 'lenis';
 import type { ReactNode} from 'react';
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
-import type Lenis from 'lenis';
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
@@ -72,16 +72,12 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
     if (typeof window === 'undefined' || prefersReduced) return;
 
-    let cancelled = false;
-    (async () => {
     try {
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
       window.scrollTo(0, 0);
 
-      const { default: Lenis } = await import('lenis');
-      if (cancelled) return;
       const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -106,10 +102,8 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     } catch (e) {
       console.error('Lenis init error:', e);
     }
-    })();
 
     return () => {
-      cancelled = true;
       if (rafIdRef.current !== null) {
         cancelAnimationFrame(rafIdRef.current);
       }

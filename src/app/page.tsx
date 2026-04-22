@@ -1,5 +1,3 @@
-export const revalidate = 3600;
-
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { Hero } from '@/components/sections/Hero';
 import { getSiteConfig } from '@/sanity/lib/queries';

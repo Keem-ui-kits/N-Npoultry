@@ -28,11 +28,11 @@ const InstagramIcon = () => (
 
 export async function Footer() {
   const sanity = await getSiteConfig();
-  const contacts = {
-    phones: sanity?.contacts?.phones ?? siteConfig.contacts.phones,
-    email: sanity?.contacts?.email ?? siteConfig.contacts.email,
-    address: sanity?.contacts?.address ?? siteConfig.contacts.address,
-  };
+
+  const phones = sanity?.contacts?.phones ?? siteConfig.contacts.phones;
+  const email = sanity?.contacts?.email ?? siteConfig.contacts.email;
+  const address = sanity?.contacts?.address ?? siteConfig.contacts.address;
+
   const currentYear = new Date().getFullYear();
 
   return (
@@ -123,7 +123,7 @@ export async function Footer() {
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
                 <div className="text-white/70 text-sm md:text-base">
-                  {contacts.phones.map((phone) => (
+                  {phones.map((phone) => (
                     <div key={phone}>{phone}</div>
                   ))}
                 </div>
@@ -131,15 +131,15 @@ export async function Footer() {
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
                 <a
-                  href={`mailto:${contacts.email}`}
+                  href={`mailto:${email}`}
                   className="text-white/70 hover:text-brand-gold transition-colors text-sm md:text-base"
                 >
-                  {contacts.email}
+                  {email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                <span className="text-white/70 text-sm md:text-base">{contacts.address}</span>
+                <span className="text-white/70 text-sm md:text-base">{address}</span>
               </li>
             </ul>
           </FadeIn>

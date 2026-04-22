@@ -62,7 +62,7 @@ export const EDUCATION_ARTICLE_BY_SLUG_QUERY = `*[_type == "educationArticle" &&
   content
 }`
 
-export const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0] {
+export const SITE_CONFIG_QUERY = `*[_type == "siteConfig" && _id == "siteConfig"][0] {
   "heroImageUrl": heroImage.asset->url,
   contacts { email, phones, address, whatsapp },
   businessHours { weekdays, saturday }
@@ -119,7 +119,7 @@ export async function fetchFromSanity<T>(
   try {
     const { client } = await import('./client')
     return await client.fetch<T>(query, params ?? {}, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600, tags: ['sanity'] },
     })
   } catch {
     return null

@@ -5,7 +5,7 @@ export const siteConfig = {
   description: 'Fresh and Nutritious — your trusted source for farm-fresh eggs in Machakos.',
   contacts: {
     phones: ['0113377623', '0714246534'],
-    email: 'info@nnpoultry.co.ke',
+    email: 'palacepoultryn.n@gmail.com',
     address: 'Machakos, Kenya',
     whatsapp: '254113377623',
   },

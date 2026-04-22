@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import '../styles/index.css';
 
-import dynamic from 'next/dynamic';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
-
-const MouseSpotlight = dynamic(() => import('@/components/layout/MouseSpotlight'), { ssr: false });
+import { MouseSpotlightLoader } from '@/components/layout/MouseSpotlightLoader';
 
 
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
@@ -116,7 +114,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
           <SmoothScroll>
-            <MouseSpotlight />
+            <MouseSpotlightLoader />
             <ErrorBoundary>
               {children}
             </ErrorBoundary>

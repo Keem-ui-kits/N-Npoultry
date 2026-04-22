@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import '../styles/index.css';
 
-import MouseSpotlight from '@/components/layout/MouseSpotlight';
+import dynamic from 'next/dynamic';
 import { SmoothScroll } from '@/components/layout/SmoothScroll';
+
+const MouseSpotlight = dynamic(() => import('@/components/layout/MouseSpotlight'), { ssr: false });
 
 
 import { ThemeProvider } from '@/components/layout/ThemeProvider';

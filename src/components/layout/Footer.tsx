@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { siteConfig } from '@/content/site';
 import { footerLinks } from '@/content/navigation';
 import { FadeIn } from '@/components/ui/fade-in';
+import { getSiteConfig } from '@/sanity/lib/queries';
 
 const FacebookIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -25,7 +26,13 @@ const InstagramIcon = () => (
   </svg>
 );
 
-export function Footer() {
+export async function Footer() {
+  const sanity = await getSiteConfig();
+  const contacts = {
+    phones: sanity?.contacts?.phones ?? siteConfig.contacts.phones,
+    email: sanity?.contacts?.email ?? siteConfig.contacts.email,
+    address: sanity?.contacts?.address ?? siteConfig.contacts.address,
+  };
   const currentYear = new Date().getFullYear();
 
   return (
@@ -116,7 +123,7 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
                 <div className="text-white/70 text-sm md:text-base">
-                  {siteConfig.contacts.phones.map((phone) => (
+                  {contacts.phones.map((phone) => (
                     <div key={phone}>{phone}</div>
                   ))}
                 </div>
@@ -124,15 +131,15 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
                 <a
-                  href={`mailto:${siteConfig.contacts.email}`}
+                  href={`mailto:${contacts.email}`}
                   className="text-white/70 hover:text-brand-gold transition-colors text-sm md:text-base"
                 >
-                  {siteConfig.contacts.email}
+                  {contacts.email}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                <span className="text-white/70 text-sm md:text-base">{siteConfig.contacts.address}</span>
+                <span className="text-white/70 text-sm md:text-base">{contacts.address}</span>
               </li>
             </ul>
           </FadeIn>

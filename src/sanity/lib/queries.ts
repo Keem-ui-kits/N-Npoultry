@@ -62,8 +62,17 @@ export const EDUCATION_ARTICLE_BY_SLUG_QUERY = `*[_type == "educationArticle" &&
 }`
 
 export const SITE_CONFIG_QUERY = `*[_type == "siteConfig"][0] {
-  ...,
-  "heroImageUrl": heroImage.asset->url
+  "heroImageUrl": heroImage.asset->url,
+  contacts {
+    email,
+    phones,
+    address,
+    whatsapp
+  },
+  businessHours {
+    weekdays,
+    saturday
+  }
 }`
 
 export const ABOUT_CONFIG_QUERY = `*[_type == "aboutConfig"][0] {
@@ -147,8 +156,24 @@ export async function getEducationArticleBySlug(slug: string): Promise<Education
   return educationArticles.find((a) => a.id === slug) ?? null
 }
 
-export async function getSiteConfig(): Promise<{ heroImageUrl?: string } | null> {
-  return fetchFromSanity<{ heroImageUrl?: string }>(SITE_CONFIG_QUERY)
+export type SanityContacts = {
+  email?: string
+  phones?: string[]
+  address?: string
+  whatsapp?: string
+}
+
+export type SiteConfig = {
+  heroImageUrl?: string
+  contacts?: SanityContacts
+  businessHours?: {
+    weekdays?: string
+    saturday?: string
+  }
+}
+
+export async function getSiteConfig(): Promise<SiteConfig | null> {
+  return fetchFromSanity<SiteConfig>(SITE_CONFIG_QUERY)
 }
 
 export type AboutConfig = {

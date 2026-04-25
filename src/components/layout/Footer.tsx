@@ -32,6 +32,7 @@ export async function Footer() {
   const phones = sanity?.contacts?.phones ?? siteConfig.contacts.phones;
   const email = sanity?.contacts?.email ?? siteConfig.contacts.email;
   const address = sanity?.contacts?.address ?? siteConfig.contacts.address;
+  const socialLinks = sanity?.socialLinks ?? siteConfig.socialLinks;
 
   const currentYear = new Date().getFullYear();
 
@@ -56,27 +57,39 @@ export async function Footer() {
             </div>
             <p className="text-white/70 text-sm md:text-base mb-4">{siteConfig.description}</p>
             <div className="flex gap-4">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
-                aria-label="Facebook"
-              >
-                <FacebookIcon />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
-                aria-label="Twitter"
-              >
-                <XIcon />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
-                aria-label="Instagram"
-              >
-                <InstagramIcon />
-              </a>
+              {socialLinks.facebook && (
+                <a
+                  href={socialLinks.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
+                  aria-label="Facebook"
+                >
+                  <FacebookIcon />
+                </a>
+              )}
+              {socialLinks.twitter && (
+                <a
+                  href={socialLinks.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
+                  aria-label="Twitter"
+                >
+                  <XIcon />
+                </a>
+              )}
+              {socialLinks.instagram && (
+                <a
+                  href={socialLinks.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-gradient-to-r hover:from-brand-gold hover:to-brand-orange transition-all transform hover:scale-110"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon />
+                </a>
+              )}
             </div>
           </FadeIn>
 

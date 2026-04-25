@@ -13,6 +13,11 @@ export const siteConfig = {
     weekdays: 'Mon–Fri: 8:00 AM – 5:00 PM',
     saturday: 'Sat: 8:00 AM – 12:00 PM',
   },
+  socialLinks: {
+    facebook: '',
+    twitter: '',
+    instagram: '',
+  },
   stats: [
     { label: 'Years Exp.', value: '5+' },
     { label: 'Deliveries', value: '10k+' },

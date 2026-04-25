@@ -65,7 +65,8 @@ export const EDUCATION_ARTICLE_BY_SLUG_QUERY = `*[_type == "educationArticle" &&
 export const SITE_CONFIG_QUERY = `*[_type == "siteConfig" && _id == "siteConfig"][0] {
   "heroImageUrl": heroImage.asset->url,
   contacts { email, phones, address, whatsapp },
-  businessHours { weekdays, saturday }
+  businessHours { weekdays, saturday },
+  socialLinks { facebook, twitter, instagram }
 }`
 
 export const ABOUT_CONFIG_QUERY = `*[_type == "aboutConfig"][0] {
@@ -92,6 +93,11 @@ export type SiteConfig = {
   businessHours?: {
     weekdays?: string
     saturday?: string
+  }
+  socialLinks?: {
+    facebook?: string
+    twitter?: string
+    instagram?: string
   }
 }
 

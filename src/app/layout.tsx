@@ -59,6 +59,9 @@ export const metadata: Metadata = {
     description: 'Quality poultry products straight from the farm.',
     images: ['/og-image.png'],
   },
+  verification: {
+    google: 'vUa7EMWvr_ovEu8omCw6mEFm1LufugqNds7WoggxJzw',
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

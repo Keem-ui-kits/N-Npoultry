@@ -104,13 +104,8 @@ function PrimaryProductRow({ product }: { product: Product }) {
 
   return (
     <div id={product.id}>
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 48 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div ref={ref}>
+
       {/* Mobile / Tablet */}
       <MobileProductLayout product={product} badge="Main Product" />
 
@@ -206,6 +201,7 @@ function PrimaryProductRow({ product }: { product: Product }) {
             className="object-contain p-10 transition-transform duration-700 ease-out group-hover:scale-105 drop-shadow-[0_32px_64px_rgba(0,0,0,0.6)]"
             sizes="55vw"
             priority
+            fetchPriority="high"
           />
           {/* "Our hero" label */}
           <div className="absolute bottom-8 left-8 z-20">
@@ -218,7 +214,7 @@ function PrimaryProductRow({ product }: { product: Product }) {
           </div>
         </motion.div>
       </div>
-    </motion.div>
+    </div>
     </div>
   );
 }

@@ -133,18 +133,14 @@ function PrimaryProductRow({ product }: { product: Product }) {
             aria-hidden="true"
           >01</span>
 
-          <motion.h2
+          <h2
             className="text-6xl xl:text-7xl 2xl:text-8xl font-black uppercase tracking-tight leading-[0.9] text-foreground"
-            initial={{ y: 24 }}
-            whileInView={{ y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
           >
             {product.title}{' '}
             <span style={{ color: accentHex, textShadow: `0 0 60px ${accentHex}60` }}>
               {product.titleAccent}
             </span>
-          </motion.h2>
+          </h2>
 
           <motion.p
             className="text-xl text-muted-foreground leading-relaxed max-w-lg"
@@ -181,13 +177,9 @@ function PrimaryProductRow({ product }: { product: Product }) {
         </div>
 
         {/* Large image panel */}
-        <motion.div
-          style={{ y: imageY, borderColor: `${accentHex}20` }}
+        <div
+          style={{ borderColor: `${accentHex}20` }}
           className="relative lg:min-h-[580px] rounded-[3rem] overflow-hidden group shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] border"
-          initial={{ scale: 0.94 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
           <div
             className="absolute inset-0 opacity-30 z-10"
@@ -212,7 +204,7 @@ function PrimaryProductRow({ product }: { product: Product }) {
               Our Star Product
             </span>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
     </div>

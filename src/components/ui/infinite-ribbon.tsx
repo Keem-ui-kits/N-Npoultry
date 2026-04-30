@@ -23,33 +23,10 @@ export function InfiniteRibbon() {
           />
         </defs>
         
-        {/* Soft blur copy for a glow effect */}
-        <text className="text-[36px] md:text-[48px] font-extrabold uppercase tracking-widest fill-brand-gold/40" style={{ filter: 'blur(8px)' }}>
-          <textPath href="#squiggly-ribbon-path" startOffset="0%">
-            {repeatedText}
-            <animate 
-              attributeName="startOffset" 
-              from="0%" 
-              to="-200%" 
-              begin="0s" 
-              dur="180s" 
-              repeatCount="indefinite" 
-            />
-          </textPath>
-        </text>
-
         {/* Sharp core text */}
         <text className="text-[16px] md:text-[28px] font-extrabold uppercase tracking-widest fill-brand-gold/50">
           <textPath href="#squiggly-ribbon-path" startOffset="0%">
             {repeatedText}
-            <animate 
-              attributeName="startOffset" 
-              from="0%" 
-              to="-200%" 
-              begin="0s" 
-              dur="180s" 
-              repeatCount="indefinite" 
-            />
           </textPath>
         </text>
       </svg>

@@ -19,13 +19,6 @@ export function Hero({ heroImageUrl }: { heroImageUrl?: string }) {
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      // Ken Burns: slow scale-up of background image
-      gsap.fromTo(
-        bgRef.current,
-        { scale: 1.06 },
-        { scale: 1, duration: 2.2, ease: 'power2.out' }
-      );
-
       // Parallax on scroll
       gsap.to(bgRef.current, {
         yPercent: 20,
@@ -38,19 +31,7 @@ export function Hero({ heroImageUrl }: { heroImageUrl?: string }) {
         },
       });
 
-      // Staggered text reveals — animate children of contentRef
-      gsap.fromTo(
-        contentRef.current?.children ?? [],
-        { opacity: 0, y: 28 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.75,
-          ease: 'power3.out',
-          stagger: 0.12,
-          delay: 0.15,
-        }
-      );
+      // Cleaned up text reveals for performance
     }, containerRef);
 
     return () => { ctx.revert(); };
@@ -82,26 +63,26 @@ export function Hero({ heroImageUrl }: { heroImageUrl?: string }) {
         ref={contentRef}
         className="relative z-10 w-full max-w-5xl mx-auto px-6 md:px-12 py-28 flex flex-col items-center text-center"
       >
-        <div className="flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 backdrop-blur-sm">
+        <div className="flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100 fill-mode-both">
           <Sparkles className="w-4 h-4 text-brand-gold" />
           <span className="text-sm font-semibold tracking-widest text-brand-gold uppercase">
             Premium Quality Suppliers
           </span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight mb-6">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight mb-6 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200 fill-mode-both">
           Farm-Fresh<br />
           <span className="gradient-brand-text">Nutritious Eggs</span>
         </h1>
 
-        <p className="text-lg md:text-xl text-white/75 max-w-2xl mb-10 leading-relaxed">
+        <p className="text-lg md:text-xl text-white/75 max-w-2xl mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300 fill-mode-both">
           From day-collected table eggs to organic farm nutrients, everything you need
           from a supplier you can rely on. Built with premium quality in mind.
         </p>
 
         <a
           href="/contact"
-          className="inline-flex items-center gap-2 px-8 py-4 rounded-full gradient-brand text-brand-dark font-bold text-base tracking-wide transition-all duration-300 hover:shadow-[0_0_32px_rgba(236,204,116,0.5)] hover:scale-105"
+          className="inline-flex items-center gap-2 px-8 py-4 rounded-full gradient-brand text-brand-dark font-bold text-base tracking-wide transition-all duration-300 hover:shadow-[0_0_32px_rgba(236,204,116,0.5)] hover:scale-105 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-500 fill-mode-both"
         >
           Contact Us
         </a>

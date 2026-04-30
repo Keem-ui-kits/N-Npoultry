@@ -17,11 +17,7 @@ export function PageHeader({ title, subtitle, accent }: PageHeaderProps) {
       </div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ y: 30 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
           <h1 className="text-5xl md:text-8xl font-black text-white italic uppercase tracking-tighter mb-6">
             {title} <span className="text-brand-gold not-italic">{accent}</span>
           </h1>
@@ -30,7 +26,7 @@ export function PageHeader({ title, subtitle, accent }: PageHeaderProps) {
               {subtitle}
             </p>
           )}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

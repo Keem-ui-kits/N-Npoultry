@@ -71,19 +71,29 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const email = sanityConfig?.contacts?.email ?? siteConfig.contacts.email;
   const whatsapp = sanityConfig?.contacts?.whatsapp ?? siteConfig.contacts.whatsapp;
 
+  const socialLinks = Object.values(siteConfig.socialLinks).filter(Boolean);
+
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: siteConfig.name,
     description: siteConfig.description,
     url: siteConfig.baseUrl,
+    logo: `${siteConfig.baseUrl}/nn-poultry-logo.png`,
+    image: `${siteConfig.baseUrl}/og-image.png`,
     telephone,
     email,
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Machakos',
+      addressRegion: 'Machakos County',
       addressCountry: 'KE',
     },
+    areaServed: {
+      '@type': 'State',
+      name: 'Machakos County',
+    },
+    ...(socialLinks.length > 0 ? { sameAs: socialLinks } : {}),
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
@@ -97,8 +107,29 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         opens: '08:00',
         closes: '12:00',
       },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: 'Sunday',
+        opens: '00:00',
+        closes: '00:00',
+      },
     ],
-    priceRange: 'KES',
+  };
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: siteConfig.name,
+    url: siteConfig.baseUrl,
+    logo: `${siteConfig.baseUrl}/nn-poultry-logo.png`,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone,
+      email,
+      contactType: 'customer service',
+      availableLanguage: 'English',
+    },
+    ...(socialLinks.length > 0 ? { sameAs: socialLinks } : {}),
   };
 
   return (
@@ -106,9 +137,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <head>
         <link rel="preload" as="image" href="/images/hero-bg.jpeg" fetchPriority="high" />
         <link rel="preload" as="font" type="font/woff2" href="/fonts/made-tommy/MadeTommy-Regular.woff2" crossOrigin="anonymous" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/nn-poultry-logo.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </head>
       <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>

@@ -23,13 +23,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const productTitle = `${product.title} ${product.titleAccent}`;
   return {
-    title: `${product.title} ${product.titleAccent} | N&N Poultry Palace`,
+    title: `${productTitle} | N&N Poultry Palace`,
     description: product.description,
+    alternates: { canonical: `${siteConfig.baseUrl}/products/${id}` },
     openGraph: {
-      title: `${product.title} ${product.titleAccent} | N&N Poultry Palace`,
+      title: `${productTitle} | N&N Poultry Palace`,
       description: product.description,
-      images: [{ url: product.image }],
+      url: `${siteConfig.baseUrl}/products/${id}`,
+      siteName: siteConfig.name,
+      images: [{ url: product.image, alt: productTitle }],
+      locale: 'en_KE',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${productTitle} | N&N Poultry Palace`,
+      description: product.description,
+      images: [product.image],
     },
   };
 }
@@ -56,6 +68,7 @@ export default async function ProductDetailPage({ params }: Props) {
     name: `${product.title} ${product.titleAccent}`,
     description: product.fullDescription ?? product.description,
     image: `${siteConfig.baseUrl}${product.image}`,
+    url: `${siteConfig.baseUrl}/products/${product.id}`,
     brand: { '@type': 'Brand', name: 'N&N Poultry Palace' },
     offers: {
       '@type': 'Offer',

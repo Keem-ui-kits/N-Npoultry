@@ -71,13 +71,13 @@ export function About({ aboutConfig }: { aboutConfig?: AboutConfig | null }) {
         <section data-section="hero" className="min-h-[70vh] md:min-h-[90vh] flex flex-col items-center justify-center relative overflow-hidden px-4 md:px-8 bg-transparent">
           <div className="text-center w-full max-w-5xl relative z-10 pt-20">
             <h1 data-hero-text className="text-5xl md:text-7xl lg:text-8xl xl:text-[9rem] font-black mb-6 uppercase tracking-tighter leading-[0.9]">
-              <span className="block italic text-brand-gold/60 text-2xl md:text-4xl lg:text-5xl mb-4 lowercase opacity-80 font-serif font-light tracking-wide">the</span>
+              <span className="block italic text-brand-gold/60 text-2xl md:text-4xl lg:text-5xl mb-4 lowercase opacity-80 font-serif font-light tracking-wide">About</span>
               <span className="relative inline-block">
                 <span className="gradient-brand-text">N&N</span>
                 <span aria-hidden="true" data-hero-glow className="absolute inset-0 gradient-brand-text blur-3xl opacity-60">N&N</span>
               </span>
               <br />
-              <span className="text-white drop-shadow-2xl">STANDARD</span>
+              <span className="text-white drop-shadow-2xl">POULTRY PALACE</span>
             </h1>
             <p data-hero-sub className="text-xl md:text-2xl lg:text-3xl text-gray-300 font-light max-w-3xl mx-auto tracking-wide mt-12 bg-black/30 backdrop-blur-sm p-4 rounded-2xl border border-white/5 inline-block">
               Rooted in <span className="text-white font-medium">Machakos</span>. Committed to <span className="text-brand-gold">excellence</span>.

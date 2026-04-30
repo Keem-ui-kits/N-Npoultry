@@ -7,6 +7,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const nextConfig = {
   reactStrictMode: true,
+  trailingSlash: false,
   turbopack: {
     root: __dirname,
   },

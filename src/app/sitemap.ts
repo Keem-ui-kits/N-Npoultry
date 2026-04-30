@@ -1,43 +1,39 @@
 import type { MetadataRoute } from 'next';
 import { siteConfig } from '@/content/site';
-import { products } from '@/content/products';
+import { getProducts, getEducationArticles } from '@/sanity/lib/queries';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.baseUrl;
 
-  const priorities: Record<string, number> = {
-    '': 1.0,
-    '/products': 0.9,
-    '/about': 0.7,
-    '/contact': 0.7,
-    '/quote': 0.7,
-    '/education-hub': 0.5,
-    '/terms': 0.1,
-    '/privacy': 0.1,
-  };
-
   const staticRoutes: MetadataRoute.Sitemap = [
-    '',
-    '/products',
-    '/about',
-    '/contact',
-    '/quote',
-    '/education-hub',
-    '/terms',
-    '/privacy',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: (route === '' || route === '/products' ? 'weekly' : (route === '/terms' || route === '/privacy' ? 'yearly' : 'monthly')),
-    priority: priorities[route] ?? 0.5,
-  }));
+    { url: `${baseUrl}`, lastModified: new Date('2026-04-01'), changeFrequency: 'weekly', priority: 1.0 },
+    { url: `${baseUrl}/products`, lastModified: new Date('2026-04-01'), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/about`, lastModified: new Date('2026-04-01'), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/contact`, lastModified: new Date('2026-04-01'), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/quote`, lastModified: new Date('2026-04-01'), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/education-hub`, lastModified: new Date('2026-04-01'), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/terms`, lastModified: new Date('2026-04-01'), changeFrequency: 'yearly', priority: 0.1 },
+    { url: `${baseUrl}/privacy`, lastModified: new Date('2026-04-01'), changeFrequency: 'yearly', priority: 0.1 },
+  ];
+
+  const [products, articles] = await Promise.all([
+    getProducts(),
+    getEducationArticles(),
+  ]);
 
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
     url: `${baseUrl}/products/${product.id}`,
-    lastModified: new Date(),
+    lastModified: new Date('2026-04-01'),
     changeFrequency: 'monthly' as const,
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...productRoutes];
+  const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${baseUrl}/education-hub/${article.id}`,
+    lastModified: new Date('2026-04-01'),
+    changeFrequency: 'monthly' as const,
+    priority: 0.5,
+  }));
+
+  return [...staticRoutes, ...productRoutes, ...articleRoutes];
 }

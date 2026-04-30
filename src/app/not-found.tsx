@@ -1,5 +1,12 @@
 import Link from 'next/link';
 import { PageWrapper } from '@/components/layout/PageWrapper';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '404 — Page Not Found | N&N Poultry Palace',
+  description: 'The page you are looking for does not exist.',
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (

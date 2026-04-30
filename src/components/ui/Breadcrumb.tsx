@@ -18,7 +18,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.label,
-      ...(item.href ? { item: item.href } : {}),
+      ...(item.href ? { item: { '@id': item.href } } : {}),
     })),
   };
 

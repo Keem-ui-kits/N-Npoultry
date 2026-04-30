@@ -2,6 +2,7 @@ import { PageWrapper } from '@/components/layout/PageWrapper';
 import { educationCategories } from '@/content/education';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { siteConfig } from '@/content/site';
 import { ArrowRight } from 'lucide-react';
 import { getEducationArticles } from '@/sanity/lib/queries';
 import { EducationTabsClient } from '@/components/sections/EducationTabsClient';
@@ -9,6 +10,22 @@ import { EducationTabsClient } from '@/components/sections/EducationTabsClient';
 export const metadata: Metadata = {
   title: 'Education Hub | N&N Poultry Palace',
   description: 'Learn about our farming practices, the poultry lifecycle, and how we guarantee fresh and nutritious eggs daily.',
+  alternates: { canonical: `${siteConfig.baseUrl}/education-hub` },
+  openGraph: {
+    title: 'Education Hub | N&N Poultry Palace',
+    description: 'Discover the journey from one-day-old chicks to premium table eggs. Transparent, sustainable farming from Machakos.',
+    url: `${siteConfig.baseUrl}/education-hub`,
+    siteName: siteConfig.name,
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'N&N Poultry Palace Education Hub' }],
+    locale: 'en_KE',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Education Hub | N&N Poultry Palace',
+    description: 'Farm education and poultry lifecycle insights from N&N Poultry Palace.',
+    images: ['/og-image.png'],
+  },
 };
 
 export default async function EducationHubPage() {

@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 import { getEducationArticles, getEducationArticleBySlug } from '@/sanity/lib/queries';
+import { siteConfig } from '@/content/site';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -23,6 +24,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${article.title} | N&N Poultry Palace`,
     description: article.excerpt,
+    alternates: { canonical: `${siteConfig.baseUrl}/education-hub/${slug}` },
+    openGraph: {
+      title: `${article.title} | N&N Poultry Palace`,
+      description: article.excerpt,
+      url: `${siteConfig.baseUrl}/education-hub/${slug}`,
+      siteName: siteConfig.name,
+      images: [{ url: article.image, alt: article.title }],
+      locale: 'en_KE',
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${article.title} | N&N Poultry Palace`,
+      description: article.excerpt,
+      images: [article.image],
+    },
   };
 }
 
@@ -39,8 +56,16 @@ export default async function EducationArticlePage({ params }: Props) {
     headline: article.title,
     description: article.excerpt,
     image: article.image,
-    author: { '@type': 'Organization', name: 'N&N Poultry Palace' },
-    publisher: { '@type': 'Organization', name: 'N&N Poultry Palace' },
+    url: `${siteConfig.baseUrl}/education-hub/${slug}`,
+    datePublished: '2024-01-01',
+    dateModified: '2026-04-01',
+    author: { '@type': 'Organization', name: 'N&N Poultry Palace', url: siteConfig.baseUrl },
+    publisher: {
+      '@type': 'Organization',
+      name: 'N&N Poultry Palace',
+      url: siteConfig.baseUrl,
+      logo: { '@type': 'ImageObject', url: `${siteConfig.baseUrl}/nn-poultry-logo.png` },
+    },
   };
 
   return (

@@ -18,8 +18,8 @@ export function PageHeader({ title, subtitle, accent }: PageHeaderProps) {
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 30 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-5xl md:text-8xl font-black text-white italic uppercase tracking-tighter mb-6">

@@ -135,8 +135,8 @@ function PrimaryProductRow({ product }: { product: Product }) {
 
           <motion.h2
             className="text-6xl xl:text-7xl 2xl:text-8xl font-black uppercase tracking-tight leading-[0.9] text-foreground"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ y: 24 }}
+            whileInView={{ y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
@@ -184,8 +184,8 @@ function PrimaryProductRow({ product }: { product: Product }) {
         <motion.div
           style={{ y: imageY, borderColor: `${accentHex}20` }}
           className="relative lg:min-h-[580px] rounded-[3rem] overflow-hidden group shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] border"
-          initial={{ opacity: 0, scale: 0.94 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ scale: 0.94 }}
+          whileInView={{ scale: 1 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >

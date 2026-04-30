@@ -24,7 +24,7 @@ export function InfiniteRibbon() {
         </defs>
         
         {/* Soft blur copy for a glow effect */}
-        <text className="text-[36px] md:text-[48px] font-extrabold uppercase tracking-widest fill-brand-gold/40" filter="blur(8px)">
+        <text className="text-[36px] md:text-[48px] font-extrabold uppercase tracking-widest fill-brand-gold/40" style={{ filter: 'blur(8px)' }}>
           <textPath href="#squiggly-ribbon-path" startOffset="0%">
             {repeatedText}
             <animate 

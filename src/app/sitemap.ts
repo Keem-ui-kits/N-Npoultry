@@ -17,8 +17,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const [products, articles] = await Promise.all([
-    getProducts(),
-    getEducationArticles(),
+    getProducts().catch(() => []),
+    getEducationArticles().catch(() => []),
   ]);
 
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({

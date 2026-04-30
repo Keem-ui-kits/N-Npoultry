@@ -145,3 +145,10 @@ eslint_out.txt
 *_out.txt
 *_out_clean.txt
 typecheck.txt
+tmp/lighthouse-products.json
+tmp/lighthouse-products-desk.json
+tmp/lighthouse-products-4.json
+tmp/lighthouse-products-3.json
+tmp/lighthouse-products-2.json
+tmp/lighthouse-home-final.json
+tmp/lighthouse-home-desk.json

@@ -44,6 +44,20 @@ export default defineType({
       type: 'array',
       of: [{ type: 'text' }],
     }),
+    defineField({
+      name: 'authorNote',
+      title: 'Farm Note (shown as a callout at the top)',
+      description: 'Write as "At N&N, we..." — first person, farm-specific',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'farmerTip',
+      title: 'Farmer\'s Practical Tip',
+      description: 'One practical tip in first person, e.g. "From experience, we always..."',
+      type: 'text',
+      rows: 2,
+    }),
   ],
   preview: {
     select: { title: 'title', subtitle: 'category', media: 'image' },

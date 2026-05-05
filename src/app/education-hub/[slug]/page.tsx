@@ -115,11 +115,40 @@ export default async function EducationArticlePage({ params }: Props) {
           <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-transparent" />
         </div>
 
+        {/* Farm note callout */}
+        {article.authorNote && (
+          <div
+            className="rounded-2xl px-6 py-5 mb-10 border-l-4"
+            style={{
+              background: 'rgba(245,240,232,0.06)',
+              borderLeftColor: 'var(--brand-straw)',
+            }}
+          >
+            <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: 'var(--brand-straw)' }}>
+              A note from our farm
+            </p>
+            <p className="text-white/75 leading-relaxed text-base">{article.authorNote}</p>
+          </div>
+        )}
+
         <div className="space-y-6 text-white/80 font-light leading-relaxed text-lg">
           {article.content.map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
           ))}
         </div>
+
+        {/* Farmer tip callout */}
+        {article.farmerTip && (
+          <div
+            className="mt-10 rounded-2xl px-6 py-5 border border-brand-gold/20"
+            style={{ background: 'rgba(236,204,116,0.05)' }}
+          >
+            <p className="text-xs font-bold tracking-widest uppercase mb-2 text-brand-gold/70">
+              Farmer&apos;s tip
+            </p>
+            <p className="text-white/70 leading-relaxed text-base italic">{article.farmerTip}</p>
+          </div>
+        )}
       </section>
     </PageWrapper>
   );

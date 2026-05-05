@@ -7,6 +7,8 @@ import { siteConfig } from '@/content/site';
 import { footerLinks } from '@/content/navigation';
 import { FadeIn } from '@/components/ui/fade-in';
 import { getSiteConfig } from '@/sanity/lib/queries';
+import { OpenNowBadge } from '@/components/ui/OpenNowBadge';
+import { PhoneCopyButton } from '@/components/ui/PhoneCopyButton';
 
 const FacebookIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -33,6 +35,7 @@ export async function Footer() {
   const email = sanity?.contacts?.email ?? siteConfig.contacts.email;
   const address = sanity?.contacts?.address ?? siteConfig.contacts.address;
   const socialLinks = sanity?.socialLinks ?? siteConfig.socialLinks;
+  const businessHours = sanity?.businessHours ?? siteConfig.businessHours;
 
   const currentYear = new Date().getFullYear();
 
@@ -135,9 +138,9 @@ export async function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                <div className="text-white/70 text-sm md:text-base">
+                <div className="flex flex-col gap-0.5">
                   {phones.map((phone) => (
-                    <div key={phone}>{phone}</div>
+                    <PhoneCopyButton key={phone} phone={phone} />
                   ))}
                 </div>
               </li>
@@ -152,7 +155,10 @@ export async function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                <span className="text-white/70 text-sm md:text-base">{address}</span>
+                <div className="flex flex-col gap-1">
+                  <span className="text-white/70 text-sm md:text-base">{address}</span>
+                  <OpenNowBadge hours={businessHours} />
+                </div>
               </li>
             </ul>
           </FadeIn>

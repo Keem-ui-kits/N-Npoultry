@@ -176,14 +176,14 @@ export function Contact({ contactInfo }: ContactProps) {
                 whileTap={{ scale: 0.98 }}
                 className="w-full sm:w-auto px-10 py-4 gradient-brand text-brand-dark rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                {isSubmitting ? 'Sending...' : 'Submit'}
+                {isSubmitting ? 'Sending...' : 'Send Message'}
                 <Send className="w-5 h-5" />
               </motion.button>
 
               <div aria-live="polite" aria-atomic="true" className="min-h-[1.5rem]">
                 {submitStatus === 'success' && (
                   <p className="text-brand-gold font-medium">
-                    Message sent successfully! We'll be in touch soon.
+                    Got it! We typically reply within a few hours. If it's urgent, <a href={`https://wa.me/${siteConfig.contacts.whatsapp}`} className="underline">WhatsApp is faster</a>.
                   </p>
                 )}
                 {submitStatus === 'error' && (

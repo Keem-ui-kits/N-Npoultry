@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(del *)",
+      "mcp__sanity__whoami",
+      "mcp__sanity__list_projects",
+      "mcp__sanity__query_documents",
+      "Bash(node -e \"import\\('@sanity/client'\\).then\\(m => console.log\\('ok', Object.keys\\(m\\)\\)\\)\")",
+      "Bash(npx sanity@latest debug --secrets)",
+      "Bash(SANITY_WRITE_TOKEN=\"sk4nei605HFTLk4UnfBeSb5xlpHUf1VoNIGLDkIeGoHjnJLoHPdS3M0D2EupPYkoIcb8TZHKCkblXKkAIMYDrUHNtzmm40J8CqqCsIhShpGTyXVyafW1eymqaWTpLiLzQrqmwh7zSJ02iINPAIY3iDcHFytbElt809MauxXWXtNtHMduWhEx\" node *)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}

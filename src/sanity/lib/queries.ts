@@ -50,7 +50,9 @@ export const EDUCATION_ARTICLES_QUERY = `*[_type == "educationArticle"] {
   category,
   "image": image.asset->url,
   excerpt,
-  content
+  content,
+  authorNote,
+  farmerTip
 }`
 
 export const EDUCATION_ARTICLE_BY_SLUG_QUERY = `*[_type == "educationArticle" && id.current == $slug][0] {
@@ -59,14 +61,17 @@ export const EDUCATION_ARTICLE_BY_SLUG_QUERY = `*[_type == "educationArticle" &&
   category,
   "image": image.asset->url,
   excerpt,
-  content
+  content,
+  authorNote,
+  farmerTip
 }`
 
 export const SITE_CONFIG_QUERY = `*[_type == "siteConfig" && _id == "siteConfig"][0] {
   "heroImageUrl": heroImage.asset->url,
   contacts { email, phones, address, whatsapp },
   businessHours { weekdays, saturday },
-  socialLinks { facebook, twitter, instagram }
+  socialLinks { facebook, twitter, instagram },
+  availability { tableEggs, manure, exLayerHens, lastUpdated, note }
 }`
 
 export const ABOUT_CONFIG_QUERY = `*[_type == "aboutConfig"][0] {
@@ -74,6 +79,21 @@ export const ABOUT_CONFIG_QUERY = `*[_type == "aboutConfig"][0] {
   rootsParagraph2,
   rootsQuote,
   "rootsImageUrl": rootsImage.asset->url
+}`
+
+export const FOUNDER_CONFIG_QUERY = `*[_type == "founderConfig" && _id == "founderConfig"][0] {
+  founderName,
+  founderRole,
+  yearsOnFarm,
+  "founderPhotoUrl": founderPhoto.asset->url,
+  founderQuote,
+  founderStory
+}`
+
+export const FARM_PHOTOS_QUERY = `*[_type == "farmPhoto"] | order(order asc) {
+  "url": photo.asset->url,
+  alt,
+  order
 }`
 
 // ---------------------------------------------------------------------------
@@ -85,6 +105,14 @@ export type SanityContacts = {
   phones?: string[]
   address?: string
   whatsapp?: string
+}
+
+export type AvailabilityData = {
+  tableEggs?: number | null
+  manure?: number | null
+  exLayerHens?: number | null
+  lastUpdated?: string | null
+  note?: string | null
 }
 
 export type SiteConfig = {
@@ -99,6 +127,7 @@ export type SiteConfig = {
     twitter?: string
     instagram?: string
   }
+  availability?: AvailabilityData | null
 }
 
 export type AboutConfig = {
@@ -106,6 +135,21 @@ export type AboutConfig = {
   rootsParagraph1?: string
   rootsParagraph2?: string
   rootsQuote?: string
+}
+
+export type FounderConfig = {
+  founderName?: string
+  founderRole?: string
+  yearsOnFarm?: number
+  founderPhotoUrl?: string
+  founderQuote?: string
+  founderStory?: string[]
+}
+
+export type FarmPhoto = {
+  url: string
+  alt: string
+  order?: number
 }
 
 // ---------------------------------------------------------------------------
@@ -137,24 +181,39 @@ export async function fetchFromSanity<T>(
 // ---------------------------------------------------------------------------
 
 export async function getProducts(): Promise<Product[]> {
+  const { products: fallback } = await import('@/content/products')
   const data = await fetchFromSanity<Product[]>(PRODUCTS_QUERY)
   if (data && data.length > 0) {
-    return data.map((p) => ({
-      ...p,
-      colorRgb: (p.colorRgb ?? [0, 0, 0]),
-    }))
+    return data.map((p) => {
+      const fb = fallback.find((f) => f.id === p.id)
+      return {
+        ...fb,
+        ...p,
+        image: p.image ?? fb?.image ?? '',
+        color: p.color ?? fb?.color ?? '',
+        gradient: p.gradient ?? fb?.gradient ?? '',
+        colorRgb: p.colorRgb ?? fb?.colorRgb ?? [0, 0, 0],
+      }
+    })
   }
-  const { products } = await import('@/content/products')
-  return products
+  return fallback
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
+  const { products: fallback } = await import('@/content/products')
+  const fb = fallback.find((p) => p.id === id) ?? null
   const data = await fetchFromSanity<Product>(PRODUCT_BY_SLUG_QUERY, { id })
   if (data) {
-    return { ...data, colorRgb: (data.colorRgb ?? [0, 0, 0]) }
+    return {
+      ...fb,
+      ...data,
+      image: data.image ?? fb?.image ?? '',
+      color: data.color ?? fb?.color ?? '',
+      gradient: data.gradient ?? fb?.gradient ?? '',
+      colorRgb: data.colorRgb ?? fb?.colorRgb ?? [0, 0, 0],
+    }
   }
-  const { products } = await import('@/content/products')
-  return products.find((p) => p.id === id) ?? null
+  return fb
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {
@@ -189,4 +248,13 @@ export const getSiteConfig = cache(function getSiteConfig(): Promise<SiteConfig 
 
 export async function getAboutConfig(): Promise<AboutConfig | null> {
   return fetchFromSanity<AboutConfig>(ABOUT_CONFIG_QUERY)
+}
+
+export async function getFounderConfig(): Promise<FounderConfig | null> {
+  return fetchFromSanity<FounderConfig>(FOUNDER_CONFIG_QUERY)
+}
+
+export async function getFarmPhotos(): Promise<FarmPhoto[]> {
+  const data = await fetchFromSanity<FarmPhoto[]>(FARM_PHOTOS_QUERY)
+  return data ?? []
 }

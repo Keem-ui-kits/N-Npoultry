@@ -33,4 +33,16 @@ export const structure: StructureResolver = (S) =>
             .schemaType('aboutConfig')
             .documentId('aboutConfig')
         ),
+
+      S.listItem()
+        .title('Founder Story')
+        .child(
+          S.document()
+            .schemaType('founderConfig')
+            .documentId('founderConfig')
+        ),
+
+      S.listItem()
+        .title('Farm Gallery Photos')
+        .child(S.documentTypeList('farmPhoto')),
     ])

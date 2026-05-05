@@ -123,14 +123,20 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
             variants={imageVariants}
           >
             <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ background: `radial-gradient(ellipse at center, #ECCC74 0%, transparent 70%)` }} />
-            <Image
-              src={images[0] ?? ''}
-              alt="Hero Image 1"
-              fill
-              sizes="(max-width: 640px) 224px, (max-width: 1024px) 320px, 384px"
-              priority
-              className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
-            />
+            {images[0] ? (
+              <Image
+                src={images[0]}
+                alt="Hero Image 1"
+                fill
+                sizes="(max-width: 640px) 224px, (max-width: 1024px) 320px, 384px"
+                priority
+                className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
+              />
+            ) : (
+              <div className="relative z-10 w-full h-full flex items-center justify-center bg-muted rounded-xl border border-dashed border-border opacity-50">
+                <span className="text-xs text-muted-foreground uppercase tracking-widest font-bold">N&N Branding</span>
+              </div>
+            )}
           </motion.div>
           <motion.div
             className="absolute right-0 top-1/3 h-48 w-48 rounded-[3rem] bg-card dark:bg-brand-dark/60 border border-border dark:border-white/10 shadow-2xl sm:h-72 sm:w-72 hover:scale-105 transition-transform duration-500 cursor-pointer group overflow-hidden flex items-center justify-center p-4 sm:p-8"
@@ -138,13 +144,15 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
             variants={imageVariants}
           >
             <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ background: `radial-gradient(ellipse at center, #4ade80 0%, transparent 70%)` }} />
-            <Image
-              src={images[1] ?? ''}
-              alt="Hero Image 2"
-              fill
-              sizes="(max-width: 640px) 192px, (max-width: 1024px) 288px, 320px"
-              className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
-            />
+            {images[1] && (
+              <Image
+                src={images[1]}
+                alt="Hero Image 2"
+                fill
+                sizes="(max-width: 640px) 192px, (max-width: 1024px) 288px, 320px"
+                className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
+              />
+            )}
           </motion.div>
           <motion.div
             className="absolute bottom-0 left-0 h-40 w-40 rounded-[3rem] bg-card dark:bg-brand-dark/60 border border-border dark:border-white/10 shadow-2xl sm:h-64 sm:w-64 hover:scale-105 transition-transform duration-500 cursor-pointer group overflow-hidden flex items-center justify-center p-4 sm:p-6"
@@ -152,13 +160,15 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
             variants={imageVariants}
           >
             <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ background: `radial-gradient(ellipse at center, #ef4444 0%, transparent 70%)` }} />
-            <Image
-              src={images[2] ?? ''}
-              alt="Hero Image 3"
-              fill
-              sizes="(max-width: 640px) 160px, (max-width: 1024px) 256px, 288px"
-              className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
-            />
+            {images[2] && (
+              <Image
+                src={images[2]}
+                alt="Hero Image 3"
+                fill
+                sizes="(max-width: 640px) 160px, (max-width: 1024px) 256px, 288px"
+                className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
+              />
+            )}
           </motion.div>
         </motion.div>
         <motion.div className="mt-8 mb-6 flex lg:hidden flex-wrap justify-end gap-6 w-full" variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>

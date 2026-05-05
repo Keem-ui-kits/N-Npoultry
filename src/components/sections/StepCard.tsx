@@ -88,8 +88,6 @@ export function StepCard({ step, index }: StepCardProps) {
         rotateY: (x - 0.5) * 16,
         translateZ: (y - 0.5) * 40,
         duration: 0.3,
-        glowX: x * 100,
-        glowY: y * 100,
         ease: 'power2.out',
         transformPerspective: 1000,
       });

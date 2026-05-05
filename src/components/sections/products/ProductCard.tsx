@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Send, MessageCircle } from 'lucide-react';
+import { Send, MessageCircle, Users } from 'lucide-react';
 import { siteConfig } from '@/content/site';
 import type { Product } from '@/types/product';
 import { lerp, mapRange, getValueFromRanges } from '@/lib/math';
@@ -195,7 +195,7 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
   return (
     <div
       ref={cardRef}
-      className="absolute top-52 md:top-auto w-[92vw] sm:w-[85vw] max-w-6xl h-auto md:h-[65vh] flex flex-col md:flex-row overflow-visible rounded-3xl bg-card dark:bg-brand-dark shadow-2xl origin-center preserve-3d perspective-1000 border border-border dark:border-white/10"
+      className="absolute top-52 md:top-auto w-[92vw] sm:w-[85vw] max-w-6xl h-auto md:h-[65vh] flex flex-col md:flex-row overflow-visible rounded-3xl bg-card dark:bg-brand-dark shadow-2xl origin-center preserve-3d perspective-1000 border border-border dark:border-white/10 group/card"
       style={{
         willChange: 'transform, opacity',
       }}
@@ -204,6 +204,13 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
         ref={contentRef}
         className="flex-1 p-8 md:p-12 flex flex-col justify-center relative z-10 preserve-3d"
       >
+        <div className="flex items-center gap-3 mb-2 preserve-3d">
+          {product.popular && (
+            <span className="text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-brand-gold/15 text-brand-gold border border-brand-gold/25 flex-shrink-0">
+              Most Popular
+            </span>
+          )}
+        </div>
         <h3
           ref={titleRef}
           className="text-foreground dark:text-white text-2xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 tracking-tight preserve-3d"
@@ -235,6 +242,41 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
             </div>
           ))}
         </div>
+
+        {product.bestFor && product.bestFor.length > 0 && (
+          <div className="mt-5 preserve-3d">
+            <div className="flex items-center gap-1.5 mb-2">
+              <Users className="w-3.5 h-3.5 text-white/35" />
+              <span className="text-[10px] font-bold tracking-widest uppercase text-white/35">
+                Best for
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {product.bestFor.map((audience, i) => (
+                <span
+                  key={i}
+                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/5 text-white/60 border border-white/10"
+                >
+                  {audience}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {product.objections && product.objections.length > 0 && (
+          <div className="mt-5 space-y-2 preserve-3d">
+            {product.objections.map((obj, i) => (
+              <details key={i} className="group">
+                <summary className="flex items-center gap-2 cursor-pointer text-xs text-white/45 hover:text-white/70 transition-colors list-none">
+                  <span className="text-brand-gold/60 text-base leading-none">›</span>
+                  <span className="font-medium">{obj.q}</span>
+                </summary>
+                <p className="mt-1 ml-4 text-xs text-white/40 leading-relaxed">{obj.a}</p>
+              </details>
+            ))}
+          </div>
+        )}
 
         <div className="mt-8 flex gap-4 preserve-3d">
           <Link
@@ -274,6 +316,30 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
             quality={85}
           />
         </div>
+
+        {/* Peek-behind hover panel — desktop only */}
+        {product.bestFor && product.bestFor.length > 0 && (
+          <div
+            className="absolute bottom-0 left-0 right-0 hidden md:block pointer-events-none translate-y-full group-hover/card:translate-y-0 transition-transform duration-300 ease-out"
+            aria-hidden="true"
+          >
+            <div className="px-8 pb-6 pt-10 bg-gradient-to-t from-black/80 via-black/60 to-transparent rounded-br-3xl">
+              <p className="text-[10px] font-bold tracking-widest uppercase text-white/40 mb-2">
+                Most popular with
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {product.bestFor.map((audience, i) => (
+                  <span
+                    key={i}
+                    className="text-xs font-semibold px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/20"
+                  >
+                    {audience}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

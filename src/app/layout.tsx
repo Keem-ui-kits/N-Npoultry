@@ -11,6 +11,7 @@ import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import { siteConfig } from '@/content/site';
+import { products } from '@/content/products';
 import { getSiteConfig } from '@/sanity/lib/queries';
 
 const geistSans = Geist({
@@ -33,13 +34,16 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
-  title: 'N&N Poultry Palace | Farm-Fresh Nutritious Eggs in Machakos',
+  title: {
+    default: 'N&N Poultry Palace | Farm-Fresh Eggs & Poultry Products in Machakos',
+    template: '%s | N&N Poultry Palace',
+  },
   description:
-    'Your trusted source for day-collected table eggs and organic poultry manure. Wholesome, responsibly produced products from our family-run farm in Machakos, Kenya.',
+    'Order farm-fresh table eggs, organic poultry manure, and ex-layer hens from N&N Poultry Palace in Machakos, Kenya. Daily delivery to Syokimau, Athi River, Mlolongo, and surrounding areas.',
   openGraph: {
-    title: 'N&N Poultry Palace | Farm-Fresh Nutritious Eggs',
+    title: 'N&N Poultry Palace | Farm-Fresh Eggs in Machakos, Kenya',
     description:
-      'Daily collected farm-fresh eggs and organic nutrients. Trusted quality from Machakos.',
+      'Daily-collected eggs, organic manure, and quality hens. Trusted by families and businesses across Machakos County.',
     url: siteConfig.baseUrl,
     siteName: siteConfig.name,
     images: [
@@ -47,7 +51,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'N&N Poultry Palace Logo',
+        alt: 'N&N Poultry Palace — fresh eggs and poultry products from Machakos, Kenya',
       },
     ],
     locale: 'en_KE',
@@ -55,8 +59,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'N&N Poultry Palace | Farm-Fresh Eggs',
-    description: 'Quality poultry products straight from the farm.',
+    title: 'N&N Poultry Palace | Farm-Fresh Eggs — Machakos, Kenya',
+    description: 'Daily-collected eggs, organic poultry manure, and quality hens. WhatsApp ordering available.',
     images: ['/og-image.png'],
   },
   verification: {
@@ -89,10 +93,31 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       addressRegion: 'Machakos County',
       addressCountry: 'KE',
     },
-    areaServed: {
-      '@type': 'State',
-      name: 'Machakos County',
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: -1.5177,
+      longitude: 37.2634,
     },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'N&N Poultry Palace Products',
+      itemListElement: products.map((p) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Product',
+          name: `${p.title} ${p.titleAccent}`,
+          description: p.description,
+        },
+      })),
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Machakos' },
+      { '@type': 'City', name: 'Syokimau' },
+      { '@type': 'City', name: 'Athi River' },
+      { '@type': 'City', name: 'Mlolongo' },
+      { '@type': 'City', name: 'Katoloni' },
+      { '@type': 'City', name: 'Mwala' },
+    ],
     ...(socialLinks.length > 0 ? { sameAs: socialLinks } : {}),
     openingHoursSpecification: [
       {
@@ -107,11 +132,67 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         opens: '08:00',
         closes: '12:00',
       },
+    ],
+  };
+
+  const productSchemas = products.map((p) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: `${p.title} ${p.titleAccent}`,
+    description: p.fullDescription,
+    image: `${siteConfig.baseUrl}${p.image}`,
+    brand: { '@type': 'Brand', name: siteConfig.name },
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      seller: { '@type': 'Organization', name: siteConfig.name },
+      areaServed: 'Machakos County, Kenya',
+    },
+  }));
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
       {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: 'Sunday',
-        opens: '00:00',
-        closes: '00:00',
+        '@type': 'Question',
+        name: 'How do I order eggs from N&N Poultry Palace?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The easiest way is to send a WhatsApp message to +254113377623. Tell us what you need — 30pc trays of table eggs, poultry manure, or ex-layer hens — and we will confirm the price and next delivery slot within minutes.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Which areas do you deliver to?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'We deliver daily to Machakos Town, Syokimau, Athi River, Mlolongo, Katoloni, and Mwala. Contact us if you are in a nearby area — we may be able to arrange delivery.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How fresh are the eggs?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Our eggs are collected daily at 6:30 AM, inspected and packed by 9 AM, and delivered the same day. We guarantee a maximum 24–48 hour farm-to-delivery window.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Do you sell in bulk for businesses?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. We supply restaurants, kiosks, bakeries, and wholesale distributors. Contact us via WhatsApp or our contact form to discuss bulk pricing and standing orders.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is poultry manure used for?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Our poultry manure is a fully organic fertilizer rich in nitrogen, phosphorus, and potassium. It is suitable for kitchen gardens, commercial farms, and all crop types. Available in 70kg bulk sacks.',
+        },
       },
     ],
   };
@@ -136,8 +217,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" data-scroll-behavior="smooth" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preload" as="image" href="/images/hero-bg.jpeg" fetchPriority="high" />
-        <link rel="preload" as="font" type="font/woff2" href="/fonts/made-tommy/MadeTommy-Regular.woff2" crossOrigin="anonymous" />
-        <link rel="manifest" href="/manifest.json" />
+<link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/nn-poultry-logo.png" />
         <script
           type="application/ld+json"
@@ -146,6 +226,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        {productSchemas.map((schema, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       </head>
       <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>

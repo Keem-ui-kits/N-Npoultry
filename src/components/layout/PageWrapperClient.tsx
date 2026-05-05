@@ -1,9 +1,6 @@
 'use client';
 
 import { Navbar } from '@/components/layout/Navbar';
-import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname } from 'next/navigation';
-import { InfiniteRibbon } from '@/components/ui/infinite-ribbon';
 
 interface PageWrapperClientProps {
   children: React.ReactNode;
@@ -11,7 +8,6 @@ interface PageWrapperClientProps {
 }
 
 export function PageWrapperClient({ children, footer }: PageWrapperClientProps) {
-  const pathname = usePathname();
 
   return (
     <div className="flex flex-col min-h-screen relative">

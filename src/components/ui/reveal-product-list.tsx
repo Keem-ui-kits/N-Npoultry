@@ -50,13 +50,19 @@ function RevealProductItem({ product, index }: RevealProductItemProps) {
           style={{ background: `radial-gradient(ellipse at center, ${accentColor}, transparent 70%)` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
-        <Image
-          src={product.image}
-          alt=""
-          fill
-          className="object-contain p-3 drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
-          sizes="(max-width: 640px) 80px, 112px"
-        />
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt=""
+            fill
+            className="object-contain p-3 drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
+            sizes="(max-width: 640px) 80px, 112px"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/5">
+            <span className="text-[10px] font-bold text-white/20 uppercase tracking-tighter">N&N</span>
+          </div>
+        )}
       </div>
 
       {/* Desktop: hover-reveal overlay */}
@@ -69,13 +75,19 @@ function RevealProductItem({ product, index }: RevealProductItemProps) {
           style={{ background: `radial-gradient(ellipse at center, ${accentColor}, transparent 70%)` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10" />
-        <Image
-          src={product.image}
-          alt=""
-          fill
-          className="object-contain p-3 drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
-          sizes="(max-width: 1280px) 144px, 176px"
-        />
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt=""
+            fill
+            className="object-contain p-3 drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
+            sizes="(max-width: 1280px) 144px, 176px"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/5">
+            <span className="text-xs font-bold text-white/20 uppercase tracking-widest">N&N</span>
+          </div>
+        )}
       </div>
 
       {/* Glow underline slides in on hover */}

@@ -89,6 +89,49 @@ function MobileProductLayout({ product, badge }: { product: Product; badge: stri
           </ul>
         </motion.div>
       )}
+
+      {product.bestFor && product.bestFor.length > 0 && (
+        <motion.div
+          className="flex flex-wrap gap-2"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, delay: 0.22 }}
+        >
+          <p className="w-full text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: `${accentHex}70` }}>
+            Best for
+          </p>
+          {product.bestFor.map((audience, i) => (
+            <span
+              key={i}
+              className="text-xs font-semibold px-3 py-1 rounded-full"
+              style={{ background: `${accentHex}12`, color: accentHex, border: `1px solid ${accentHex}28` }}
+            >
+              {audience}
+            </span>
+          ))}
+        </motion.div>
+      )}
+
+      {product.objections && product.objections.length > 0 && (
+        <motion.div
+          className="mt-6 space-y-4 pt-6 border-t border-border/50 dark:border-white/10"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <p className="text-[10px] font-black uppercase tracking-widest" style={{ color: `${accentHex}80` }}>Common Questions</p>
+          <div className="space-y-3">
+            {product.objections.map((obj, i) => (
+              <div key={i} className="text-sm text-muted-foreground leading-snug">
+                <strong className="text-foreground block">{obj.q}</strong>
+                {obj.a}
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 }
@@ -98,8 +141,8 @@ function PrimaryProductRow({ product }: { product: Product }) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imageYMotion = useTransform(scrollYProgress, [0, 1], ['5%', '-5%']);
-  const imageY = prefersReduced ? undefined : imageYMotion;
+  const imageYRaw = useTransform(scrollYProgress, [0, 1], ['4%', '-4%']);
+  const imageY = prefersReduced ? '0%' : imageYRaw;
   const accentHex = resolveAccent(product.color);
 
   return (
@@ -174,11 +217,47 @@ function PrimaryProductRow({ product }: { product: Product }) {
               </ul>
             </div>
           )}
+
+          {product.bestFor && product.bestFor.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-1">
+              <p className="w-full text-xs font-black uppercase tracking-widest mb-1" style={{ color: `${accentHex}70` }}>
+                Best for
+              </p>
+              {product.bestFor.map((audience, i) => (
+                <span
+                  key={i}
+                  className="text-xs font-semibold px-3 py-1 rounded-full"
+                  style={{ background: `${accentHex}12`, color: accentHex, border: `1px solid ${accentHex}28` }}
+                >
+                  {audience}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {product.objections && product.objections.length > 0 && (
+            <div className="pt-6 mt-4 border-t border-border/50 dark:border-white/10">
+              <p className="text-xs font-black uppercase tracking-widest mb-4" style={{ color: `${accentHex}80` }}>
+                Common Questions
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {product.objections.map((obj, i) => (
+                  <div
+                    key={i}
+                    className={`text-sm text-muted-foreground ${i === product.objections!.length - 1 && product.objections!.length % 2 !== 0 ? 'sm:col-span-2' : ''}`}
+                  >
+                    <strong className="text-foreground block mb-1">{obj.q}</strong>
+                    {obj.a}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Large image panel */}
-        <div
-          style={{ borderColor: `${accentHex}20` }}
+        <motion.div
+          style={{ borderColor: `${accentHex}20`, y: imageY }}
           className="relative lg:min-h-[580px] rounded-[3rem] overflow-hidden group shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] border"
         >
           <div
@@ -204,7 +283,7 @@ function PrimaryProductRow({ product }: { product: Product }) {
               Our Star Product
             </span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
     </div>
@@ -284,6 +363,20 @@ function SecondaryProductRow({ product, index }: { product: Product; index: numb
                 </motion.li>
               ))}
             </ul>
+          )}
+
+          {product.bestFor && product.bestFor.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 pt-2">
+              {product.bestFor.map((audience, i) => (
+                <span
+                  key={i}
+                  className="text-xs font-semibold px-2.5 py-0.5 rounded-full"
+                  style={{ background: `${accentHex}10`, color: `${accentHex}cc`, border: `1px solid ${accentHex}25` }}
+                >
+                  {audience}
+                </span>
+              ))}
+            </div>
           )}
         </div>
       </div>

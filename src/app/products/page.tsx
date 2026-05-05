@@ -36,7 +36,7 @@ export default async function ProductsPage() {
       <PageHeader
         title="Our"
         accent="Products"
-        subtitle="Farm-fresh excellence delivered daily from our palace to your doorstep."
+        subtitle="Eggs collected this morning, delivered from our farm to your door."
       />
       <ProductsDetailed products={products} />
     </PageWrapper>

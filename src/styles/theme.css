@@ -42,6 +42,13 @@
   /* Product accent colors */
   --product-green: #4ade80;
   --product-red: #ef4444;
+
+  /* Earth Tones */
+  --brand-cream: #f5f0e8;
+  --brand-soil: #8b5e3c;
+  --brand-sage: #7a9e7e;
+  --brand-terracotta: #c0613b;
+  --brand-straw: #d4a847;
 }
 
 .dark {
@@ -113,17 +120,63 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-product-green: var(--product-green);
   --color-product-red: var(--product-red);
+
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-soil: var(--brand-soil);
+  --color-brand-sage: var(--brand-sage);
+  --color-brand-terracotta: var(--brand-terracotta);
+  --color-brand-straw: var(--brand-straw);
+
+  --animate-gradient: gradient 8s linear infinite;
 }
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
+  }
+}
+
+@keyframes gallery-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 
 @layer utilities {
   .gradient-brand {
     background-image: linear-gradient(to right, var(--brand-gold), var(--brand-orange));
   }
   .gradient-brand-text {
-    background-image: linear-gradient(to right, var(--brand-gold), var(--brand-orange));
+    background: linear-gradient(
+      to right,
+      var(--brand-gold) 0%,
+      var(--brand-orange) 15%,
+      var(--brand-gold) 35%,
+      #ffffff 50%,
+      var(--brand-gold) 65%,
+      var(--brand-orange) 85%,
+      var(--brand-gold) 100%
+    );
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradient 6s linear infinite;
+  }
+  .gradient-brand-glow {
+    background: linear-gradient(
+      to right,
+      rgba(236, 204, 116, 0.3) 0%,
+      rgba(245, 146, 104, 0.3) 25%,
+      rgba(236, 204, 116, 0.6) 50%,
+      rgba(245, 146, 104, 0.3) 75%,
+      rgba(236, 204, 116, 0.3) 100%
+    );
+    background-size: 200% auto;
+    animation: gradient 6s linear infinite;
   }
   .preserve-3d {
     transform-style: preserve-3d;

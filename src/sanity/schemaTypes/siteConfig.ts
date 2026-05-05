@@ -56,6 +56,19 @@ export default defineType({
         defineField({ name: 'values', type: 'array', of: [{ type: 'text' }] }),
       ],
     }),
+    defineField({
+      name: 'availability',
+      title: 'Current Stock Availability',
+      description: 'Update weekly to show live stock on the website',
+      type: 'object',
+      fields: [
+        defineField({ name: 'tableEggs', title: 'Egg Trays Available (number)', type: 'number' }),
+        defineField({ name: 'manure', title: 'Manure Sacks Available (number)', type: 'number' }),
+        defineField({ name: 'exLayerHens', title: 'Ex-Layer Hens Available (number)', type: 'number' }),
+        defineField({ name: 'lastUpdated', title: 'Last Updated', type: 'datetime' }),
+        defineField({ name: 'note', title: 'Availability Note (e.g. "Only 4 trays left for afternoon dispatch")', type: 'string' }),
+      ],
+    }),
   ],
   preview: {
     select: { title: 'baseUrl' },

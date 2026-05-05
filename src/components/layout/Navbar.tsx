@@ -3,6 +3,7 @@
 import { gsap } from 'gsap';
 import { Send } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -138,7 +139,7 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-1 transition-opacity relative cursor-pointer group"
+            className="navbar-brand flex items-center gap-1 transition-opacity relative cursor-pointer group"
             onClick={(e) => {
               if (pathname === '/') {
                 e.preventDefault();
@@ -148,10 +149,20 @@ export function Navbar() {
             aria-label="Home"
           >
             <div
-              className={`flex items-center font-bold tracking-tight uppercase text-lg md:text-xl py-1 transition-colors duration-300 text-white`}
+              className={`flex items-center font-bold tracking-tight uppercase text-xl md:text-2xl py-1 transition-colors duration-300 text-white`}
             >
-              <span>N&N POULTRY</span>
-              <span className="text-brand-gold ml-1.5">PALACE</span>
+              <div className="flex items-center gap-2">
+                <Image 
+                  src="/nn-brand-text.png" 
+                  alt="N&N" 
+                  width={50} 
+                  height={32} 
+                  className="h-8 md:h-10 w-auto object-contain brightness-110"
+                />
+                <div className="flex items-baseline gap-1.5">
+                  <span>POULTRY PALACE</span>
+                </div>
+              </div>
             </div>
           </Link>
 

@@ -9,24 +9,24 @@ const steps = [
     icon: Phone,
     title: 'Inquire',
     description:
-      "Reach out via phone or form. Tell us what you need — eggs, manure, or hens — and we'll guide you.",
+      'Message us on WhatsApp with what you need — eggs, manure, or hens. We reply within minutes, not hours.',
   },
   {
     icon: ClipboardList,
     title: 'Order',
-    description: 'We confirm quantities, pricing, and delivery schedule tailored to your needs.',
+    description: 'We confirm your quantity, current price, and the next available delivery slot. Simple and transparent.',
   },
   {
     icon: Truck,
     title: 'Deliver',
     description:
-      'Farm-fresh products dispatched same-day, with careful packaging and reliable transport.',
+      'Your order is packed fresh and dispatched on our daily route. We cover Machakos Town, Syokimau, Athi River, and beyond.',
   },
   {
     icon: ShieldCheck,
     title: 'Guarantee',
     description:
-      'Every product is inspected and quality-assured. Your satisfaction is our standard.',
+      'Every tray is shell-checked before it leaves the farm. If something is wrong when it arrives, we make it right.',
   },
 ];
 
@@ -48,7 +48,7 @@ export function HowWeWork() {
               }}
               className="relative z-10 text-white"
             >
-              Farm to table.
+              Order today.
             </span>
             <br />
             <span
@@ -60,7 +60,7 @@ export function HowWeWork() {
               className="relative z-10 text-white"
             >
               <span className="relative inline-block">
-                <span className="gradient-brand-text">Done right.</span>
+                <span className="gradient-brand-text">Delivered tomorrow.</span>
               </span>
             </span>
           </h2>
@@ -69,7 +69,7 @@ export function HowWeWork() {
             style={{ transformStyle: 'preserve-3d' }}
             className="text-base sm:text-lg md:text-xl text-white/50 max-w-2xl mx-auto px-4"
           >
-            A simple, transparent process from your first inquiry to doorstep delivery.
+            Four steps from your first message to fresh eggs at your door. No guesswork, no delays.
           </p>
         </div>
 

@@ -10,6 +10,9 @@ export interface Product {
   color: string;
   colorRgb?: [number, number, number];
   gradient: string;
+  bestFor?: string[];
+  popular?: boolean;
+  objections?: { q: string; a: string }[];
 }
 
 export interface ProductPricingTier {

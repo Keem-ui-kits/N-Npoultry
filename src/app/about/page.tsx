@@ -1,8 +1,9 @@
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { About } from '@/components/sections/About';
 import { Testimonials } from '@/components/sections/Testimonials';
+import { FounderStory } from '@/components/sections/FounderStory';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
-import { getAboutConfig, getTestimonials } from '@/sanity/lib/queries';
+import { getAboutConfig, getTestimonials, getFounderConfig } from '@/sanity/lib/queries';
 import type { Metadata } from 'next';
 import { siteConfig } from '@/content/site';
 
@@ -28,15 +29,19 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const [testimonials, aboutConfig] = await Promise.all([
+  const [testimonials, aboutConfig, founder] = await Promise.all([
     getTestimonials(),
     getAboutConfig(),
+    getFounderConfig(),
   ]);
 
   return (
     <PageWrapper>
       <ErrorBoundary>
         <About aboutConfig={aboutConfig} />
+      </ErrorBoundary>
+      <ErrorBoundary>
+        <FounderStory founder={founder} />
       </ErrorBoundary>
       <ErrorBoundary>
         <Testimonials testimonials={testimonials} />

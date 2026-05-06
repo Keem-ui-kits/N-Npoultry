@@ -24,7 +24,7 @@ export const products: Product[] = [
     popular: true,
     objections: [
       { q: 'Do you deliver on weekends?', a: 'We deliver Mon–Sat. Saturday slots fill quickly — message early.' },
-      { q: 'What if an egg breaks in transit?', a: 'We pack carefully and replace any cracked eggs on the next delivery.' },
+      { q: 'What if an egg breaks in transit?', a: 'At time of delivery, any breakage is replaced to ensure quality and value.' },
       { q: 'Can I order less than a tray?', a: 'Our minimum is one 30pc tray. For smaller quantities, ask us — we may have loose stock.' },
     ],
   },

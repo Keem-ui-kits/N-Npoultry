@@ -8,7 +8,6 @@ import { TestimonialsTeaser } from '@/components/sections/TestimonialsTeaser';
 import { EducationHubTeaser } from '@/components/sections/EducationHubTeaser';
 import { ContactCTA } from '@/components/sections/ContactCTA';
 import { FarmGallery } from '@/components/sections/FarmGallery';
-import { BroadcastSignup } from '@/components/sections/BroadcastSignup';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import type { Metadata } from 'next';
 import { siteConfig } from '@/content/site';
@@ -68,14 +67,11 @@ export default async function Home() {
       <ErrorBoundary>
         <HowWeWork />
       </ErrorBoundary>
-      <ErrorBoundary>
-        <ProductsTeaser />
-      </ErrorBoundary>
+      <ProductsTeaser />
       <ErrorBoundary>
         <TestimonialsTeaser />
       </ErrorBoundary>
       <EducationHubTeaser />
-      <BroadcastSignup whatsapp={config?.contacts?.whatsapp} />
       <ContactCTA whatsapp={config?.contacts?.whatsapp} />
     </PageWrapper>
   );

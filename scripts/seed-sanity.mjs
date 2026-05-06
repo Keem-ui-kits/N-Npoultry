@@ -321,14 +321,14 @@ const aboutConfig = {
 const founderConfig = {
   _id: 'founderConfig',
   _type: 'founderConfig',
-  founderName: 'Nelson Mutua',
-  founderRole: 'Founder & Farm Manager',
-  yearsOnFarm: 8,
-  founderQuote: "Farming is not just about production — it's about building something your community can count on.",
+  founderName: 'The Kyalos',
+  founderRole: 'Founder & Directors',
+  yearsOnFarm: 5,
+  founderQuote: 'Integrity, teamwork and consistency are out guiding principles.',
   founderStory: [
-    "I started N&N in 2017 with a single brooding house and a lot of uncertainty. I'd spent years watching other farmers struggle with inconsistent markets and unreliable suppliers, and I knew there had to be a better way.",
-    "The name N&N comes from my family — my wife Naomi and I built this together from the ground up. The first year was hard. We lost batches, we made mistakes, we learned. But we never compromised on the quality of what we sent out.",
-    "Today, when a kiosk owner in Athi River tells me our eggs are the only ones her customers ask for by name — that's what it's all about. That trust is everything we've worked for.",
+    'We started N&N in 2021 during the Covid19 era with broiler chicken just as a backyard project. Due to lack of market for broilers after controlled movement to eateries, we decided to venture into layers breed from 2022 and that is when the company was officially registered.\nWith disease challenges, we became more resilient through online training and seminars organized by Kenchic and other poultry input traders.\nWe also made considerable research in poultry farming; not mentioning the several visits to a number of farms.',
+    'The name N&N comes from a family setup - our two daughters bear the initials. \nThe first year was hard. We lost batches, we made mistakes, we learned. But we never compromised on the quality of what we sent out.',
+    "Today, when a kiosk owner in Athi River tells me our eggs are the only ones her customers ask for by name — that's what it's all about. That trust is everything we've worked for.\n\n\"Every egg, every day, done right.\"",
   ],
 }
 

@@ -5,15 +5,15 @@ import { motion } from 'framer-motion';
 import type { FounderConfig } from '@/sanity/lib/queries';
 
 const PLACEHOLDER: FounderConfig = {
-  founderName: 'The N&N Family',
-  founderRole: 'Founders & Farm Managers',
+  founderName: 'The Kyalos',
+  founderRole: 'Founder & Directors',
   yearsOnFarm: 5,
   founderPhotoUrl: '/nn-poultry-logo.png',
-  founderQuote:
-    "Farming isn't something we do for a living. It's something we do because we can't imagine doing anything else.",
+  founderQuote: 'Integrity, teamwork and consistency are our guiding principles.',
   founderStory: [
-    'Every flock teaches you something different. After five years on this land, we still find ourselves learning — about the birds, about the soil, about the rhythms of a Machakos morning. That knowledge doesn\'t come from a textbook. It comes from being here, daily.',
-    "What keeps us going isn't the business side. It's the moment a customer tells us their family has been buying from us for two years and their kids won't eat any other eggs. That's the part you can't measure.",
+    'We started N&N in 2021 during the Covid19 era with broiler chicken just as a backyard project. Due to lack of market for broilers after controlled movement to eateries, we decided to venture into layers breed from 2022 and that is when the company was officially registered.\nWith disease challenges, we became more resilient through online training and seminars organized by Kenchic and other poultry input traders.\nWe also made considerable research in poultry farming; not mentioning the several visits to a number of farms.',
+    'The name N&N comes from a family setup - our two daughters bear the initials. \nThe first year was hard. We lost batches, we made mistakes, we learned. But we never compromised on the quality of what we sent out.',
+    "Today, when a kiosk owner in Athi River tells me our eggs are the only ones her customers ask for by name — that's what it's all about. That trust is everything we've worked for.\n\n\"Every egg, every day, done right.\"",
   ],
 };
 

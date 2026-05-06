@@ -32,8 +32,8 @@ export function FarmPulse({
       icon: Egg,
       color: '#eccc74',
       badge: getFarmBadge(),
-      title: "Today's batch — collected at 6:30am",
-      body: "Our hens lay through the night and we collect at dawn. By the time your order is confirmed, the eggs haven't been sitting for more than a few hours.",
+      title: "Today's batch — Collection starts at 2pm",
+      body: "Hens lay from dawn to slightly past midday. Collection and grading start from 2pm to 4pm. Previous day's collection is sold in the local market every day to retain quality and freshness.",
       stat: '24–48hrs',
       statLabel: 'Farm to delivery',
     },
@@ -61,106 +61,95 @@ export function FarmPulse({
       cta: { label: 'Message us on WhatsApp', href: waUrl },
     },
   ];
-  return (
-    <section className="relative py-20 md:py-28 bg-background overflow-hidden">
-      {/* Subtle ambient glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[140px] opacity-[0.04] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, #eccc74, #f59268, transparent)' }}
-        aria-hidden="true"
-      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
+  return (
+    <section className="relative py-24 md:py-32 bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Left-aligned header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-12 md:mb-16"
+          className="mb-14 md:mb-20 max-w-2xl"
         >
-          <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-white/15 bg-white/5">
+          <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-brand-gold/25 bg-brand-gold/[0.07]">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-gold" />
             </span>
-            <span className="text-xs font-bold tracking-widest uppercase text-brand-gold">
+            <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-brand-gold">
               Farm Pulse
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[0.95] uppercase text-white">
-            What&apos;s <span className="gradient-brand-text">Happening</span>{' '}
-            at the Farm
+
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.9] uppercase text-white">
+            What&apos;s{' '}
+            <span className="gradient-brand-text">Happening</span>
+            <br />at the Farm
           </h2>
-          <p className="mt-4 text-lg text-white/50 max-w-xl leading-relaxed">
-            This is a real working farm — here&apos;s a window into how we operate every day.
+          <p className="mt-5 text-base md:text-lg text-white/45 max-w-xl leading-relaxed">
+            Every egg you order was laid here, graded here, and dispatched from here. No cold storage, no middlemen — just our farm in Machakos County.
           </p>
         </motion.div>
 
         {/* Cards grid */}
-        <div className="grid md:grid-cols-2 gap-5 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
           {pulseCards.map((card, i) => {
             const Icon = card.icon;
             return (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 32 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
-                className="group relative rounded-[2rem] border border-white/8 bg-white/[0.025] p-7 md:p-8 hover:border-white/16 hover:bg-white/[0.05] transition-all duration-300 overflow-hidden"
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: i * 0.07 }}
+                className="group flex flex-col gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 md:p-8 transition-colors duration-300 hover:bg-white/[0.05]"
               >
-                {/* Subtle corner accent */}
-                <div
-                  className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl opacity-[0.06] pointer-events-none"
-                  style={{ background: card.color }}
-                  aria-hidden="true"
-                />
-
-                {/* Top row */}
-                <div className="flex items-center justify-between mb-5">
+                {/* Icon + badge */}
+                <div className="flex items-center gap-3">
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center"
-                    style={{ background: `${card.color}1a`, border: `1px solid ${card.color}33` }}
+                    className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: `${card.color}12`, border: `1px solid ${card.color}28` }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: card.color }} />
+                    <Icon className="w-4 h-4" style={{ color: card.color }} />
                   </div>
                   <span
-                    className="text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full"
-                    style={{
-                      background: `${card.color}15`,
-                      color: card.color,
-                      border: `1px solid ${card.color}30`,
-                    }}
+                    className="text-[10px] font-bold tracking-[0.16em] uppercase px-2.5 py-1 rounded-full"
+                    style={{ color: card.color, background: `${card.color}10`, border: `1px solid ${card.color}22` }}
                   >
                     {card.badge}
                   </span>
                 </div>
 
-                <h3 className="text-xl font-black text-white mb-3 leading-snug">{card.title}</h3>
-                <p className="text-sm text-white/55 leading-relaxed mb-5">{card.body}</p>
+                {/* Title */}
+                <h3 className="text-lg md:text-xl font-black text-white leading-snug">
+                  {card.title}
+                </h3>
 
-                {/* Stat or zones or CTA */}
-                {'stat' in card && card.stat !== undefined && (
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl font-black" style={{ color: card.color }}>
+                {/* Body */}
+                <p className="text-sm md:text-base text-white/50 leading-relaxed flex-1">{card.body}</p>
+
+                {/* Meta */}
+                {'stat' in card && card.stat && (
+                  <div className="flex items-baseline gap-2 mt-auto pt-2">
+                    <span className="text-2xl md:text-3xl font-black" style={{ color: card.color }}>
                       {card.stat}
                     </span>
-                    <span className="text-xs text-white/40 font-medium">{card.statLabel}</span>
+                    <span className="text-[10px] text-white/35 font-bold uppercase tracking-widest">
+                      {card.statLabel}
+                    </span>
                   </div>
                 )}
 
                 {'zones' in card && card.zones && (
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
                     {card.zones.map((zone) => (
                       <span
                         key={zone}
-                        className="text-xs font-semibold px-3 py-1 rounded-full"
-                        style={{
-                          background: `${card.color}12`,
-                          color: card.color,
-                          border: `1px solid ${card.color}25`,
-                        }}
+                        className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full"
+                        style={{ color: card.color, background: `${card.color}10`, border: `1px solid ${card.color}20` }}
                       >
                         {zone}
                       </span>
@@ -173,7 +162,7 @@ export function FarmPulse({
                     href={card.cta.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-bold transition-all duration-200 hover:gap-3"
+                    className="inline-flex items-center gap-2 text-sm font-bold transition-all duration-200 group-hover:gap-3 active:scale-[0.98] mt-auto pt-2"
                     style={{ color: card.color }}
                   >
                     {card.cta.label}

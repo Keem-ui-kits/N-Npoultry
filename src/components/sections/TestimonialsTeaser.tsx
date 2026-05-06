@@ -1,32 +1,31 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { testimonials } from '@/content/testimonials';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Quote } from 'lucide-react';
+import { ArrowRight, Star } from 'lucide-react';
 
-function StarRating({ rating }: { rating: number }) {
+const AUTO_ADVANCE_MS = 5000;
+
+function StarRow({ rating }: { rating: number }) {
   return (
-    <div className="flex items-center gap-0.5 mb-4" aria-label={`${rating} out of 5 stars`}>
+    <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((star) => {
         const filled = rating >= star;
         const half = !filled && rating >= star - 0.5;
         return (
-          <motion.svg
+          <svg
             key={star}
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: star * 0.05, duration: 0.25 }}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            className="w-4 h-4"
+            className="w-3.5 h-3.5"
             fill={filled || half ? '#eccc74' : 'none'}
             stroke="#eccc74"
             strokeWidth="1.5"
           >
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-          </motion.svg>
+          </svg>
         );
       })}
     </div>
@@ -34,78 +33,114 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export function TestimonialsTeaser() {
-  const featured = testimonials.slice(0, 2);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setTimeout(
+      () => setIndex((prev) => (prev + 1) % testimonials.length),
+      AUTO_ADVANCE_MS
+    );
+    return () => clearTimeout(t);
+  }, [index]);
+
+  const current = testimonials[index];
 
   return (
-    <section id="testimonials-teaser" className="py-24 bg-muted/20 dark:bg-brand-dark/20 relative overflow-hidden">
-      {/* Subtle warm glow */}
+    <section
+      id="testimonials-teaser"
+      className="py-24 md:py-32 bg-background border-t border-white/[0.06] relative overflow-hidden"
+    >
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full blur-[100px] opacity-[0.04] pointer-events-none"
+        className="absolute top-0 right-0 w-[500px] h-[400px] rounded-full blur-[130px] opacity-[0.03] pointer-events-none"
         style={{ background: 'radial-gradient(ellipse, #eccc74, transparent)' }}
         aria-hidden="true"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-brand-gold/30 bg-brand-gold/10">
-              <span className="text-xs font-bold tracking-widest uppercase text-brand-gold">Customer Stories</span>
+
+        {/* Section label + heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 md:mb-16"
+        >
+          <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full border border-brand-gold/25 bg-brand-gold/[0.07]">
+            <Star className="w-3 h-3 text-brand-gold" />
+            <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-brand-gold">
+              Customer Stories
+            </span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight leading-[0.9] text-white">
+            What{' '}
+            <span className="gradient-brand-text">Machakos</span>
+            <br className="hidden sm:block" /> is saying
+          </h2>
+        </motion.div>
+
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10 lg:gap-20">
+
+          {/* Auto-cycling testimonial */}
+          <div className="flex-1 border-l-2 border-brand-gold/30 pl-6">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <blockquote className="text-base md:text-lg font-medium text-white/75 leading-relaxed mb-5 italic">
+                  &ldquo;{current.text}&rdquo;
+                </blockquote>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-brand-orange/15 border border-brand-orange/25 flex items-center justify-center font-black text-brand-orange text-xs flex-shrink-0">
+                    {current.name.charAt(0)}
+                  </div>
+                  <div>
+                    <StarRow rating={current.rating} />
+                    <p className="font-bold text-white text-xs mt-0.5">{current.name}</p>
+                    {(current.company || current.location) && (
+                      <p className="text-white/40 text-xs">
+                        {[current.company, current.location].filter(Boolean).join(' · ')}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Progress dots — click to jump */}
+            <div className="flex items-center gap-1.5 mt-6">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIndex(i)}
+                  aria-label={`Go to testimonial ${i + 1}`}
+                  className={`h-1 rounded-full transition-all duration-300 ${
+                    i === index
+                      ? 'w-5 bg-brand-gold'
+                      : 'w-1.5 bg-white/20 hover:bg-white/40'
+                  }`}
+                />
+              ))}
             </div>
-            <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tight">
-              What <span className="gradient-brand-text">Machakos</span> is saying
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground font-medium">
-              From breakfast kiosks in Athi River to family homes in Syokimau — real customers, real orders, real results.
+          </div>
+
+          {/* CTA */}
+          <div className="shrink-0">
+            <p className="text-sm text-white/40 mb-4 max-w-xs leading-relaxed">
+              From breakfast kiosks in Athi River to family homes in Syokimau — real customers, real orders.
             </p>
-          </motion.div>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 mb-16">
-          {featured.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15 }}
-              className="bg-card dark:bg-brand-dark border border-border dark:border-white/10 rounded-2xl p-6 md:p-8 relative shadow-xl group hover:border-brand-gold/20 transition-colors duration-300"
+            <Link
+              href="/about#testimonials"
+              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full border border-white/15 bg-white/[0.04] text-white font-bold text-sm hover:bg-white/[0.08] hover:border-white/25 transition-all duration-200 active:scale-[0.98]"
             >
-              <Quote className="absolute top-6 right-6 w-10 h-10 text-brand-gold opacity-10" />
-              <StarRating rating={item.rating} />
-              <blockquote className="text-base md:text-lg font-medium mb-6 leading-relaxed">
-                {item.text}
-              </blockquote>
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center font-bold text-brand-gold flex-shrink-0">
-                  {item.name.charAt(0)}
-                </div>
-                <div>
-                  <p className="font-bold text-base">{item.name}</p>
-                  {item.company && (
-                    <p className="text-brand-gold text-xs font-semibold">{item.company}</p>
-                  )}
-                  {item.location && (
-                    <p className="text-muted-foreground italic text-xs">{item.location}</p>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="flex justify-center">
-          <Link
-            href="/about#testimonials"
-            className="flex items-center gap-2 px-10 py-4 bg-brand-dark dark:bg-white text-white dark:text-brand-dark rounded-full font-bold text-lg hover:scale-105 transition-all shadow-xl"
-          >
-            Read More Stories
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+              Read more stories
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

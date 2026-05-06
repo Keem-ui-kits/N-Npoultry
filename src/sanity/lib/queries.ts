@@ -90,7 +90,7 @@ export const FOUNDER_CONFIG_QUERY = `*[_type == "founderConfig" && _id == "found
   founderStory
 }`
 
-export const FARM_PHOTOS_QUERY = `*[_type == "farmPhoto"] | order(order asc) {
+export const FARM_PHOTOS_QUERY = `*[_type == "farmPhoto" && defined(photo.asset)] | order(order asc) {
   "url": photo.asset->url,
   alt,
   order
@@ -256,5 +256,5 @@ export async function getFounderConfig(): Promise<FounderConfig | null> {
 
 export async function getFarmPhotos(): Promise<FarmPhoto[]> {
   const data = await fetchFromSanity<FarmPhoto[]>(FARM_PHOTOS_QUERY)
-  return data ?? []
+  return (data ?? []).filter((p) => !!p.url)
 }

@@ -175,7 +175,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         name: 'How fresh are the eggs?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Our eggs are collected daily at 6:30 AM, inspected and packed by 9 AM, and delivered the same day. We guarantee a maximum 24–48 hour farm-to-delivery window.',
+          text: 'Our eggs are collected daily starting at 2 PM, inspected and packed by 5 PM, and delivered fresh to your doorstep within hours. We guarantee a maximum 24–48 hour farm-to-delivery window.',
         },
       },
       {

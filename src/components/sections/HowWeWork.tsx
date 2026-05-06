@@ -34,50 +34,52 @@ export function HowWeWork() {
   return (
     <HowWeWorkClientWrapper>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div data-hww-header className="mb-12 md:mb-16 lg:mb-20 text-center">
+
+        {/* Left-aligned editorial header */}
+        <div data-hww-header className="mb-14 md:mb-20">
+          <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-brand-gold/25 bg-brand-gold/[0.07]">
+            <ClipboardList className="w-3 h-3 text-brand-gold" />
+            <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-brand-gold">
+              How we work
+            </span>
+          </div>
           <h2
             data-hww-title
             style={{ transformStyle: 'preserve-3d' }}
-            className="max-w-68 mx-auto sm:mx-0 sm:max-w-none text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 md:mb-6 relative"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.9] uppercase"
           >
             <span
               data-hww-span1
-              style={{
-                display: 'inline-block',
-                transformStyle: 'preserve-3d',
-              }}
-              className="relative z-10 text-white"
+              style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}
+              className="text-white"
             >
               Order today.
             </span>
             <br />
             <span
               data-hww-span2
-              style={{
-                display: 'inline-block',
-                transformStyle: 'preserve-3d',
-              }}
-              className="relative z-10 text-white"
+              style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}
+              className="gradient-brand-text"
             >
-              <span className="relative inline-block">
-                <span className="gradient-brand-text">Delivered tomorrow.</span>
-              </span>
+              Delivered tomorrow.
             </span>
           </h2>
           <p
             data-hww-para
             style={{ transformStyle: 'preserve-3d' }}
-            className="text-base sm:text-lg md:text-xl text-white/50 max-w-2xl mx-auto px-4"
+            className="text-base md:text-lg text-white/45 max-w-xl mt-5 leading-relaxed"
           >
-            Four steps from your first message to fresh eggs at your door. No guesswork, no delays.
+            Send a WhatsApp message, get your price and slot confirmed in minutes, and receive your order the next morning. Most of Machakos County is on our daily route.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
-          <div className="hidden lg:block absolute top-12 left-0 w-full h-0.5 bg-white/10 -z-10">
+        {/* Step cards grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 relative">
+          {/* Desktop connector line */}
+          <div className="hidden lg:block absolute top-14 left-0 w-full h-px bg-white/[0.04] -z-10">
             <div
               data-hww-line
-              className="h-full bg-gradient-to-r from-brand-gold/30 to-brand-orange/30"
+              className="h-full bg-gradient-to-r from-brand-gold/25 via-brand-orange/20 to-transparent"
             />
           </div>
 

@@ -7,11 +7,11 @@ export function ProductsTeaserDesktop({ products }: { products: Product[] }) {
   const heroData = {
     title: (
       <>
-        Premium <span className="gradient-brand-text">Poultry</span> <br /> Products
+        THREE PRODUCTS <span className="gradient-brand-text">ONE TRUSTED</span> SOURCE
       </>
     ),
     subtitle:
-      'Daily collected farm-fresh eggs and organic nutrients. Trusted quality from Machakos, Kenya.',
+      'Table eggs graded daily, organic manure from our flock, and ex-layer hens when the cycle turns — all raised and dispatched from our farm outside Machakos Town.',
     actions: [
       {
         text: 'Explore All Products',

@@ -107,9 +107,6 @@ interface RevealProductListProps {
 export function RevealProductList({ products }: RevealProductListProps) {
   return (
     <div className="w-full">
-      <p className="text-xs font-black uppercase tracking-widest text-white/30 mb-2 px-1">
-        Our Products
-      </p>
       <div className="flex flex-col">
         {products.map((product, index) => (
           <RevealProductItem key={product.id} product={product} index={index} />

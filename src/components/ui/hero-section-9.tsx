@@ -118,7 +118,7 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
           />
 
           <motion.div
-            className="absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 rounded-[3rem] bg-card dark:bg-brand-dark/60 border border-border dark:border-white/10 shadow-2xl sm:h-80 sm:w-80 hover:scale-105 transition-transform duration-500 cursor-pointer group overflow-hidden flex items-center justify-center p-6 sm:p-10"
+            className="absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 rounded-[3rem] bg-card dark:bg-brand-dark/60 border border-border dark:border-white/10 shadow-2xl sm:h-80 sm:w-80 hover:scale-105 transition-transform duration-500 cursor-pointer group overflow-hidden flex items-center justify-center"
             style={{ transformOrigin: 'bottom center' }}
             variants={imageVariants}
           >
@@ -130,7 +130,7 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
                 fill
                 sizes="(max-width: 640px) 224px, (max-width: 1024px) 320px, 384px"
                 priority
-                className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
+                className="relative z-10 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
             ) : (
               <div className="relative z-10 w-full h-full flex items-center justify-center bg-muted rounded-xl border border-dashed border-border opacity-50">
@@ -139,7 +139,7 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
             )}
           </motion.div>
           <motion.div
-            className="absolute right-0 top-1/3 h-48 w-48 rounded-[3rem] bg-card dark:bg-brand-dark/60 border border-border dark:border-white/10 shadow-2xl sm:h-72 sm:w-72 hover:scale-105 transition-transform duration-500 cursor-pointer group overflow-hidden flex items-center justify-center p-4 sm:p-8"
+            className="absolute right-0 top-1/3 h-48 w-48 rounded-[3rem] bg-card dark:bg-brand-dark/60 border border-border dark:border-white/10 shadow-2xl sm:h-72 sm:w-72 hover:scale-105 transition-transform duration-500 cursor-pointer group overflow-hidden flex items-center justify-center"
             style={{ transformOrigin: 'left center' }}
             variants={imageVariants}
           >
@@ -150,12 +150,12 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
                 alt="Hero Image 2"
                 fill
                 sizes="(max-width: 640px) 192px, (max-width: 1024px) 288px, 320px"
-                className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
+                className="relative z-10 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
             )}
           </motion.div>
           <motion.div
-            className="absolute bottom-0 left-0 h-40 w-40 rounded-[3rem] bg-card dark:bg-brand-dark/60 border border-border dark:border-white/10 shadow-2xl sm:h-64 sm:w-64 hover:scale-105 transition-transform duration-500 cursor-pointer group overflow-hidden flex items-center justify-center p-4 sm:p-6"
+            className="absolute bottom-0 left-0 h-40 w-40 rounded-[3rem] bg-card dark:bg-brand-dark/60 border border-border dark:border-white/10 shadow-2xl sm:h-64 sm:w-64 hover:scale-105 transition-transform duration-500 cursor-pointer group overflow-hidden flex items-center justify-center"
             style={{ transformOrigin: 'top right' }}
             variants={imageVariants}
           >
@@ -166,7 +166,7 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
                 alt="Hero Image 3"
                 fill
                 sizes="(max-width: 640px) 160px, (max-width: 1024px) 256px, 288px"
-                className="relative z-10 h-full w-full rounded-xl object-contain group-hover:scale-105 transition-transform duration-700"
+                className="relative z-10 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
             )}
           </motion.div>

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { FlippingCard } from '@/components/ui/flipping-card';
 import type { FounderConfig } from '@/sanity/lib/queries';
 
 const PLACEHOLDER: FounderConfig = {
@@ -48,16 +49,16 @@ export function FounderStory({ founder }: { founder?: FounderConfig | null }) {
           </span>
         </motion.div>
 
+        {/* --- DESKTOP LAYOUT --- */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-[2.5rem] overflow-hidden border border-white/8 shadow-2xl"
+          className="hidden md:block rounded-[2.5rem] overflow-hidden border border-white/8 shadow-2xl"
           style={{ background: 'rgba(255,255,255,0.025)', backdropFilter: 'blur(12px)' }}
         >
           <div className="grid md:grid-cols-2">
-
             {/* Photo */}
             <div className="relative h-72 md:h-auto min-h-[420px] order-2 md:order-1">
               <Image
@@ -75,17 +76,10 @@ export function FounderStory({ founder }: { founder?: FounderConfig | null }) {
                 }}
                 aria-hidden="true"
               />
-              {/* Bottom fade for mobile */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-24 md:hidden"
-                style={{ background: 'linear-gradient(to top, rgba(3,2,19,0.9), transparent)' }}
-                aria-hidden="true"
-              />
             </div>
 
             {/* Content */}
             <div className="p-8 md:p-12 lg:p-14 flex flex-col justify-center order-1 md:order-2">
-
               {data.founderQuote && (
                 <blockquote className="mb-8">
                   <span
@@ -104,7 +98,7 @@ export function FounderStory({ founder }: { founder?: FounderConfig | null }) {
               {data.founderStory && data.founderStory.length > 0 && (
                 <div className="space-y-4 mb-8">
                   {data.founderStory.map((paragraph, i) => (
-                    <p
+                        <p
                       key={i}
                       className="text-sm md:text-base leading-relaxed text-white/60"
                     >
@@ -124,9 +118,79 @@ export function FounderStory({ founder }: { founder?: FounderConfig | null }) {
                 </p>
               </div>
             </div>
-
           </div>
         </motion.div>
+
+        {/* --- MOBILE LAYOUT (FLIPPING CARD) --- */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="block md:hidden"
+        >
+          <FlippingCard
+            width="100%"
+            height="520px"
+            frontContent={
+              <div className="relative h-full w-full group">
+                <Image
+                  src={data.founderPhotoUrl ?? '/nn-poultry-logo.png'}
+                  alt={data.founderName ?? 'Founder'}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+                <div className="absolute bottom-8 left-6 right-6 flex flex-col items-center text-center">
+                  <p className="font-bold text-2xl text-white tracking-tight">
+                    {data.founderName}
+                  </p>
+                  <p className="text-sm mt-2 font-medium text-brand-gold border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5 rounded-full backdrop-blur-sm shadow-[0_0_15px_rgba(236,204,116,0.2)]">
+                    Tap to read our story
+                  </p>
+                </div>
+              </div>
+            }
+            backContent={
+              <div className="flex flex-col h-full w-full p-6 bg-background border border-white/8 rounded-[inherit] overflow-y-auto no-scrollbar relative">
+                <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ background: 'radial-gradient(circle at center, var(--brand-gold), transparent 70%)' }} />
+                
+                <div className="relative z-10 flex-1 flex flex-col">
+                  {data.founderQuote && (
+                    <blockquote className="mb-6 relative">
+                      <span className="absolute -top-4 -left-2 text-4xl text-brand-gold/20 font-serif leading-none">"</span>
+                      <p className="text-lg font-serif italic leading-relaxed text-white/90 relative z-10 pl-4 border-l-2 border-brand-gold/50">
+                        {data.founderQuote}
+                      </p>
+                    </blockquote>
+                  )}
+
+                  {data.founderStory && data.founderStory.length > 0 && (
+                    <div className="space-y-3 mb-6">
+                      {data.founderStory.map((paragraph, i) => (
+                        <p key={i} className="text-sm leading-relaxed text-white/60">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="pt-5 border-t border-white/10 mt-auto">
+                    <p className="font-bold text-base text-white">
+                      {data.founderName}
+                    </p>
+                    <p className="text-xs mt-0.5 text-brand-gold/70">
+                      {data.founderRole}
+                      {data.yearsOnFarm ? ` · ${data.yearsOnFarm} years farming` : ''}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            }
+          />
+        </motion.div>
+
       </div>
     </section>
   );

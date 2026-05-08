@@ -21,7 +21,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       const tryScroll = () => {
         let target: HTMLElement | null = null;
         try {
-          target = document.querySelector(hash) as HTMLElement | null;
+          target = document.querySelector(hash);
         } catch {
           // hash is not a valid CSS selector (e.g. tracking params like #sid=…)
           return;
@@ -36,7 +36,7 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     } else if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
     }
-    return () => clearTimeout(id);
+    return () => { clearTimeout(id); };
   }, [pathname]);
 
   // Handle hash-link navigation so Lenis intercepts #anchor scrolls

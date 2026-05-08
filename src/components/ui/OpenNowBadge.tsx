@@ -45,8 +45,8 @@ export function OpenNowBadge({ hours }: { hours?: BusinessHours }) {
 
   useEffect(() => {
     setStatus(getOpenStatus());
-    const id = setInterval(() => setStatus(getOpenStatus()), 60_000);
-    return () => clearInterval(id);
+    const id = setInterval(() => { setStatus(getOpenStatus()); }, 60_000);
+    return () => { clearInterval(id); };
   }, [hours]);
 
   if (!status) return null;

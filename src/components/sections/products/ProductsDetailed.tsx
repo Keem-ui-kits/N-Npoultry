@@ -45,7 +45,7 @@ function MobileProductLayout({ product, badge }: { product: Product; badge: stri
             src={product.image}
             alt={`${product.title} ${product.titleAccent}`}
             fill
-            className="object-contain p-2 drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="(max-width: 640px) 112px, 144px"
           />
         </div>
@@ -147,7 +147,7 @@ function PrimaryProductRow({ product }: { product: Product }) {
 
   return (
     <div id={product.id}>
-    <div ref={ref}>
+    <div ref={ref} className="relative">
 
       {/* Mobile / Tablet */}
       <MobileProductLayout product={product} badge="Main Product" />
@@ -269,7 +269,7 @@ function PrimaryProductRow({ product }: { product: Product }) {
             src={product.image}
             alt={`${product.title} ${product.titleAccent}`}
             fill
-            className="object-contain p-10 transition-transform duration-700 ease-out group-hover:scale-105 drop-shadow-[0_32px_64px_rgba(0,0,0,0.6)]"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="55vw"
             priority
             fetchPriority="high"
@@ -327,7 +327,7 @@ function SecondaryProductRow({ product, index }: { product: Product; index: numb
             src={product.image}
             alt={`${product.title} ${product.titleAccent}`}
             fill
-            className="object-contain p-6 transition-transform duration-700 ease-out group-hover:scale-105 drop-shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="40vw"
           />
         </motion.div>
@@ -432,9 +432,7 @@ export function ProductsDetailed({ products }: { products: Product[] }) {
               transition={{ duration: 0.6 }}
               className="-mt-8 md:-mt-12"
             >
-              <p className="text-xs font-black uppercase tracking-widest text-white/25 mb-8 md:mb-12">
-                Also Available
-              </p>
+
 
               {/* ── Secondary products grid ─────────────────────────────── */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-14">

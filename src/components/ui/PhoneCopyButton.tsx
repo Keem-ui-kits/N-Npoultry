@@ -10,7 +10,7 @@ export function PhoneCopyButton({ phone }: { phone: string }) {
     try {
       await navigator.clipboard.writeText(phone);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      setTimeout(() => { setCopied(false); }, 1500);
     } catch {
       // clipboard not available — no-op
     }

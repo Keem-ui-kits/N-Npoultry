@@ -5,12 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen } from 'lucide-react';
-import { educationArticles, educationCategories } from '@/content/education';
-
-// Show first article from each category — gives a preview of each pillar
-const teaserArticles = educationCategories.map((cat) =>
-  educationArticles.find((a) => a.category === cat.id)
-).filter(Boolean) as typeof educationArticles;
+import { educationArticles as staticArticles, educationCategories } from '@/content/education';
+import type { EducationArticle } from '@/content/education';
 
 const categoryLabel: Record<string, string> = {
   'the-chick-journey': 'The Chick Journey',
@@ -24,7 +20,12 @@ const categoryColor: Record<string, string> = {
   'product-excellence': '#f97316',
 };
 
-export function EducationHubTeaser() {
+export function EducationHubTeaser({ articles = staticArticles }: { articles?: EducationArticle[] }) {
+  // Show first article from each category — gives a preview of each pillar
+  const teaserArticles = educationCategories.map((cat) =>
+    articles.find((a) => a.category === cat.id)
+  ).filter(Boolean) as EducationArticle[];
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 

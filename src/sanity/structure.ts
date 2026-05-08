@@ -19,6 +19,14 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
 
       S.listItem()
+        .title('Home Page Content')
+        .child(
+          S.document()
+            .schemaType('homeConfig')
+            .documentId('homeConfig')
+        ),
+
+      S.listItem()
         .title('Site Configuration')
         .child(
           S.document()

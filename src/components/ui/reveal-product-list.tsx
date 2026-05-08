@@ -55,7 +55,7 @@ function RevealProductItem({ product, index }: RevealProductItemProps) {
             src={product.image}
             alt=""
             fill
-            className="object-contain p-3 drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="(max-width: 640px) 80px, 112px"
           />
         ) : (
@@ -80,7 +80,7 @@ function RevealProductItem({ product, index }: RevealProductItemProps) {
             src={product.image}
             alt=""
             fill
-            className="object-contain p-3 drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)]"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="(max-width: 1280px) 144px, 176px"
           />
         ) : (

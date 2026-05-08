@@ -96,7 +96,7 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
                   {PRODUCTS.map((p) => (
                     <button
                       key={p.id}
-                      onClick={() => setOrder((o) => ({ ...o, productId: p.id }))}
+                      onClick={() => { setOrder((o) => ({ ...o, productId: p.id })); }}
                       className={`flex items-center gap-3 px-4 py-3 rounded-xl border text-left text-sm font-semibold transition-all ${
                         order.productId === p.id
                           ? 'border-brand-gold bg-brand-gold/10 text-brand-gold'
@@ -123,7 +123,7 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
                   type="number"
                   min="1"
                   value={order.quantity}
-                  onChange={(e) => setOrder((o) => ({ ...o, quantity: e.target.value }))}
+                  onChange={(e) => { setOrder((o) => ({ ...o, quantity: e.target.value })); }}
                   placeholder={`Enter number of ${selectedProduct.unit}`}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-brand-gold/50 transition-colors"
                 />
@@ -140,7 +140,7 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
                 <select
                   id="order-zone"
                   value={order.zone}
-                  onChange={(e) => setOrder((o) => ({ ...o, zone: e.target.value }))}
+                  onChange={(e) => { setOrder((o) => ({ ...o, zone: e.target.value })); }}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-brand-gold/50 transition-colors appearance-none"
                 >
                   <option value="" className="bg-[#0d1b26] text-white">Select your area...</option>
@@ -163,7 +163,7 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
                   id="order-date"
                   type="date"
                   value={order.preferredDate}
-                  onChange={(e) => setOrder((o) => ({ ...o, preferredDate: e.target.value }))}
+                  onChange={(e) => { setOrder((o) => ({ ...o, preferredDate: e.target.value })); }}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-brand-gold/50 transition-colors"
                 />
               </div>

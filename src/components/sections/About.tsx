@@ -108,17 +108,16 @@ export function About({ aboutConfig }: { aboutConfig?: AboutConfig | null }) {
         <section data-section="story" className="py-12 md:py-32 px-4 sm:px-6 lg:px-8 max-w-[90rem] mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             {/* Split layout: parallax image on one side, side-scrolling text on the other */}
-            <div data-story-image-container className="relative h-[50vh] lg:h-[70vh] rounded-[2.5rem] overflow-hidden glass shadow-[0_0_50px_rgba(0,0,0,0.5)] order-2 lg:order-1 flex items-center justify-center p-12">
-               <div className="absolute inset-0 bg-gradient-to-t from-[#030213]/90 via-brand-dark/20 to-transparent"></div>
+            <div data-story-image-container className="relative h-[50vh] lg:h-[70vh] order-2 lg:order-1 flex items-center justify-center p-4 lg:p-12">
+               {/* Minimal, borderless container to let the 3D logo float */}
                <Image
                  src={aboutConfig?.rootsImageUrl ?? farmPlaceholder}
                  alt="N&N Poultry Palace Logo"
                  fill
                  sizes="(max-width: 1024px) 100vw, 50vw"
                  data-story-image
-                 className="object-contain p-12 lg:p-24 drop-shadow-2xl opacity-90"
+                 className="object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.6)] opacity-95 hover:scale-[1.02] transition-transform duration-700"
                />
-               <div className="absolute inset-0 bg-brand-dark/30 mix-blend-multiply"></div>
             </div>
 
             <div className="space-y-10 order-1 lg:order-2" data-story-text>

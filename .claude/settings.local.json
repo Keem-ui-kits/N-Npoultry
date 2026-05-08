@@ -9,7 +9,12 @@
       "mcp__sanity__query_documents",
       "Bash(node -e \"import\\('@sanity/client'\\).then\\(m => console.log\\('ok', Object.keys\\(m\\)\\)\\)\")",
       "Bash(npx sanity@latest debug --secrets)",
-      "Bash(SANITY_WRITE_TOKEN=\"sk4nei605HFTLk4UnfBeSb5xlpHUf1VoNIGLDkIeGoHjnJLoHPdS3M0D2EupPYkoIcb8TZHKCkblXKkAIMYDrUHNtzmm40J8CqqCsIhShpGTyXVyafW1eymqaWTpLiLzQrqmwh7zSJ02iINPAIY3iDcHFytbElt809MauxXWXtNtHMduWhEx\" node *)"
+      "Bash(SANITY_WRITE_TOKEN=\"sk4nei605HFTLk4UnfBeSb5xlpHUf1VoNIGLDkIeGoHjnJLoHPdS3M0D2EupPYkoIcb8TZHKCkblXKkAIMYDrUHNtzmm40J8CqqCsIhShpGTyXVyafW1eymqaWTpLiLzQrqmwh7zSJ02iINPAIY3iDcHFytbElt809MauxXWXtNtHMduWhEx\" node *)",
+      "Bash(curl -s \"https://ik167lhg.api.sanity.io/v2026-04-11/data/query/production?query=*%5B_type+%3D%3D+%22farmPhoto%22%5D+%7C+order\\(order+asc\\)+%7B_id%2C+alt%2C+order%2C+%22url%22%3A+photo.asset-%3Eurl%7D\" -H \"Authorization: Bearer skBOKD6ycyb9hmbgQrhd9CDsJwmg1qZ1GZO6xPDCXm29yaHYvdGY3hCpIJMFeGcnYlFm0tDI9syccfA7jDYV6txEpN0kLR8itsY4SK8Ad9Huqm2EdslNOUVcHgsL4tq9v8axmcBuSRucL6GPxEdZjJyiXL0iLKgvP2NtMJQ46NbAwJWgPsvZ\")",
+      "Bash(python -m json.tool)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\fredd\\\\Projects\\\\N-Npoultry1\" -Recurse -Directory)",
+      "Bash(Select-Object FullName)",
+      "Bash(Sort-Object FullName)"
     ]
   },
   "enableAllProjectMcpServers": true,

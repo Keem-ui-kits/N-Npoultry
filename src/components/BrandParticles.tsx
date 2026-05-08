@@ -99,7 +99,7 @@ export default function BrandParticles() {
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => { ctx.revert(); };
   }, [dots, mounted]);
 
   if (!mounted) {

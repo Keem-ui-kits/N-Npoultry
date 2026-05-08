@@ -1,7 +1,7 @@
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { Hero } from '@/components/sections/Hero';
 import { FarmPulse } from '@/components/sections/FarmPulse';
-import { getSiteConfig, getFarmPhotos } from '@/sanity/lib/queries';
+import { getSiteConfig, getFarmPhotos, getHomeConfig, getTestimonials, getEducationArticles } from '@/sanity/lib/queries';
 import { ProductsTeaser } from '@/components/sections/ProductsTeaser';
 import { HowWeWork } from '@/components/sections/HowWeWork';
 import { TestimonialsTeaser } from '@/components/sections/TestimonialsTeaser';
@@ -50,29 +50,44 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [config, farmPhotos] = await Promise.all([
+  const [config, farmPhotos, homeConfig, testimonials, educationArticles] = await Promise.all([
     getSiteConfig(),
     getFarmPhotos(),
+    getHomeConfig(),
+    getTestimonials(),
+    getEducationArticles(),
   ]);
+
+  const phone = config?.contacts?.phones?.[0];
 
   return (
     <PageWrapper>
-      <Hero whatsapp={config?.contacts?.whatsapp} availability={config?.availability} />
+      <Hero
+        whatsapp={config?.contacts?.whatsapp}
+        availability={config?.availability}
+        heroConfig={homeConfig?.hero}
+      />
       <ErrorBoundary>
         <FarmPulse
           whatsapp={config?.contacts?.whatsapp}
+          deliveryZones={config?.deliveryZones}
+          farmPulseConfig={homeConfig?.farmPulse}
         />
       </ErrorBoundary>
-      <FarmGallery photos={farmPhotos} />
+      <FarmGallery photos={farmPhotos} farmGalleryConfig={homeConfig?.farmGallery} />
       <ErrorBoundary>
-        <HowWeWork />
+        <HowWeWork howWeWorkConfig={homeConfig?.howWeWork} />
       </ErrorBoundary>
       <ProductsTeaser />
       <ErrorBoundary>
-        <TestimonialsTeaser />
+        <TestimonialsTeaser testimonials={testimonials} />
       </ErrorBoundary>
-      <EducationHubTeaser />
-      <ContactCTA whatsapp={config?.contacts?.whatsapp} />
+      <EducationHubTeaser articles={educationArticles} />
+      <ContactCTA
+        whatsapp={config?.contacts?.whatsapp}
+        phone={phone}
+        contactCtaConfig={homeConfig?.contactCta}
+      />
     </PageWrapper>
   );
 }

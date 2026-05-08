@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from 'framer-motion';
 import { Camera } from 'lucide-react';
+import type { HomeConfig } from '@/sanity/lib/queries';
 
 interface GalleryPhoto {
   url: string;
@@ -18,7 +19,14 @@ const FALLBACK_PHOTOS: GalleryPhoto[] = [
   { url: '/assets/education/one%20day%20old%20chicks.jpeg', alt: 'Day-one chicks arriving at N&N farm' },
 ];
 
-export function FarmGallery({ photos }: { photos?: GalleryPhoto[] }) {
+export function FarmGallery({
+  photos,
+  farmGalleryConfig,
+}: {
+  photos?: GalleryPhoto[];
+  farmGalleryConfig?: HomeConfig['farmGallery'];
+}) {
+  const fg = farmGalleryConfig;
   const prefersReduced = useReducedMotion();
   const displayPhotos = photos && photos.length > 0 ? photos : FALLBACK_PHOTOS;
   const track = [...displayPhotos, ...displayPhotos];
@@ -39,16 +47,16 @@ export function FarmGallery({ photos }: { photos?: GalleryPhoto[] }) {
             <div className="inline-flex items-center gap-2 mb-3 px-3 py-1.5 rounded-full border border-brand-gold/25 bg-brand-gold/[0.07]">
               <Camera className="w-3 h-3 text-brand-gold" />
               <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-brand-gold">
-                Inside N&N Poultry Palace
+                {fg?.badgeText ?? 'Inside N&N Poultry Palace'}
               </span>
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight leading-[0.9] text-white">
-              The Farm,{' '}
-              <span className="gradient-brand-text">Live.</span>
+              {fg?.heading ?? 'The Farm,'}{' '}
+              <span className="gradient-brand-text">{fg?.headingAccent ?? 'Live.'}</span>
             </h2>
           </div>
           <p className="text-sm text-white/35 font-medium max-w-xs sm:text-right leading-relaxed">
-            Real photos from our Machakos operation — no filters, no stock imagery.
+            {fg?.description ?? 'Real photos from our Machakos operation — no filters, no stock imagery.'}
           </p>
         </motion.div>
       </div>

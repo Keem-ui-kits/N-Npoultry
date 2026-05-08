@@ -6,7 +6,8 @@ import siteConfig from './siteConfig'
 import { aboutConfigType } from './aboutConfig'
 import { founderConfigType } from './founderConfig'
 import farmPhoto from './farmPhoto'
+import { homeConfigType } from './homeConfig'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [product, testimonial, educationArticle, siteConfig, aboutConfigType, founderConfigType, farmPhoto],
+  types: [product, testimonial, educationArticle, siteConfig, aboutConfigType, founderConfigType, farmPhoto, homeConfigType],
 }

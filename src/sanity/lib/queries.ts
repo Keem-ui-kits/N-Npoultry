@@ -71,7 +71,37 @@ export const SITE_CONFIG_QUERY = `*[_type == "siteConfig" && _id == "siteConfig"
   contacts { email, phones, address, whatsapp },
   businessHours { weekdays, saturday },
   socialLinks { facebook, twitter, instagram },
+  deliveryZones,
   availability { tableEggs, manure, exLayerHens, lastUpdated, note }
+}`
+
+export const HOME_CONFIG_QUERY = `*[_type == "homeConfig" && _id == "homeConfig"][0] {
+  hero {
+    headlinePre, headlineAccent, headlinePost,
+    subtext, locationBadge, slotNote,
+    ctaPrimary, ctaSecondary
+  },
+  farmPulse {
+    headingPre, headingAccent, headingPost, description,
+    card1Badge, card1Title, card1Body, card1Stat, card1StatLabel,
+    card2Badge, card2Title, card2Body,
+    card3Badge, card3Title, card3Body,
+    card4Badge, card4Title, card4Body, card4CtaLabel
+  },
+  howWeWork {
+    headlinePrimary, headlineAccent, description,
+    step1Title, step1Description,
+    step2Title, step2Description,
+    step3Title, step3Description,
+    step4Title, step4Description
+  },
+  contactCta {
+    headlinePre, headlineAccent, headlinePost,
+    description, ctaPrimary
+  },
+  farmGallery {
+    badgeText, heading, headingAccent, description
+  }
 }`
 
 export const ABOUT_CONFIG_QUERY = `*[_type == "aboutConfig"][0] {
@@ -100,14 +130,14 @@ export const FARM_PHOTOS_QUERY = `*[_type == "farmPhoto" && defined(photo.asset)
 // Types
 // ---------------------------------------------------------------------------
 
-export type SanityContacts = {
+export interface SanityContacts {
   email?: string
   phones?: string[]
   address?: string
   whatsapp?: string
 }
 
-export type AvailabilityData = {
+export interface AvailabilityData {
   tableEggs?: number | null
   manure?: number | null
   exLayerHens?: number | null
@@ -115,7 +145,7 @@ export type AvailabilityData = {
   note?: string | null
 }
 
-export type SiteConfig = {
+export interface SiteConfig {
   heroImageUrl?: string
   contacts?: SanityContacts
   businessHours?: {
@@ -127,17 +157,78 @@ export type SiteConfig = {
     twitter?: string
     instagram?: string
   }
+  deliveryZones?: string[]
   availability?: AvailabilityData | null
 }
 
-export type AboutConfig = {
+export interface HomeConfig {
+  hero?: {
+    headlinePre?: string
+    headlineAccent?: string
+    headlinePost?: string
+    subtext?: string
+    locationBadge?: string
+    slotNote?: string
+    ctaPrimary?: string
+    ctaSecondary?: string
+  }
+  farmPulse?: {
+    headingPre?: string
+    headingAccent?: string
+    headingPost?: string
+    description?: string
+    card1Badge?: string
+    card1Title?: string
+    card1Body?: string
+    card1Stat?: string
+    card1StatLabel?: string
+    card2Badge?: string
+    card2Title?: string
+    card2Body?: string
+    card3Badge?: string
+    card3Title?: string
+    card3Body?: string
+    card4Badge?: string
+    card4Title?: string
+    card4Body?: string
+    card4CtaLabel?: string
+  }
+  howWeWork?: {
+    headlinePrimary?: string
+    headlineAccent?: string
+    description?: string
+    step1Title?: string
+    step1Description?: string
+    step2Title?: string
+    step2Description?: string
+    step3Title?: string
+    step3Description?: string
+    step4Title?: string
+    step4Description?: string
+  }
+  contactCta?: {
+    headlinePre?: string
+    headlineAccent?: string
+    headlinePost?: string
+    description?: string
+    ctaPrimary?: string
+  }
+  farmGallery?: {
+    badgeText?: string
+    heading?: string
+    headingAccent?: string
+    description?: string
+  }
+}
+
+export interface AboutConfig {
   rootsImageUrl?: string
   rootsParagraph1?: string
   rootsParagraph2?: string
   rootsQuote?: string
 }
 
-export type FounderConfig = {
+export interface FounderConfig {
   founderName?: string
   founderRole?: string
   yearsOnFarm?: number
@@ -146,7 +237,7 @@ export type FounderConfig = {
   founderStory?: string[]
 }
 
-export type FarmPhoto = {
+export interface FarmPhoto {
   url: string
   alt: string
   order?: number
@@ -189,10 +280,10 @@ export async function getProducts(): Promise<Product[]> {
       return {
         ...fb,
         ...p,
-        image: p.image ?? fb?.image ?? '',
-        color: p.color ?? fb?.color ?? '',
-        gradient: p.gradient ?? fb?.gradient ?? '',
-        colorRgb: p.colorRgb ?? fb?.colorRgb ?? [0, 0, 0],
+        image: p.image || fb?.image || '',
+        color: p.color || fb?.color || '',
+        gradient: p.gradient || fb?.gradient || '',
+        colorRgb: p.colorRgb || fb?.colorRgb || [0, 0, 0],
       }
     })
   }
@@ -207,10 +298,10 @@ export async function getProductById(id: string): Promise<Product | null> {
     return {
       ...fb,
       ...data,
-      image: data.image ?? fb?.image ?? '',
-      color: data.color ?? fb?.color ?? '',
-      gradient: data.gradient ?? fb?.gradient ?? '',
-      colorRgb: data.colorRgb ?? fb?.colorRgb ?? [0, 0, 0],
+      image: data.image || fb?.image || '',
+      color: data.color || fb?.color || '',
+      gradient: data.gradient || fb?.gradient || '',
+      colorRgb: data.colorRgb || fb?.colorRgb || [0, 0, 0],
     }
   }
   return fb
@@ -257,4 +348,8 @@ export async function getFounderConfig(): Promise<FounderConfig | null> {
 export async function getFarmPhotos(): Promise<FarmPhoto[]> {
   const data = await fetchFromSanity<FarmPhoto[]>(FARM_PHOTOS_QUERY)
   return (data ?? []).filter((p) => !!p.url)
+}
+
+export async function getHomeConfig(): Promise<HomeConfig | null> {
+  return fetchFromSanity<HomeConfig>(HOME_CONFIG_QUERY)
 }

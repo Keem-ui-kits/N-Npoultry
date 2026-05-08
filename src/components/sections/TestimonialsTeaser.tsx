@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { testimonials } from '@/content/testimonials';
+import { testimonials as staticTestimonials } from '@/content/testimonials';
+import type { Testimonial } from '@/content/testimonials';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Star } from 'lucide-react';
@@ -10,7 +11,7 @@ const AUTO_ADVANCE_MS = 5000;
 
 function StarRow({ rating }: { rating: number }) {
   return (
-    <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
+    <div className="flex items-center gap-0.5" aria-label={`${String(rating)} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((star) => {
         const filled = rating >= star;
         const half = !filled && rating >= star - 0.5;
@@ -32,16 +33,16 @@ function StarRow({ rating }: { rating: number }) {
   );
 }
 
-export function TestimonialsTeaser() {
+export function TestimonialsTeaser({ testimonials = staticTestimonials }: { testimonials?: Testimonial[] }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const t = setTimeout(
-      () => setIndex((prev) => (prev + 1) % testimonials.length),
+      () => { setIndex((prev) => (prev + 1) % testimonials.length) },
       AUTO_ADVANCE_MS
     );
-    return () => clearTimeout(t);
-  }, [index]);
+    return () => { clearTimeout(t) };
+  }, [index, testimonials.length]);
 
   const current = testimonials[index] ?? testimonials[0];
   if (!current) return null;
@@ -102,7 +103,7 @@ export function TestimonialsTeaser() {
                   <div>
                     <StarRow rating={current.rating} />
                     <p className="font-bold text-white text-xs mt-0.5">{current.name}</p>
-                    {(current.company || current.location) && (
+                    {(current.company ?? current.location) && (
                       <p className="text-white/40 text-xs">
                         {[current.company, current.location].filter(Boolean).join(' · ')}
                       </p>
@@ -117,8 +118,8 @@ export function TestimonialsTeaser() {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setIndex(i)}
-                  aria-label={`Go to testimonial ${i + 1}`}
+                  onClick={() => { setIndex(i) }}
+                  aria-label={`Go to testimonial ${String(i + 1)}`}
                   className={`h-1 rounded-full transition-all duration-300 ${
                     i === index
                       ? 'w-5 bg-brand-gold'

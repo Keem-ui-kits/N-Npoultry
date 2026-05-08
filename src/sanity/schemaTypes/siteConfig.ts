@@ -57,6 +57,13 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'deliveryZones',
+      title: 'Delivery Zones',
+      description: 'Areas covered by daily delivery routes (shown on the home page)',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
       name: 'availability',
       title: 'Current Stock Availability',
       description: 'Update weekly to show live stock on the website',

@@ -27,7 +27,7 @@ export function HashScrollHandler() {
       if (jump() || ++attempts > 20) clearInterval(interval);
     }, 50);
 
-    return () => clearInterval(interval);
+    return () => { clearInterval(interval); };
   }, []);
 
   return null;

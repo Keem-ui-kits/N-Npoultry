@@ -1,17 +1,24 @@
-# N&N Poultry Palace - Business Operations Manager
+# N&N Poultry Palace - Digital Experience
 
-A premium, interactive, and fully responsive landing page for N&N Poultry, built with a modern tech stack focusing on performance, smooth animations, and luxury aesthetics. This tool helps showcase farm-fresh poultry products with a high-end digital presence.
+A premium, interactive, and fully responsive web platform for N&N Poultry Palace, built with a modern frontend stack focusing on high-performance, smooth animations, and a community-rooted "lived-in" aesthetic. This platform is designed to convert local traffic into direct WhatsApp orders by building trust and transparency.
 
-## 🚀 Key Features
+## 🐓 Product Vision & Brand Identity
 
-- **Premium Visual Experience**: Smooth GSAP-powered scroll animations and Framer Motion interactions.
-- **Fully Responsive**: Meticulously tuned for all screen sizes from mobile to desktop.
-- **Dark Mode Support**: Seamless theme switching with system detection and persistence.
-- **Dynamic Product Showcase**: Animated stacking cards and bento grids for clear product visualization.
-- **Optimized Scrolling**: Lenis integration for butter-smooth scrolling experience.
-- **Robust Forms**: Server-side contact form implementation with rate limiting and security headers.
-- **Accessible UI**: Adheres to accessibility best practices (Aria labels, semantic HTML, keyboard navigation).
-- **Performance Optimized**: Fine-tuned Next.js image optimization and caching strategies.
+N&N Poultry Palace is a farm-to-doorstep egg delivery brand serving households, restaurants, and retailers around Machakos, Kenya.
+
+**Our Core Promise:**
+- **Urgency without pressure**: Eggs collected at 2 PM, packed by 5 PM, delivered before noon the next day. The freshness timeline is a feature, not a marketing trick.
+- **Farm Credibility**: Real place, real process, real people. A focus on authenticity over generic corporate aesthetics.
+- **Frictionless Ordering**: A WhatsApp-first conversion strategy designed for fast decision-making and direct customer connection.
+
+## 🚀 Key Technical Features
+
+- **Premium Visual Experience**: Smooth GSAP-powered scroll animations and Framer Motion micro-interactions to create a dynamic, premium feel.
+- **Mobile-First UX**: Meticulously tuned for mobile screens, replacing complex tables and dense text with swipeable cards, expanding accordions, and high-impact visual layouts.
+- **Optimized Scrolling**: Lenis integration for a butter-smooth scroll experience.
+- **Dynamic Content**: Integrated with Sanity CMS for managing site configuration, testimonials, product details, and the "Education Hub".
+- **Accessible & SEO Ready**: Adheres to accessibility best practices (Aria labels, semantic HTML) and features a globally updated FAQ schema for optimized search presence.
+- **Production Ready**: Optimized for Vercel deployment with strict Next.js image caching, robust error boundary handling, and a zero-tolerance policy for client-side rendering blockages.
 
 ## 🛠️ Tech Stack
 
@@ -22,8 +29,8 @@ A premium, interactive, and fully responsive landing page for N&N Poultry, built
 - **Smooth Scroll**: [Lenis](https://lenis.darkroom.engineering/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **UI Components**: [Radix UI](https://www.radix-ui.com/)
+- **CMS**: [Sanity.io](https://sanity.io/)
 - **Testing**: [Vitest](https://vitest.dev/) with JSDOM
-- **Validation**: [Zod](https://zod.dev/)
 
 ## 📦 Getting Started
 
@@ -47,41 +54,38 @@ A premium, interactive, and fully responsive landing page for N&N Poultry, built
    npm install
    ```
 
-3. Run the development server:
+3. Setup environment variables (add Sanity credentials):
+
+   ```bash
+   cp .env.local.example .env.local
+   ```
+
+4. Run the development server (uses Turbopack):
 
    ```bash
    npm run dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 🧪 Testing
+## 🧪 Testing & Code Quality
 
-Run unit tests with Vitest:
-
-```bash
-npm run test:run
-```
-
-## 🧹 Code Quality
-
-The project includes standard linting and formatting tools:
+The project enforces strict type checking and linting to maintain a clean architecture:
 
 - **Linting**: `npm run lint` (ESLint)
 - **Formatting**: `npm run format` (Prettier)
 - **Type Checking**: `npm run typecheck` (TypeScript)
+- **Unit Tests**: `npm run test` (Vitest)
 
 ## 📁 Project Structure
 
-- **src/app**: Next.js App Router routes, API segments, and root layout.
-- **src/components/layout**: Global layout components (Navbar, Footer, Providers).
-- **src/components/sections**: Home page content sections (Hero, About, Products, Contact).
-- **src/components/ui**: Reusable atomic UI components.
-- **src/content**: Static configuration (navigation links, site metadata).
-- **src/hooks**: Custom React hooks for cross-component logic.
-- **src/lib**: Shared utility functions and math helpers.
-- **src/styles**: Global styles and Tailwind 4 theme definitions.
-- **src/test**: Vitest setup and testing utilities.
+- **`src/app`**: Next.js App Router definitions and global layouts.
+- **`src/components/sections`**: Feature-level page sections (Hero, FarmPulse, ProductsTeaser, etc.).
+- **`src/components/ui`**: Atomic UI components, interactive cards, and badges.
+- **`src/content`**: Static fallback content (navigation, default products) used alongside Sanity data.
+- **`src/sanity`**: CMS schema definitions and GROQ queries.
+- **`src/hooks`**: Custom React hooks for responsive logic and animations.
+- **`src/styles`**: Global CSS and styling overrides.
 
 ## 📜 License
 

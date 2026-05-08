@@ -3,20 +3,28 @@
 import Link from 'next/link';
 import { MessageCircle, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { siteConfig } from '@/content/site';
+import type { HomeConfig } from '@/sanity/lib/queries';
 
 const FALLBACK_WHATSAPP = '254113377623';
+const FALLBACK_PHONE = '0113377623';
 
 const WA_ORDER_MESSAGE = encodeURIComponent(
   "Hi N&N, I'd like to place an order:\n- Product: ___\n- Quantity: ___\n- Delivery to: ___\n- Preferred time: ___"
 );
 
-
-
-export function ContactCTA({ whatsapp }: { whatsapp?: string }) {
+export function ContactCTA({
+  whatsapp,
+  phone,
+  contactCtaConfig,
+}: {
+  whatsapp?: string;
+  phone?: string;
+  contactCtaConfig?: HomeConfig['contactCta'];
+}) {
+  const cta = contactCtaConfig;
   const number = whatsapp ?? FALLBACK_WHATSAPP;
   const orderUrl = `https://wa.me/${number}?text=${WA_ORDER_MESSAGE}`;
-  const phone = siteConfig.contacts.phones[0];
+  const displayPhone = phone ?? FALLBACK_PHONE;
 
   return (
     <section id="contact-cta" className="py-24 md:py-32 bg-brand-dark relative overflow-hidden">
@@ -57,13 +65,13 @@ export function ContactCTA({ whatsapp }: { whatsapp?: string }) {
             </div>
 
             <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tight leading-[0.88] mb-6 max-w-4xl">
-              Let&apos;s sort{' '}
-              <span className="gradient-brand-text">your first</span> order.
+              {cta?.headlinePre ?? "Let's sort"}{' '}
+              <span className="gradient-brand-text">{cta?.headlineAccent ?? 'your first'}</span>{' '}
+              {cta?.headlinePost ?? 'order.'}
             </h2>
 
             <p className="text-base md:text-lg text-white/55 max-w-2xl leading-relaxed mb-10">
-              Daily delivery to Machakos Town, Syokimau, Athi River, Mlolongo, and beyond.
-              Message us your quantity — we&apos;ll confirm the price and slot within minutes.
+              {cta?.description ?? "Daily delivery to Machakos Town, Syokimau, Athi River, Mlolongo, and beyond. Message us your quantity — we'll confirm the price and slot within minutes."}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full">
@@ -74,15 +82,15 @@ export function ContactCTA({ whatsapp }: { whatsapp?: string }) {
                 className="flex items-center justify-center gap-3 px-8 py-4 gradient-brand text-brand-dark rounded-full font-black text-base transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] flex-1 sm:flex-none"
               >
                 <MessageCircle className="w-5 h-5" />
-                Order on WhatsApp
+                {cta?.ctaPrimary ?? 'Order on WhatsApp'}
               </a>
 
               <a
-                href={`tel:${phone}`}
+                href={`tel:${displayPhone}`}
                 className="flex items-center justify-center gap-3 px-8 py-4 border border-white/15 bg-white/[0.05] text-white rounded-full font-bold text-base hover:bg-white/[0.1] hover:border-white/25 transition-all duration-200 active:scale-[0.98] flex-1 sm:flex-none"
               >
                 <Phone className="w-5 h-5" />
-                Call {phone}
+                Call {displayPhone}
               </a>
 
               <p className="text-sm text-white/30 text-center pt-1">

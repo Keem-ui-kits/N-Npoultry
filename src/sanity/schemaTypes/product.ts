@@ -48,23 +48,6 @@ export default defineType({
       type: 'image',
       options: { hotspot: true },
     }),
-    defineField({
-      name: 'color',
-      title: 'CSS Color (e.g. var(--brand-gold))',
-      type: 'string',
-    }),
-    defineField({
-      name: 'colorRgb',
-      title: 'Color RGB (3 numbers: R, G, B)',
-      type: 'array',
-      of: [{ type: 'number' }],
-      validation: (Rule) => Rule.max(3).min(3),
-    }),
-    defineField({
-      name: 'gradient',
-      title: 'Tailwind Gradient Classes',
-      type: 'string',
-    }),
   ],
   preview: {
     select: { title: 'title', subtitle: 'titleAccent', media: 'image' },

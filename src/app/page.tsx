@@ -12,6 +12,8 @@ import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import type { Metadata } from 'next';
 import { siteConfig } from '@/content/site';
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: 'N&N Poultry Palace | Farm-Fresh Eggs & Poultry Products in Machakos',
   description:

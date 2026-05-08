@@ -4,7 +4,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, type Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronRight, MapPin, MessageCircle } from 'lucide-react';
 import { WhatsAppOrderSheet } from '@/components/ui/WhatsAppOrderSheet';
 import { AvailabilityStrip } from './AvailabilityStrip';
@@ -20,29 +20,7 @@ interface AvailabilityData {
 
 const BrandParticles = dynamic(() => import('@/components/BrandParticles'), { ssr: false });
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-};
+// Framer motion variants removed for Hero content. CSS animations are used instead for LCP.
 
 export function Hero({
   whatsapp,
@@ -60,11 +38,9 @@ export function Hero({
       <BrandParticles />
 
       {/* Background Image & Overlay */}
-      <motion.div
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1, opacity: 0.7 }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
-        className="absolute inset-0 z-0"
+      <div
+        className="absolute inset-0 z-0 animate-hero-bg-zoom"
+        style={{ animationFillMode: 'both' }}
       >
         <Image
           src="/images/hero-bg.jpeg"
@@ -75,7 +51,7 @@ export function Hero({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#030213] via-[#030213]/75 to-[#030213]/20" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#030213]/60 via-transparent to-[#030213]/40" />
-      </motion.div>
+      </div>
 
       {/* Ambient Visuals */}
       <motion.div
@@ -92,16 +68,13 @@ export function Hero({
       />
 
       {/* Hero Content — fills viewport, pushes strip to natural bottom */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
+      <div
         className="relative z-10 flex flex-col items-center justify-center text-center px-5 max-w-5xl mx-auto w-full flex-1 pt-24 pb-24 sm:pt-28 sm:pb-28"
       >
         {/* Location badge */}
-        <motion.div
-          variants={itemVariants}
-          className="flex items-center gap-2.5 mb-6 sm:mb-8 px-4 sm:px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl"
+        <div
+          className="flex items-center gap-2.5 mb-6 sm:mb-8 px-4 sm:px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl animate-hero-fade-in"
+          style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75" />
@@ -111,25 +84,24 @@ export function Hero({
           <span className="text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase text-white/90">
             {heroConfig?.locationBadge ?? 'Machakos Farm'}
           </span>
-        </motion.div>
+        </div>
 
         {/* Headline */}
-        <motion.h1
-          variants={itemVariants}
-          className="font-black text-white leading-[1.08] tracking-tight mb-4 sm:mb-6 md:mb-8"
-          style={{ fontSize: 'clamp(2rem, 7.5vw, 5.75rem)' }}
+        <h1
+          className="font-black text-white leading-[1.08] tracking-tight mb-4 sm:mb-6 md:mb-8 animate-hero-fade-in"
+          style={{ fontSize: 'clamp(2rem, 7.5vw, 5.75rem)', animationDelay: '0.35s', animationFillMode: 'both' }}
         >
           <span className="whitespace-nowrap">
             {heroConfig?.headlinePre ?? 'Every egg,'}{' '}
             <span className="gradient-brand-text">{heroConfig?.headlineAccent ?? 'every day,'}</span>
           </span>
           {' '}{heroConfig?.headlinePost ?? 'Done right.'}
-        </motion.h1>
+        </h1>
 
         {/* Subtext */}
-        <motion.p
-          variants={itemVariants}
-          className="text-sm sm:text-base md:text-lg text-white/65 max-w-[17rem] sm:max-w-2xl mb-8 sm:mb-10 md:mb-12 leading-relaxed font-medium"
+        <p
+          className="text-sm sm:text-base md:text-lg text-white/65 max-w-[17rem] sm:max-w-2xl mb-8 sm:mb-10 md:mb-12 leading-relaxed font-medium animate-hero-fade-in"
+          style={{ animationDelay: '0.5s', animationFillMode: 'both' }}
         >
           {heroConfig?.subtext ?? (
             <>
@@ -138,12 +110,12 @@ export function Hero({
               {' '}— straight from <span className="text-brand-gold font-semibold">Machakos, Kenya.</span>
             </>
           )}
-        </motion.p>
+        </p>
 
         {/* CTAs */}
-        <motion.div
-          variants={itemVariants}
-          className="flex flex-col items-center gap-3 sm:gap-5"
+        <div
+          className="flex flex-col items-center gap-3 sm:gap-5 animate-hero-fade-in"
+          style={{ animationDelay: '0.65s', animationFillMode: 'both' }}
         >
           <div className="flex flex-row items-center gap-3 sm:gap-4">
             <button
@@ -167,14 +139,14 @@ export function Hero({
             {heroConfig?.slotNote ?? 'Slots fill by 10 AM daily'}
             <span className="w-6 sm:w-8 h-px bg-brand-gold/25" />
           </p>
-        </motion.div>
+        </div>
 
         <WhatsAppOrderSheet
           isOpen={orderSheetOpen}
           onClose={() => { setOrderSheetOpen(false) }}
           whatsapp={whatsapp}
         />
-      </motion.div>
+      </div>
 
       {/* Bottom Availability Strip */}
       <motion.div

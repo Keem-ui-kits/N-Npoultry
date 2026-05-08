@@ -1,6 +1,9 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { cn } from '@/lib/utils';
+
+const BrandParticles = dynamic(() => import('@/components/BrandParticles'), { ssr: false });
 
 interface PageHeaderProps {
   title: string;
@@ -13,16 +16,18 @@ export function PageHeader({ title, subtitle, accent, compact }: PageHeaderProps
   return (
     <div 
       className={cn(
-        "relative bg-brand-dark overflow-hidden",
+        "relative overflow-hidden",
         compact 
           ? "pt-24 pb-12 md:pt-32 md:pb-16" 
           : "pt-32 pb-16 md:pt-48 md:pb-24"
       )}
     >
-      {/* Background patterns */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--brand-gold)_1px,_transparent_1px)] [background-size:40px_40px]" />
+      <div className="absolute inset-0 bg-[#030213] pointer-events-none z-0">
+        <div className="svg-grain absolute inset-0 opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark/50 to-[#030213]" />
+        <div className="absolute top-0 right-1/4 w-[40vw] h-[40vw] bg-brand-gold/10 blur-[100px] rounded-full pointer-events-none" />
       </div>
+      <BrandParticles />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">

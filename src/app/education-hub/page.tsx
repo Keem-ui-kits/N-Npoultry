@@ -6,6 +6,7 @@ import { siteConfig } from '@/content/site';
 import { ArrowRight } from 'lucide-react';
 import { getEducationArticles } from '@/sanity/lib/queries';
 import { EducationTabsClient } from '@/components/sections/EducationTabsClient';
+import BrandParticles from '@/components/BrandParticles';
 
 export const metadata: Metadata = {
   title: 'Education Hub | N&N Poultry Palace',
@@ -41,6 +42,7 @@ export default async function EducationHubPage() {
           {/* Subtle Glow */}
           <div className="absolute top-0 right-1/4 w-[40vw] h-[40vw] bg-brand-gold/10 blur-[100px] rounded-full pointer-events-none" />
         </div>
+        <BrandParticles />
 
         <div className="max-w-6xl mx-auto relative z-10 text-center pt-10">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white drop-shadow-lg">

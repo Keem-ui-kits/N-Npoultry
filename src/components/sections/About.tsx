@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { ShieldCheck, Truck, Users } from 'lucide-react';
@@ -31,35 +30,8 @@ const pillarContent = [
 ];
 
 export function About({ aboutConfig }: { aboutConfig?: AboutConfig | null }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          // Play only if not already playing, handle promise to avoid AbortError
-          const playPromise = video.play();
-          playPromise.catch((error: unknown) => {
-            if (error instanceof Error && error.name !== 'AbortError') {
-              console.error('Video play error:', error);
-            }
-          });
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(video);
-    
-    return () => { 
-      observer.disconnect(); 
-      video.pause();
-    };
-  }, []);
+  // Removed manual IntersectionObserver for video play/pause
+  // Native autoPlay, muted, loop, and playsInline handle mobile playback more reliably.
 
   return (
     <AboutClientWrapper>
@@ -90,7 +62,6 @@ export function About({ aboutConfig }: { aboutConfig?: AboutConfig | null }) {
           
           <div data-hero-bg className="absolute inset-0 pointer-events-none -z-10 bg-gradient-to-b from-transparent via-[#030213]/80 to-[#030213]">
             <video
-              ref={videoRef}
               loop
               muted
               autoPlay

@@ -81,6 +81,9 @@ export function TestimonialsCarousel({ testimonials }: { testimonials: Testimoni
             animation-play-state: paused;
           }
         }
+        .marquee-track:active {
+          animation-play-state: paused;
+        }
         @media (prefers-reduced-motion: reduce) {
           .marquee-track {
             animation: none;

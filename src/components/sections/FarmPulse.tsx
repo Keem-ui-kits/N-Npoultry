@@ -31,7 +31,6 @@ export function FarmPulse({
 }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const [isDesktop, setIsDesktop] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const handleResize = () => { setIsDesktop(window.innerWidth >= 1024); };
@@ -40,16 +39,7 @@ export function FarmPulse({
     return () => { window.removeEventListener('resize', handleResize); };
   }, []);
 
-  useEffect(() => {
-    // Only auto-advance on mobile where expanding cards are active
-    if (isPaused || activeIndex === null || isDesktop) return;
-    
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev === null ? 0 : (prev + 1) % 4)); // 4 cards
-    }, 4500); // Auto-reveal next card every 4.5 seconds
-    
-    return () => { clearInterval(interval); };
-  }, [isPaused, activeIndex, isDesktop]);
+// Auto-reveal removed per user request
 
   const fp = farmPulseConfig;
   const zones = deliveryZones && deliveryZones.length > 0 ? deliveryZones : FALLBACK_ZONES;
@@ -145,9 +135,6 @@ export function FarmPulse({
             ...gridStyle,
             ...(isDesktop ? {} : { gridTemplateColumns: '1fr' })
           }}
-          onMouseEnter={() => !isDesktop && setIsPaused(true)}
-          onMouseLeave={() => !isDesktop && setIsPaused(false)}
-          onTouchStart={() => { setIsPaused(true); }}
         >
           {pulseCards.map((card, index) => {
             const Icon = card.icon;

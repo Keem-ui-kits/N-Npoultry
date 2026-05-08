@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, ClipboardList, Truck, ShieldCheck } from 'lucide-react';
 import { HowWeWorkClientWrapper } from './HowWeWorkClientWrapper';
@@ -10,7 +10,6 @@ import type { HomeConfig } from '@/sanity/lib/queries';
 
 export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['howWeWork'] }) {
   const [activeTab, setActiveTab] = useState<string>('0');
-  const [isPaused, setIsPaused] = useState(false);
   const hww = howWeWorkConfig;
 
   const steps = [
@@ -36,18 +35,7 @@ export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['h
     },
   ];
 
-  useEffect(() => {
-    if (isPaused) return;
-    
-    const interval = setInterval(() => {
-      setActiveTab((prev) => {
-        const next = (parseInt(prev, 10) + 1) % steps.length;
-        return next.toString();
-      });
-    }, 5000); // 5 seconds delay
-    
-    return () => { clearInterval(interval); };
-  }, [isPaused, steps.length]);
+  // Auto-reveal removed per user request
 
   return (
     <HowWeWorkClientWrapper>
@@ -92,12 +80,7 @@ export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['h
         </div>
 
         {/* Animated Tabs */}
-        <div 
-          className="w-full mt-10 md:mt-16 max-w-5xl"
-          onMouseEnter={() => { setIsPaused(true); }}
-          onMouseLeave={() => { setIsPaused(false); }}
-          onTouchStart={() => { setIsPaused(true); }}
-        >
+        <div className="w-full mt-10 md:mt-16 max-w-5xl">
           <div className="flex gap-2 sm:gap-3 flex-wrap mb-6 bg-white/[0.03] backdrop-blur-sm p-1.5 rounded-xl border border-white/[0.05] w-fit">
             {steps.map((step, index) => (
               <button

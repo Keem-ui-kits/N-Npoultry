@@ -1,4 +1,6 @@
-import React from "react";
+'use client';
+
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface FlippingCardProps {
@@ -16,9 +18,12 @@ export function FlippingCard({
   height = 300,
   width = 350,
 }: FlippingCardProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
   return (
     <div
-      className="group/flipping-card [perspective:1000px] w-full"
+      className="group/flipping-card [perspective:1000px] w-full cursor-pointer"
+      onClick={() => setIsFlipped(!isFlipped)}
       style={
         {
           "--height": typeof height === 'number' ? `${height}px` : height,
@@ -28,7 +33,8 @@ export function FlippingCard({
     >
       <div
         className={cn(
-          "relative rounded-[2.5rem] border border-white/8 bg-white/5 shadow-2xl transition-all duration-700 [transform-style:preserve-3d] group-hover/flipping-card:[transform:rotateY(180deg)]",
+          "relative rounded-[2.5rem] border border-white/8 bg-white/5 shadow-2xl transition-all duration-700 [transform-style:preserve-3d] lg:group-hover/flipping-card:[transform:rotateY(180deg)]",
+          isFlipped ? "[transform:rotateY(180deg)]" : "",
           "h-[var(--height)] w-[var(--width)] max-w-full",
           className
         )}

@@ -2,12 +2,14 @@ import { PageWrapper } from '@/components/layout/PageWrapper';
 import { Hero } from '@/components/sections/Hero';
 import { FarmPulse } from '@/components/sections/FarmPulse';
 import { getSiteConfig, getFarmPhotos, getHomeConfig, getTestimonials, getEducationArticles } from '@/sanity/lib/queries';
+import dynamic from 'next/dynamic';
 import { ProductsTeaser } from '@/components/sections/ProductsTeaser';
-import { HowWeWork } from '@/components/sections/HowWeWork';
-import { TestimonialsTeaser } from '@/components/sections/TestimonialsTeaser';
 import { EducationHubTeaser } from '@/components/sections/EducationHubTeaser';
 import { ContactCTA } from '@/components/sections/ContactCTA';
-import { FarmGallery } from '@/components/sections/FarmGallery';
+
+const HowWeWork = dynamic(() => import('@/components/sections/HowWeWork').then(m => m.HowWeWork));
+const TestimonialsTeaser = dynamic(() => import('@/components/sections/TestimonialsTeaser').then(m => m.TestimonialsTeaser));
+const FarmGallery = dynamic(() => import('@/components/sections/FarmGallery').then(m => m.FarmGallery));
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import type { Metadata } from 'next';
 import { siteConfig } from '@/content/site';

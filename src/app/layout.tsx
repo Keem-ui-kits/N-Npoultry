@@ -5,8 +5,10 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
-import { SmoothScroll } from '@/components/layout/SmoothScroll';
-import { MouseSpotlightLoader } from '@/components/layout/MouseSpotlightLoader';
+import dynamic from 'next/dynamic';
+
+const SmoothScroll = dynamic(() => import('@/components/layout/SmoothScroll').then(m => m.SmoothScroll));
+const MouseSpotlightLoader = dynamic(() => import('@/components/layout/MouseSpotlightLoader').then(m => m.MouseSpotlightLoader));
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
@@ -216,7 +218,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preload" as="image" href="/images/hero-bg.jpeg" fetchPriority="high" />
 <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/nn-poultry-logo.png" />
         <script

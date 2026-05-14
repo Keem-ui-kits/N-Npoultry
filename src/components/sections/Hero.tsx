@@ -47,6 +47,8 @@ export function Hero({
           alt="Freshly collected eggs on N&N Poultry Palace farm in Machakos, Kenya"
           fill
           priority
+          sizes="100vw"
+          quality={85}
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#030213] via-[#030213]/75 to-[#030213]/20" />

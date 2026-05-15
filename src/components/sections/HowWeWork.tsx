@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, ClipboardList, Truck, ShieldCheck } from 'lucide-react';
 import { HowWeWorkClientWrapper } from './HowWeWorkClientWrapper';
@@ -10,6 +10,7 @@ import type { HomeConfig } from '@/sanity/lib/queries';
 
 export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['howWeWork'] }) {
   const [activeTab, setActiveTab] = useState<string>('0');
+  const [isHovered, setIsHovered] = useState(false);
   const hww = howWeWorkConfig;
 
   const steps = [
@@ -35,14 +36,27 @@ export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['h
     },
   ];
 
-  // Auto-reveal removed per user request
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setActiveTab((current) => ((parseInt(current) + 1) % steps.length).toString());
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isHovered, steps.length]);
 
   return (
     <HowWeWorkClientWrapper>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Left-aligned editorial header */}
-        <div data-hww-header className="mb-14 md:mb-20">
+        <motion.div 
+          data-hww-header 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-14 md:mb-20"
+        >
           <div className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-brand-gold/25 bg-brand-gold/[0.07]">
             <ClipboardList className="w-3 h-3 text-brand-gold" />
             <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-brand-gold">
@@ -77,10 +91,14 @@ export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['h
           >
             {hww?.description ?? 'Send a WhatsApp message, get your price and slot confirmed in minutes, and receive your order the next morning. Most of Machakos County is on our daily route.'}
           </p>
-        </div>
+        </motion.div>
 
         {/* Animated Tabs */}
-        <div className="w-full mt-10 md:mt-16 max-w-5xl">
+        <div 
+          className="w-full mt-10 md:mt-16 max-w-5xl"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <div className="flex gap-2 sm:gap-3 flex-wrap mb-6 bg-white/[0.03] backdrop-blur-sm p-1.5 rounded-xl border border-white/[0.05] w-fit">
             {steps.map((step, index) => (
               <button

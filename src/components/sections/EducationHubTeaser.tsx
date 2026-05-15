@@ -40,7 +40,13 @@ export function EducationHubTeaser({ articles = staticArticles }: { articles?: E
   const secondary = teaserArticles.slice(1);
 
   return (
-    <section className="relative py-24 md:py-32 bg-background border-t border-white/[0.06] overflow-hidden">
+    <motion.section 
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="relative py-24 md:py-32 bg-background border-t border-white/[0.06] overflow-hidden"
+    >
       {/* Ambient glow */}
       <div
         className="absolute top-0 left-1/4 w-[600px] h-[400px] rounded-full blur-[130px] opacity-[0.04] pointer-events-none"
@@ -250,6 +256,6 @@ export function EducationHubTeaser({ articles = staticArticles }: { articles?: E
           </div>
         )}
       </div>
-    </section>
+    </motion.section>
   );
 }

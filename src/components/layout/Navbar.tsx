@@ -157,7 +157,7 @@ export function Navbar() {
                   alt="N&N" 
                   width={50} 
                   height={32} 
-                  style={{ width: 'auto' }}
+                  style={{ width: 'auto', height: 'auto' }}
                   className="h-8 md:h-10 w-auto object-contain brightness-110"
                 />
                 <div className="flex items-baseline gap-1.5">

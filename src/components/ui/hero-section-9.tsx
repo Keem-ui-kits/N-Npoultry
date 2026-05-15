@@ -12,6 +12,7 @@ interface ActionProps {
 }
 
 interface HeroSectionProps {
+  badge?: React.ReactNode;
   title: React.ReactNode;
   subtitle: string;
   actions: ActionProps[];
@@ -63,9 +64,9 @@ const floatingVariants: Variants = {
   },
 };
 
-const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectionProps) => {
+const HeroSection = ({ badge, title, subtitle, actions, images, className }: HeroSectionProps) => {
   return (
-    <section className={cn('w-full overflow-hidden bg-background pt-8 pb-16 lg:pb-24', className)}>
+    <section className={cn('w-full overflow-hidden bg-background pt-8 pb-16 lg:pb-24 relative', className)}>
       <div className="container mx-auto grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
         <motion.div
           className="flex flex-col items-start text-left"
@@ -74,6 +75,11 @@ const HeroSection = ({ title, subtitle, actions, images, className }: HeroSectio
           whileInView="visible"
           viewport={{ once: true }}
         >
+          {badge && (
+            <motion.div variants={itemVariants} className="mb-6">
+              {badge}
+            </motion.div>
+          )}
           <motion.h1
             className="text-5xl font-black tracking-tighter text-foreground sm:text-7xl lg:text-[5.5rem] leading-[1.1]"
             variants={itemVariants}

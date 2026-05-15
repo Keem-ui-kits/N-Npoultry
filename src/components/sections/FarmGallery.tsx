@@ -32,7 +32,14 @@ export function FarmGallery({
   const track = [...displayPhotos, ...displayPhotos];
 
   return (
-    <section className="py-16 md:py-20 border-t border-white/[0.06]" aria-label="Farm gallery">
+    <motion.section 
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="py-16 md:py-20 border-t border-white/[0.06] relative" 
+      aria-label="Farm gallery"
+    >
 
       {/* Bold editorial header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 md:mb-12">
@@ -41,7 +48,7 @@ export function FarmGallery({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
         >
           <div>
             <div className="inline-flex items-center gap-2 mb-3 px-3 py-1.5 rounded-full border border-brand-gold/25 bg-brand-gold/[0.07]">
@@ -55,14 +62,14 @@ export function FarmGallery({
               <span className="gradient-brand-text">{fg?.headingAccent ?? 'Live.'}</span>
             </h2>
           </div>
-          <p className="text-sm text-white/35 font-medium max-w-xs sm:text-right leading-relaxed">
-            {fg?.description ?? 'Real photos from our Machakos operation — no filters, no stock imagery.'}
+          <p className="text-sm sm:text-base text-white/50 font-medium max-w-sm md:text-right leading-relaxed">
+            {fg?.description ?? 'What you see is what you get. These are real moments from our farm in Machakos—no filters, no stock photos, just honest hard work.'}
           </p>
         </motion.div>
       </div>
 
       {/* Marquee container */}
-      <div className="relative overflow-hidden group/gallery" role="list" aria-label="Farm photos">
+      <div className="relative overflow-hidden group/gallery" style={{ touchAction: 'pan-y' }} role="list" aria-label="Farm photos">
         {/* Edge fades */}
         <div
           className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none"
@@ -77,7 +84,7 @@ export function FarmGallery({
 
         {/* Scrolling track */}
         <div
-          className="flex gap-3 w-max pl-4 pr-4 pb-3 group-hover/gallery:[animation-play-state:paused]"
+          className="flex gap-3 w-max pl-4 pr-4 pb-3 group-hover/gallery:[animation-play-state:paused] group-active/gallery:[animation-play-state:paused] active:[animation-play-state:paused]"
           style={{
             animation: prefersReduced ? 'none' : 'gallery-marquee 42s linear infinite',
             willChange: 'transform',
@@ -90,7 +97,7 @@ export function FarmGallery({
                 key={i}
                 role={isOriginal ? 'listitem' : 'presentation'}
                 aria-hidden={!isOriginal}
-                className="flex-shrink-0 relative rounded-lg overflow-hidden bg-white/5"
+                className="flex-shrink-0 relative rounded-lg overflow-hidden bg-white/5 group/photo"
                 style={{
                   width: 'clamp(240px, 30vw, 320px)',
                   height: 'clamp(200px, 22vw, 280px)',
@@ -100,15 +107,24 @@ export function FarmGallery({
                   src={photo.url}
                   alt={isOriginal ? photo.alt : ''}
                   fill
-                  className="object-cover pointer-events-none select-none transition-transform duration-700 group-hover/gallery:scale-[1.03]"
+                  className="object-cover pointer-events-none select-none transition-transform duration-700 group-hover/gallery:scale-[1.03] group-hover/photo:scale-105 group-active/photo:scale-105"
                   sizes="320px"
                   loading={i < 4 ? 'eager' : 'lazy'}
                 />
+
+                {/* Text overlay on touch/hold/hover */}
+                {photo.alt && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover/photo:opacity-100 group-active/photo:opacity-100 active:opacity-100 transition-opacity duration-300 pointer-events-none flex flex-col justify-end p-4 md:p-5">
+                    <span className="text-white font-medium text-xs sm:text-sm leading-snug translate-y-3 group-hover/photo:translate-y-0 group-active/photo:translate-y-0 active:translate-y-0 transition-transform duration-300">
+                      {photo.alt}
+                    </span>
+                  </div>
+                )}
               </div>
             );
           })}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

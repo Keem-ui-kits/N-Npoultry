@@ -90,7 +90,13 @@ export function FarmPulse({
   }, [activeIndex, pulseCards.length, isDesktop]);
 
   return (
-    <section className="relative py-24 md:py-32 bg-background overflow-hidden">
+    <motion.section 
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="relative py-24 md:py-32 bg-background overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Left-aligned header */}
@@ -244,6 +250,6 @@ export function FarmPulse({
           })}
         </motion.ul>
       </div>
-    </section>
+    </motion.section>
   );
 }

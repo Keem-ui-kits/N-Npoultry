@@ -48,8 +48,12 @@ export function TestimonialsTeaser({ testimonials = staticTestimonials }: { test
   if (!current) return null;
 
   return (
-    <section
+    <motion.section
       id="testimonials-teaser"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="py-24 md:py-32 bg-background border-t border-white/[0.06] relative overflow-hidden"
     >
       <div
@@ -145,6 +149,6 @@ export function TestimonialsTeaser({ testimonials = staticTestimonials }: { test
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

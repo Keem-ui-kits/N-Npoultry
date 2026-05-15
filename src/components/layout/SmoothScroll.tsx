@@ -91,6 +91,12 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
       lenisRef.current = lenis;
 
+      // Sync with GSAP ScrollTrigger
+      const { ScrollTrigger } = require('gsap/ScrollTrigger');
+      lenis.on('scroll', () => {
+        ScrollTrigger.update();
+      });
+
       function raf(time: number) {
         if (lenisRef.current) {
           lenisRef.current.raf(time);

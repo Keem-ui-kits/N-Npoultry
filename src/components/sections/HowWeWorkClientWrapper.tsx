@@ -2,7 +2,7 @@
 
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
 import type { ReactNode} from 'react';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-is-mobile';
 
 interface HowWeWorkClientWrapperProps {
@@ -25,22 +25,7 @@ export function HowWeWorkClientWrapper({ children }: HowWeWorkClientWrapperProps
       const glow = containerRef.current.querySelector('[data-hww-glow]');
       const header = containerRef.current.querySelector('[data-hww-header]');
 
-      if (header) {
-        gsap.fromTo(
-          header,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            scrollTrigger: {
-              trigger: header,
-              start: 'top bottom-=100px',
-              toggleActions: 'play none none none',
-            },
-          },
-        );
-      }
+      // Header fade-in handled by Framer Motion in HowWeWork.tsx
 
       if (!isMobile) {
         ScrollTrigger.create({
@@ -119,8 +104,17 @@ export function HowWeWorkClientWrapper({ children }: HowWeWorkClientWrapperProps
     { scope: containerRef, dependencies: [isMobile] },
   );
 
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, []);
+
   return (
-    <section ref={containerRef} id="how-we-work" className="py-16 sm:py-24 md:py-32 overflow-hidden relative z-20 bg-background transition-colors duration-500">
+    <section 
+      ref={containerRef} 
+      id="how-we-work" 
+      className="py-16 sm:py-24 md:py-32 relative z-20 bg-background transition-colors duration-500"
+      style={{ perspective: '2000px' }}
+    >
       {children}
     </section>
   );

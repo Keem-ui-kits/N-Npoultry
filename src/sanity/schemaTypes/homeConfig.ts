@@ -93,7 +93,7 @@ export const homeConfigType = defineType({
         defineField({ name: 'badgeText', title: 'Badge text', type: 'string', description: 'e.g. "Inside N&N Poultry Palace"' }),
         defineField({ name: 'heading', title: 'Heading — main text', type: 'string', description: 'e.g. "The Farm,"' }),
         defineField({ name: 'headingAccent', title: 'Heading — accent/gradient word', type: 'string', description: 'e.g. "Live."' }),
-        defineField({ name: 'description', title: 'Caption text (right side)', type: 'string', description: 'e.g. "Real photos from our Machakos operation..."' }),
+        defineField({ name: 'description', title: 'Caption text (right side)', type: 'text', rows: 3, description: 'e.g. "What you see is what you get. These are real moments from our farm in Machakos—no filters, no stock photos, just honest hard work."' }),
       ],
     }),
   ],

@@ -27,7 +27,14 @@ export function ContactCTA({
   const displayPhone = phone ?? FALLBACK_PHONE;
 
   return (
-    <section id="contact-cta" className="py-24 md:py-32 bg-brand-dark relative overflow-hidden">
+    <motion.section 
+      id="contact-cta" 
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="py-24 md:py-32 bg-brand-dark relative overflow-hidden"
+    >
       {/* Ambient glows */}
       <div
         className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.08] pointer-events-none"
@@ -106,6 +113,6 @@ export function ContactCTA({
           </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -23,7 +23,7 @@ export default function Error({
       <div className="space-y-4">
         <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter">Something went wrong</h1>
         <p className="text-muted-foreground max-w-md mx-auto text-lg">
-          {error.message ?? 'An unexpected error occurred while loading this page.'}
+          {error.message}
         </p>
       </div>
       <div className="flex gap-4 mt-4">

@@ -23,7 +23,6 @@ export function HowWeWorkClientWrapper({ children }: HowWeWorkClientWrapperProps
       const para = containerRef.current.querySelector('[data-hww-para]');
       const line = containerRef.current.querySelector('[data-hww-line]');
       const glow = containerRef.current.querySelector('[data-hww-glow]');
-      const header = containerRef.current.querySelector('[data-hww-header]');
 
       // Header fade-in handled by Framer Motion in HowWeWork.tsx
 

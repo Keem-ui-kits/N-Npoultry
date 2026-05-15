@@ -121,7 +121,7 @@ export default function BrandParticles() {
     >
       {dots.map((dot, i) => (
         <div
-          key={`brand-dot-${dot.id}`}
+          key={`brand-dot-${String(dot.id)}`}
           ref={(el) => {
             dotRefs.current[i] = el;
           }}

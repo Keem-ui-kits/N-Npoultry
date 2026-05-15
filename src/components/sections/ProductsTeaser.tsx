@@ -18,7 +18,7 @@ export async function ProductsTeaser() {
   let products: Product[] = sortProducts(contentProducts);
   try {
     const raw = await getProducts();
-    if (raw && raw.length > 0) products = sortProducts(raw);
+    if (raw.length > 0) products = sortProducts(raw);
   } catch {
     // static contentProducts already set above
   }

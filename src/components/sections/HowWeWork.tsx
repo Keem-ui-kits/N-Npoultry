@@ -41,7 +41,7 @@ export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['h
     const interval = setInterval(() => {
       setActiveTab((current) => ((parseInt(current) + 1) % steps.length).toString());
     }, 5000);
-    return () => clearInterval(interval);
+    return () => { clearInterval(interval); };
   }, [isHovered, steps.length]);
 
   return (
@@ -96,8 +96,8 @@ export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['h
         {/* Animated Tabs */}
         <div 
           className="w-full mt-10 md:mt-16 max-w-5xl"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseEnter={() => { setIsHovered(true); }}
+          onMouseLeave={() => { setIsHovered(false); }}
         >
           <div className="flex gap-2 sm:gap-3 flex-wrap mb-6 bg-white/[0.03] backdrop-blur-sm p-1.5 rounded-xl border border-white/[0.05] w-fit">
             {steps.map((step, index) => (

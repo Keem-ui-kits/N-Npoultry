@@ -23,11 +23,11 @@ export function FlippingCard({
   return (
     <div
       className="group/flipping-card [perspective:1000px] w-full cursor-pointer"
-      onClick={() => setIsFlipped(!isFlipped)}
+      onClick={() => { setIsFlipped(!isFlipped); }}
       style={
         {
-          "--height": typeof height === 'number' ? `${height}px` : height,
-          "--width": typeof width === 'number' ? `${width}px` : width,
+          "--height": typeof height === 'number' ? `${String(height)}px` : height,
+          "--width": typeof width === 'number' ? `${String(width)}px` : width,
         } as React.CSSProperties
       }
     >

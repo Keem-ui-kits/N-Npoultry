@@ -154,7 +154,7 @@ export function FarmPulse({
                   "min-h-0 min-w-0 flex flex-col",
                   isDesktop ? "cursor-default" : "cursor-pointer"
                 )}
-                onClick={() => !isDesktop && setActiveIndex(index)}
+                onClick={() => { if (!isDesktop) setActiveIndex(index); }}
                 data-active={isActive}
               >
                 {/* Background glow tint when active */}

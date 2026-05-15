@@ -273,18 +273,18 @@ export async function fetchFromSanity<T>(
 
 export async function getProducts(): Promise<Product[]> {
   const { products: fallback } = await import('@/content/products')
-  const data = await fetchFromSanity<Product[]>(PRODUCTS_QUERY)
+  const data = await fetchFromSanity<Partial<Product>[]>(PRODUCTS_QUERY)
   if (data && data.length > 0) {
     return data.map((p) => {
       const fb = fallback.find((f) => f.id === p.id)
       return {
         ...fb,
         ...p,
-        image: p.image || fb?.image || '',
-        color: p.color || fb?.color || '',
-        gradient: p.gradient || fb?.gradient || '',
-        colorRgb: p.colorRgb || fb?.colorRgb || [0, 0, 0],
-      }
+        image: p.image ?? fb?.image ?? '',
+        color: p.color ?? fb?.color ?? '',
+        gradient: p.gradient ?? fb?.gradient ?? '',
+        colorRgb: p.colorRgb ?? fb?.colorRgb ?? [0, 0, 0],
+      } as Product
     })
   }
   return fallback
@@ -293,16 +293,16 @@ export async function getProducts(): Promise<Product[]> {
 export async function getProductById(id: string): Promise<Product | null> {
   const { products: fallback } = await import('@/content/products')
   const fb = fallback.find((p) => p.id === id) ?? null
-  const data = await fetchFromSanity<Product>(PRODUCT_BY_SLUG_QUERY, { id })
+  const data = await fetchFromSanity<Partial<Product>>(PRODUCT_BY_SLUG_QUERY, { id })
   if (data) {
     return {
       ...fb,
       ...data,
-      image: data.image || fb?.image || '',
-      color: data.color || fb?.color || '',
-      gradient: data.gradient || fb?.gradient || '',
-      colorRgb: data.colorRgb || fb?.colorRgb || [0, 0, 0],
-    }
+      image: data.image ?? fb?.image ?? '',
+      color: data.color ?? fb?.color ?? '',
+      gradient: data.gradient ?? fb?.gradient ?? '',
+      colorRgb: data.colorRgb ?? fb?.colorRgb ?? [0, 0, 0],
+    } as Product
   }
   return fb
 }

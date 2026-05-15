@@ -114,7 +114,7 @@ export function FounderStory({ founder }: { founder?: FounderConfig | null }) {
                 </p>
                 <p className="text-sm mt-0.5 text-brand-gold/70">
                   {data.founderRole}
-                  {data.yearsOnFarm ? ` · ${data.yearsOnFarm} years farming` : ''}
+                  {data.yearsOnFarm ? ` · ${String(data.yearsOnFarm)} years farming` : ''}
                 </p>
               </div>
             </div>
@@ -182,7 +182,7 @@ export function FounderStory({ founder }: { founder?: FounderConfig | null }) {
                     </p>
                     <p className="text-xs mt-0.5 text-brand-gold/70">
                       {data.founderRole}
-                      {data.yearsOnFarm ? ` · ${data.yearsOnFarm} years farming` : ''}
+                      {data.yearsOnFarm ? ` · ${String(data.yearsOnFarm)} years farming` : ''}
                     </p>
                   </div>
                 </div>

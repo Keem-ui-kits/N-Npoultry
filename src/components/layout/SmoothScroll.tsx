@@ -93,8 +93,13 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
       // Sync with GSAP ScrollTrigger
       import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+        let lastUpdate = 0;
         lenis.on('scroll', () => {
-          ScrollTrigger.update();
+          const now = Date.now();
+          if (now - lastUpdate > 16) { // ~60fps
+            ScrollTrigger.update();
+            lastUpdate = now;
+          }
         });
       });
 

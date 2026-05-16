@@ -11,22 +11,39 @@ export default function MouseSpotlight() {
 
   useEffect(() => {
     if (prefersReduced) return;
-    const updateBackground = () => {
-      if (ref.current) {
-        ref.current.style.background = `radial-gradient(800px circle at ${mousePosition.current.x.toFixed(1)}px ${mousePosition.current.y.toFixed(1)}px, rgba(var(--brand-gold-rgb), 0.05), rgba(var(--brand-gold-rgb), 0) 150px)`;
-      }
-      rafId.current = null; // stop — don't reschedule
+    
+    let active = true;
+    const init = () => {
+      if (!active) return;
+      
+      const updateBackground = () => {
+        if (ref.current && active) {
+          ref.current.style.background = `radial-gradient(800px circle at ${mousePosition.current.x.toFixed(1)}px ${mousePosition.current.y.toFixed(1)}px, rgba(var(--brand-gold-rgb), 0.05), rgba(var(--brand-gold-rgb), 0) 150px)`;
+        }
+        rafId.current = null;
+      };
+
+      const handleMouseMove = (e: MouseEvent) => {
+        mousePosition.current = { x: e.clientX, y: e.clientY };
+        rafId.current ??= requestAnimationFrame(updateBackground);
+      };
+
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+      };
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePosition.current = { x: e.clientX, y: e.clientY };
-      rafId.current ??= requestAnimationFrame(updateBackground);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    // Defer initialization to after initial paint
+    const idleId = window.requestIdleCallback ? window.requestIdleCallback(() => init()) : setTimeout(() => init(), 100);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      active = false;
+      if (typeof idleId === 'number') {
+        if (window.cancelIdleCallback) window.cancelIdleCallback(idleId);
+        else clearTimeout(idleId);
+      }
       if (rafId.current !== null) {
         cancelAnimationFrame(rafId.current);
       }

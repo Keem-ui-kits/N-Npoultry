@@ -47,7 +47,7 @@ export function Hero({
           alt="Freshly collected eggs on N&N Poultry Palace farm in Machakos, Kenya"
           fill
           priority
-          sizes="100vw"
+          sizes="(max-width: 1024px) 100vw, (max-width: 1920px) 100vw, 1920px"
           quality={85}
           className="object-cover"
         />

@@ -40,7 +40,7 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
     const product = PRODUCTS.find((p) => p.id === order.productId);
     const lines = [
       `Hi N&N, I'd like to order:`,
-      `- ${product?.label} x ${order.quantity || '___'}`,
+      `- ${product?.label ?? '___'} x ${order.quantity || '___'}`,
       `- Delivery to: ${order.zone || '___'}`,
       order.preferredDate ? `- Preferred date: ${order.preferredDate}` : '- Preferred date: ___',
     ];

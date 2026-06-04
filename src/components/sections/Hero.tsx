@@ -90,8 +90,8 @@ export function Hero({
 
         {/* Headline */}
         <h1
-          className="font-black text-white leading-[1.08] tracking-tight mb-4 sm:mb-6 md:mb-8 animate-hero-fade-in"
-          style={{ fontSize: 'clamp(2rem, 7.5vw, 5.75rem)', animationDelay: '0.35s', animationFillMode: 'both' }}
+          className="font-black text-white leading-[1.08] tracking-tight mb-4 sm:mb-6 md:mb-8"
+          style={{ fontSize: 'clamp(2rem, 7.5vw, 5.75rem)' }}
         >
           <span className="whitespace-nowrap">
             {heroConfig?.headlinePre ?? 'Every egg,'}{' '}

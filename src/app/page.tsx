@@ -1,18 +1,26 @@
+import { Suspense } from 'react';
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { Hero } from '@/components/sections/Hero';
 import { FarmPulse } from '@/components/sections/FarmPulse';
-import { getSiteConfig, getFarmPhotos, getHomeConfig, getTestimonials, getEducationArticles } from '@/sanity/lib/queries';
+import { 
+  getSiteConfig, 
+  getFarmPhotos, 
+  getHomeConfig, 
+  getTestimonials, 
+  getEducationArticles 
+} from '@/sanity/lib/queries';
 import dynamic from 'next/dynamic';
 import { ProductsTeaser } from '@/components/sections/ProductsTeaser';
 import { EducationHubTeaser } from '@/components/sections/EducationHubTeaser';
 import { ContactCTA } from '@/components/sections/ContactCTA';
+import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
+import type { Metadata } from 'next';
+import { siteConfig } from '@/content/site';
+import { SectionSkeleton } from '@/components/ui/SectionSkeleton';
 
 const HowWeWork = dynamic(() => import('@/components/sections/HowWeWork').then(m => m.HowWeWork));
 const TestimonialsTeaser = dynamic(() => import('@/components/sections/TestimonialsTeaser').then(m => m.TestimonialsTeaser));
 const FarmGallery = dynamic(() => import('@/components/sections/FarmGallery').then(m => m.FarmGallery));
-import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
-import type { Metadata } from 'next';
-import { siteConfig } from '@/content/site';
 
 export const revalidate = 3600;
 
@@ -50,18 +58,37 @@ export const metadata: Metadata = {
     'N&N Poultry Palace',
     'fresh eggs Machakos County',
     'wholesale eggs Kenya',
+    'egg supplier Kenya',
   ],
 };
 
-export default async function Home() {
-  const [config, farmPhotos, homeConfig, testimonials, educationArticles] = await Promise.all([
-    getSiteConfig(),
-    getFarmPhotos(),
-    getHomeConfig(),
-    getTestimonials(),
-    getEducationArticles(),
-  ]);
+// --- Streaming Wrappers ---
 
+async function AsyncFarmGallery({ farmGalleryConfig }: { farmGalleryConfig?: any }) {
+  const photos = await getFarmPhotos();
+  return <FarmGallery photos={photos} farmGalleryConfig={farmGalleryConfig} />;
+}
+
+async function AsyncTestimonials({ testimonialsPromise }: { testimonialsPromise: Promise<any> }) {
+  const testimonials = await testimonialsPromise;
+  return <TestimonialsTeaser testimonials={testimonials} />;
+}
+
+async function AsyncEducationHub({ articlesPromise }: { articlesPromise: Promise<any> }) {
+  const articles = await articlesPromise;
+  return <EducationHubTeaser articles={articles} />;
+}
+
+export default async function Home() {
+  // Core config needed for initial paint (Hero)
+  const configPromise = getSiteConfig();
+  const homeConfigPromise = getHomeConfig();
+  
+  // Secondary data — start fetching immediately but don't await at top level
+  const testimonialsPromise = getTestimonials();
+  const educationArticlesPromise = getEducationArticles();
+
+  const [config, homeConfig] = await Promise.all([configPromise, homeConfigPromise]);
   const phone = config?.contacts?.phones?.[0];
 
   return (
@@ -71,6 +98,7 @@ export default async function Home() {
         availability={config?.availability}
         heroConfig={homeConfig?.hero}
       />
+      
       <ErrorBoundary>
         <FarmPulse
           whatsapp={config?.contacts?.whatsapp}
@@ -78,15 +106,25 @@ export default async function Home() {
           farmPulseConfig={homeConfig?.farmPulse}
         />
       </ErrorBoundary>
-      <FarmGallery photos={farmPhotos} farmGalleryConfig={homeConfig?.farmGallery} />
+
+      <Suspense fallback={<SectionSkeleton />}>
+        <AsyncFarmGallery farmGalleryConfig={homeConfig?.farmGallery} />
+      </Suspense>
+
       <ErrorBoundary>
         <HowWeWork howWeWorkConfig={homeConfig?.howWeWork} />
       </ErrorBoundary>
+
       <ProductsTeaser />
-      <ErrorBoundary>
-        <TestimonialsTeaser testimonials={testimonials} />
-      </ErrorBoundary>
-      <EducationHubTeaser articles={educationArticles} />
+
+      <Suspense fallback={<SectionSkeleton />}>
+        <AsyncTestimonials testimonialsPromise={testimonialsPromise} />
+      </Suspense>
+
+      <Suspense fallback={<SectionSkeleton />}>
+        <AsyncEducationHub articlesPromise={educationArticlesPromise} />
+      </Suspense>
+
       <ContactCTA
         whatsapp={config?.contacts?.whatsapp}
         phone={phone}

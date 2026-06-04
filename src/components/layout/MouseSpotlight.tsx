@@ -36,14 +36,11 @@ export default function MouseSpotlight() {
     };
 
     // Defer initialization to after initial paint
-    const idleId = window.requestIdleCallback ? window.requestIdleCallback(() => init()) : setTimeout(() => init(), 100);
+    const idleId = window.requestIdleCallback(() => init());
 
     return () => {
       active = false;
-      if (typeof idleId === 'number') {
-        if (window.cancelIdleCallback) window.cancelIdleCallback(idleId);
-        else clearTimeout(idleId);
-      }
+      window.cancelIdleCallback(idleId);
       if (rafId.current !== null) {
         cancelAnimationFrame(rafId.current);
       }

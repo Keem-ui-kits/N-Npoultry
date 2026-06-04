@@ -5,6 +5,6 @@ import { Hero } from '@/components/sections/Hero';
 describe('Hero section', () => {
   it('renders the hero heading', () => {
     render(<Hero />);
-    expect(screen.getByText(/Farm-Fresh/i)).toBeInTheDocument();
+    expect(screen.getByText(/Every egg/i)).toBeInTheDocument();
   });
 });

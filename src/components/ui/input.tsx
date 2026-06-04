@@ -46,6 +46,9 @@ export const Input = ({
 
   return (
     <div className={cn("relative", className)}>
+      <label htmlFor={props.id} className="sr-only">
+        {label}
+      </label>
       <motion.div
         className="absolute top-1/2 -translate-y-1/2 pointer-events-none text-zinc-900 dark:text-zinc-50"
         variants={containerVariants}

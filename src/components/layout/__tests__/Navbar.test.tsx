@@ -5,8 +5,8 @@ import { Navbar } from '../Navbar';
 describe('Navbar', () => {
   it('renders logo and desktop links', () => {
     render(<Navbar />);
-    expect(screen.getByText(/N&N POULTRY/i)).toBeInTheDocument();
-    expect(screen.getByText(/PALACE/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/N&N/i)).toBeInTheDocument();
+    expect(screen.getByText(/POULTRY PALACE/i)).toBeInTheDocument();
     
     expect(screen.getAllByText(/About/i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/Products/i)[0]).toBeInTheDocument();

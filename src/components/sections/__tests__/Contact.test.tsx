@@ -9,7 +9,7 @@ describe('Contact section', () => {
 
   it('renders correctly', () => {
     render(<Contact />);
-    expect(screen.getByText(/Open a business account/i)).toBeInTheDocument();
+    expect(screen.getByText(/Bulk & business orders/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Name \*/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email \*/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Website \(optional\)/i)).toBeInTheDocument();

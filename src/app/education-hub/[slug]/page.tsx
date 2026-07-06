@@ -55,10 +55,8 @@ export default async function EducationArticlePage({ params }: Props) {
     '@type': 'Article',
     headline: article.title,
     description: article.excerpt,
-    image: article.image,
+    image: article.image.startsWith('http') ? article.image : `${siteConfig.baseUrl}${article.image}`,
     url: `${siteConfig.baseUrl}/education-hub/${slug}`,
-    datePublished: '2024-01-01',
-    dateModified: '2026-04-01',
     author: { '@type': 'Organization', name: 'N&N Poultry Palace', url: siteConfig.baseUrl },
     publisher: {
       '@type': 'Organization',
@@ -118,10 +116,10 @@ export default async function EducationArticlePage({ params }: Props) {
         {/* Farm note callout */}
         {article.authorNote && (
           <div
-            className="rounded-2xl px-6 py-5 mb-10 border-l-4"
+            className="rounded-2xl px-6 py-5 mb-10 border"
             style={{
               background: 'rgba(245,240,232,0.06)',
-              borderLeftColor: 'var(--brand-straw)',
+              borderColor: 'rgba(245,240,232,0.18)',
             }}
           >
             <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: 'var(--brand-straw)' }}>

@@ -119,7 +119,7 @@ export function FarmPulse({
 
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.9] uppercase text-white">
             {fp?.headingPre ?? "What's"}{' '}
-            <span className="gradient-brand-text">{fp?.headingAccent ?? 'Happening'}</span>
+            <span className="text-brand-gold">{fp?.headingAccent ?? 'Happening'}</span>
             <br />{fp?.headingPost ?? 'at the Farm'}
           </h2>
           <p className="mt-5 text-base md:text-lg text-white/45 max-w-xl leading-relaxed">

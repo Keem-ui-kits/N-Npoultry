@@ -7,6 +7,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { siteConfig } from '@/content/site';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { OrderSheetButton } from '@/components/ui/OrderSheetButton';
 import { getProducts, getProductById } from '@/sanity/lib/queries';
 
 interface Props {
@@ -136,12 +137,13 @@ export default async function ProductDetailPage({ params }: Props) {
                 </div>
 
                 <div className="pt-8 flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href={`/quote?product=${product.id}`}
+                  <OrderSheetButton
+                    initialProductId={product.id}
+                    whatsapp={siteConfig.contacts.whatsapp}
                     className="inline-flex items-center justify-center gap-3 px-12 py-5 gradient-brand text-brand-dark rounded-full font-bold text-xl hover:scale-105 transition-all shadow-xl shadow-brand-gold/10"
                   >
-                    Request a Quote <Send className="w-5 h-5" />
-                  </Link>
+                    Order Now <Send className="w-5 h-5" />
+                  </OrderSheetButton>
                   <Link
                     href="/contact"
                     className="inline-flex items-center justify-center gap-3 px-12 py-5 bg-background dark:bg-white/5 border border-border dark:border-white/10 rounded-full font-bold text-xl hover:bg-muted/30 dark:hover:bg-white/10 transition-all"

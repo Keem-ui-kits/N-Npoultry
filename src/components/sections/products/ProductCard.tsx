@@ -4,9 +4,9 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { Send, MessageCircle, Users } from 'lucide-react';
 import { siteConfig } from '@/content/site';
+import { OrderSheetButton } from '@/components/ui/OrderSheetButton';
 import type { Product } from '@/types/product';
 import { lerp, mapRange, getValueFromRanges } from '@/lib/math';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
@@ -279,13 +279,14 @@ export function ProductCard({ product, index, isMobile }: ProductCardProps) {
         )}
 
         <div className="mt-8 flex gap-4 preserve-3d">
-          <Link
-            href={`/quote?product=${product.id}`}
+          <OrderSheetButton
+            initialProductId={product.id}
+            whatsapp={siteConfig.contacts.whatsapp}
             className="gradient-brand text-brand-dark px-8 py-3 rounded-full font-bold shadow-lg hover:shadow-brand-gold/20 transition-all flex items-center gap-2 group transform hover:scale-105 active:scale-95"
           >
-            Request a Quote
+            Order Now
             <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" />
-          </Link>
+          </OrderSheetButton>
 
           <a
             href={`https://wa.me/${siteConfig.contacts.whatsapp}?text=${encodeURIComponent(`Hi, I'd like to order ${product.title} ${product.titleAccent}.`)}`}

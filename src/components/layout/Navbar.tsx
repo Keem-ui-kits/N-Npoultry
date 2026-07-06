@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { OrderSheetButton } from '@/components/ui/OrderSheetButton';
 
 import { navLinks } from '@/content/navigation';
 
@@ -190,20 +191,19 @@ export function Navbar() {
 
 
 
-            <Link
-              href="/contact"
+            <OrderSheetButton
               className="px-6 py-2.5 gradient-brand text-brand-dark rounded-full font-bold hover:shadow-[0_0_20px_rgba(var(--brand-gold-rgb),0.4)] transition-all flex items-center gap-2 group transform hover:scale-105"
             >
               Order Now
               <Send suppressHydrationWarning className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </OrderSheetButton>
           </div>
 
           {/* Mobile Menu & CTA */}
           <div className="lg:hidden flex items-center gap-3">
 
             <button
-              className="text-white relative z-50 p-2 cursor-pointer focus:outline-none bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors"
+              className="text-white relative z-50 p-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 focus-visible:ring-offset-black bg-white/5 border border-white/10 rounded-full hover:bg-white/10 transition-colors"
               onClick={() => { setMobileMenuOpen(!mobileMenuOpen); }}
               aria-label="Toggle mobile menu"
               aria-expanded={mobileMenuOpen}
@@ -272,15 +272,14 @@ export function Navbar() {
             }}
             className="mt-6 w-full"
           >
-            <Link
-              href="/contact"
-              onClick={() => {
+            <OrderSheetButton
+              onOpen={() => {
                 setMobileMenuOpen(false);
               }}
               className="flex justify-center items-center gap-3 w-full py-4 gradient-brand text-brand-dark rounded-full font-bold text-lg shadow-xl"
             >
               Place an Order <Send suppressHydrationWarning className="w-5 h-5" />
-            </Link>
+            </OrderSheetButton>
           </div>
         </div>
       </div>

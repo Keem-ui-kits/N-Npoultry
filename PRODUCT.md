@@ -1,4 +1,12 @@
-# Product
+# Product — N&N Poultry Palace
+
+→ [[00-HOME]] · [[memory/project-states]] · [[context/current-priorities]]
+
+**Stack:** Next.js 16 + Tailwind v4 + Sanity CMS + GSAP  
+**Status:** Active — mobile fixes needed (deadline-sensitive)  
+**Key Skills:** [[skills/impeccable]] · [[skills/gpt-tasteskill]] · [[skills/designing-frontends]]
+
+---
 
 ## Register
 

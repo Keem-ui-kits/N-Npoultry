@@ -2,13 +2,16 @@ import { Suspense } from 'react';
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { Hero } from '@/components/sections/Hero';
 import { FarmPulse } from '@/components/sections/FarmPulse';
-import { 
-  getSiteConfig, 
-  getFarmPhotos, 
-  getHomeConfig, 
-  getTestimonials, 
-  getEducationArticles 
+import {
+  getSiteConfig,
+  getFarmPhotos,
+  getHomeConfig,
+  getTestimonials,
+  getEducationArticles,
+  type HomeConfig,
 } from '@/sanity/lib/queries';
+import type { Testimonial } from '@/content/testimonials';
+import type { EducationArticle } from '@/content/education';
 import dynamic from 'next/dynamic';
 import { ProductsTeaser } from '@/components/sections/ProductsTeaser';
 import { EducationHubTeaser } from '@/components/sections/EducationHubTeaser';
@@ -64,17 +67,17 @@ export const metadata: Metadata = {
 
 // --- Streaming Wrappers ---
 
-async function AsyncFarmGallery({ farmGalleryConfig }: { farmGalleryConfig?: any }) {
+async function AsyncFarmGallery({ farmGalleryConfig }: { farmGalleryConfig?: HomeConfig['farmGallery'] }) {
   const photos = await getFarmPhotos();
   return <FarmGallery photos={photos} farmGalleryConfig={farmGalleryConfig} />;
 }
 
-async function AsyncTestimonials({ testimonialsPromise }: { testimonialsPromise: Promise<any> }) {
+async function AsyncTestimonials({ testimonialsPromise }: { testimonialsPromise: Promise<Testimonial[]> }) {
   const testimonials = await testimonialsPromise;
   return <TestimonialsTeaser testimonials={testimonials} />;
 }
 
-async function AsyncEducationHub({ articlesPromise }: { articlesPromise: Promise<any> }) {
+async function AsyncEducationHub({ articlesPromise }: { articlesPromise: Promise<EducationArticle[]> }) {
   const articles = await articlesPromise;
   return <EducationHubTeaser articles={articles} />;
 }

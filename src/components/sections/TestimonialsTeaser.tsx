@@ -80,7 +80,7 @@ export function TestimonialsTeaser({ testimonials = staticTestimonials }: { test
           </div>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight leading-[0.9] text-white">
             What{' '}
-            <span className="gradient-brand-text">Machakos</span>
+            <span className="text-brand-gold">Machakos</span>
             <br className="hidden sm:block" /> is saying
           </h2>
         </motion.div>

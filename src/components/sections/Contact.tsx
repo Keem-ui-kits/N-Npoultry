@@ -75,10 +75,10 @@ export function Contact({ contactInfo }: ContactProps) {
                 <div>
                   <h3 className="text-foreground dark:text-white font-bold text-lg md:text-xl mb-3 flex items-center gap-3">
                     <Mail className="w-6 h-6 text-brand-gold" />
-                    Open a business account
+                    Bulk &amp; business orders
                   </h3>
                   <p className="text-muted-foreground dark:text-white/50 text-sm md:text-base pl-9">
-                    For planning and logistics, fill the call card. Terms apply
+                    Restaurants, kiosks, and distributors: send us a message and we&apos;ll set up pricing and standing orders.
                   </p>
                 </div>
 
@@ -119,11 +119,13 @@ export function Contact({ contactInfo }: ContactProps) {
                   id="name"
                   label="Name *"
                   value={nameValue}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
                   {...register('name')}
                   onChange={(e) => { setValue('name', e.target.value, { shouldValidate: true }); }}
                   className="w-full"
                 />
-                {errors.name && <p className="text-destructive text-sm mt-1">{errors.name.message}</p>}
+                {errors.name && <p id="name-error" className="text-destructive text-sm mt-1">{errors.name.message}</p>}
               </div>
 
               <div>
@@ -132,11 +134,13 @@ export function Contact({ contactInfo }: ContactProps) {
                   label="Email *"
                   type="email"
                   value={emailValue}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
                   {...register('email')}
                   onChange={(e) => { setValue('email', e.target.value, { shouldValidate: true }); }}
                   className="w-full"
                 />
-                {errors.email && <p className="text-destructive text-sm mt-1">{errors.email.message}</p>}
+                {errors.email && <p id="email-error" className="text-destructive text-sm mt-1">{errors.email.message}</p>}
               </div>
 
               <div>
@@ -161,12 +165,14 @@ export function Contact({ contactInfo }: ContactProps) {
                 </label>
                 <textarea
                   id="message"
+                  aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? 'message-error' : undefined}
                   {...register('message')}
                   rows={5}
                   className="w-full px-5 py-4 bg-background dark:bg-black/20 border border-border dark:border-white/10 rounded-xl text-foreground dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold transition-all resize-none cursor-text text-left"
                   placeholder="Tell us about your needs..."
                 />
-                {errors.message && <p className="text-destructive text-sm mt-1">{errors.message.message}</p>}
+                {errors.message && <p id="message-error" className="text-destructive text-sm mt-1">{errors.message.message}</p>}
               </div>
 
               <motion.button
@@ -187,8 +193,9 @@ export function Contact({ contactInfo }: ContactProps) {
                   </p>
                 )}
                 {submitStatus === 'error' && (
-                  <p className="text-white/60 font-medium">
-                    Something went wrong. Please try again.
+                  <p className="text-destructive font-medium">
+                    Something went wrong and your message was not sent. Please try again, or{' '}
+                    <a href={`https://wa.me/${siteConfig.contacts.whatsapp}`} className="underline">reach us on WhatsApp</a>.
                   </p>
                 )}
               </div>

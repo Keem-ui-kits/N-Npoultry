@@ -79,7 +79,7 @@ export function HowWeWork({ howWeWorkConfig }: { howWeWorkConfig?: HomeConfig['h
             <span
               data-hww-span2
               style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}
-              className="gradient-brand-text"
+              className="text-brand-gold"
             >
               {hww?.headlineAccent ?? 'Delivered tomorrow.'}
             </span>

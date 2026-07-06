@@ -17,7 +17,7 @@ export function ProductsTeaserDesktop({ products }: { products: Product[] }) {
     ),
     title: (
       <>
-        THREE PRODUCTS <span className="gradient-brand-text">ONE TRUSTED</span> SOURCE
+        THREE PRODUCTS <span className="text-brand-gold">ONE TRUSTED</span> SOURCE
       </>
     ),
     subtitle:

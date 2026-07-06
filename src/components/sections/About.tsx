@@ -49,8 +49,8 @@ export function About({ aboutConfig }: { aboutConfig?: AboutConfig | null }) {
             <h1 data-hero-text className="text-5xl md:text-7xl lg:text-8xl xl:text-[9rem] font-black mb-6 uppercase tracking-tighter leading-[0.9]">
               <span className="block italic text-brand-gold/60 text-2xl md:text-4xl lg:text-5xl mb-4 lowercase opacity-80 font-serif font-light tracking-wide">The</span>
               <span className="relative inline-block">
-                <span className="gradient-brand-text">N&N</span>
-                <span aria-hidden="true" data-hero-glow className="absolute inset-0 gradient-brand-text blur-3xl opacity-60">N&N</span>
+                <span className="text-brand-gold">N&N</span>
+                <span aria-hidden="true" data-hero-glow className="absolute inset-0 text-brand-gold blur-3xl opacity-60">N&N</span>
               </span>
               <br />
               <span className="text-white drop-shadow-2xl">STANDARD</span>
@@ -103,9 +103,12 @@ export function About({ aboutConfig }: { aboutConfig?: AboutConfig | null }) {
                 <p className="mb-8">
                   {aboutConfig?.rootsParagraph2 ?? 'Guided by a clear vision to lead in sustainable poultry production, we combine modern husbandry practices, rigorous quality control, and environmentally responsible methods to ensure every product meets our exacting standards.'}
                 </p>
-                <p className="italic border-l-4 border-brand-orange pl-8 text-white/90 text-xl font-serif">
-                  {aboutConfig?.rootsQuote ?? <>&ldquo;Fresh and Nutritious&rdquo; isn&apos;t just a tagline &mdash; it&apos;s our promise to deliver wholesome, responsibly produced products that people can trust.</>}
-                </p>
+                <blockquote className="relative pt-8">
+                  <span aria-hidden="true" className="absolute top-0 left-0 text-6xl leading-none text-brand-gold font-serif">&ldquo;</span>
+                  <p className="italic pl-10 text-white/90 text-xl font-serif">
+                    {aboutConfig?.rootsQuote ?? <>&ldquo;Fresh and Nutritious&rdquo; isn&apos;t just a tagline &mdash; it&apos;s our promise to deliver wholesome, responsibly produced products that people can trust.</>}
+                  </p>
+                </blockquote>
               </div>
             </div>
           </div>
@@ -149,7 +152,7 @@ export function About({ aboutConfig }: { aboutConfig?: AboutConfig | null }) {
         <section data-section="values" className="py-12 md:py-32 px-4 sm:px-6 lg:px-8 max-w-[90rem] mx-auto relative z-10">
           <div className="mb-20 md:mb-28 text-center max-w-3xl mx-auto">
             <h2 className="text-5xl md:text-7xl font-bold mb-8 tracking-tight">
-              Pillars of <span className="gradient-brand-text">Excellence</span>
+              Pillars of <span className="text-brand-gold">Excellence</span>
             </h2>
             <p className="text-xl md:text-2xl text-white/50 font-light">The foundational principles that drive our standard everyday.</p>
           </div>

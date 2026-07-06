@@ -72,6 +72,10 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
     if (typeof window === 'undefined' || prefersReduced) return;
 
+    // Mobile Optimization: Disable Lenis smooth scroll on mobile to restore native responsive scrolling
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if (isMobile) return;
+
     try {
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';

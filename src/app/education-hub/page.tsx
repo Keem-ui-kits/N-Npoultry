@@ -46,7 +46,7 @@ export default async function EducationHubPage() {
 
         <div className="max-w-6xl mx-auto relative z-10 text-center pt-10">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white drop-shadow-lg">
-            Education <span className="gradient-brand-text italic font-serif">Hub</span>
+            Education <span className="text-brand-gold italic font-serif">Hub</span>
           </h1>
           <p className="text-lg md:text-2xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
             Discover the journey from one-day-old chicks to premium table eggs. At N&N Poultry Palace, transparency and sustainable farming are at the core of what we do.

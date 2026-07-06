@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import '../styles/index.css';
 
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -33,6 +33,13 @@ const geistMono = Geist_Mono({
   fallback: ['monospace'],
   adjustFontFallback: true,
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#030213',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
@@ -152,53 +159,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     },
   }));
 
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'How do I order eggs from N&N Poultry Palace?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'The easiest way is to send a WhatsApp message to +254113377623. Tell us what you need — 30pc trays of table eggs, poultry manure, or ex-layer hens — and we will confirm the price and next delivery slot within minutes.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Which areas do you deliver to?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'We deliver daily to Machakos Town, Syokimau, Athi River, Mlolongo, Katoloni, and Mwala. Contact us if you are in a nearby area — we may be able to arrange delivery.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'How fresh are the eggs?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Our eggs are collected daily starting at 2 PM, inspected and packed by 5 PM, and delivered fresh to your doorstep within hours. We guarantee a maximum 24–48 hour farm-to-delivery window.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Do you sell in bulk for businesses?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes. We supply restaurants, kiosks, bakeries, and wholesale distributors. Contact us via WhatsApp or our contact form to discuss bulk pricing and standing orders.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What is poultry manure used for?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Our poultry manure is a fully organic fertilizer rich in nitrogen, phosphorus, and potassium. It is suitable for kitchen gardens, commercial farms, and all crop types. Available in 70kg bulk sacks.',
-        },
-      },
-    ],
-  };
-
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -235,10 +195,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
           />
         ))}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
       </head>
       <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>
         <a

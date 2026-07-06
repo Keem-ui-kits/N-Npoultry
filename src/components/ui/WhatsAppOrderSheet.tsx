@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { X, MessageCircle, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -23,9 +23,10 @@ interface WhatsAppOrderSheetProps {
   whatsapp?: string;
   isOpen: boolean;
   onClose: () => void;
+  initialProductId?: string;
 }
 
-export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderSheetProps) {
+export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose, initialProductId }: WhatsAppOrderSheetProps) {
   const number = whatsapp ?? '254113377623';
   const [order, setOrder] = useState<OrderState>({
     productId: 'table-eggs',
@@ -33,6 +34,57 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
     zone: '',
     preferredDate: '',
   });
+
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const today = new Date().toISOString().split('T')[0];
+
+  // Sync pre-selected product, remember the trigger for focus return,
+  // lock body scroll, and move focus into the dialog on open
+  useEffect(() => {
+    if (!isOpen) return;
+    if (initialProductId && PRODUCTS.some((p) => p.id === initialProductId)) {
+      setOrder((o) => ({ ...o, productId: initialProductId }));
+    }
+    triggerRef.current = document.activeElement as HTMLElement | null;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const focusFrame = requestAnimationFrame(() => {
+      sheetRef.current?.querySelector<HTMLElement>('button, input, select, [href]')?.focus();
+    });
+    return () => {
+      cancelAnimationFrame(focusFrame);
+      document.body.style.overflow = prevOverflow;
+      triggerRef.current?.focus();
+    };
+  }, [isOpen, initialProductId]);
+
+  // Escape closes; Tab cycles within the dialog
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !sheetRef.current) return;
+      const focusables = sheetRef.current.querySelectorAll<HTMLElement>(
+        'button, input, select, a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0]!;
+      const last = focusables[focusables.length - 1]!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => { document.removeEventListener('keydown', handler); };
+  }, [isOpen, onClose]);
 
   const selectedProduct = PRODUCTS.find((p) => p.id === order.productId) ?? PRODUCTS[0]!;
 
@@ -70,7 +122,8 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
             role="dialog"
             aria-modal="true"
             aria-label="Place an order"
-            className="fixed inset-x-4 bottom-4 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-md z-[10001] bg-[#0d1b26] border border-white/10 rounded-3xl p-6 shadow-2xl"
+            ref={sheetRef}
+            className="fixed inset-x-4 bottom-4 sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-md z-[10001] bg-[#0d1b26] border border-white/10 rounded-3xl p-6 shadow-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-6">
               <div>
@@ -121,6 +174,7 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
                 <input
                   id="order-qty"
                   type="number"
+                  inputMode="numeric"
                   min="1"
                   value={order.quantity}
                   onChange={(e) => { setOrder((o) => ({ ...o, quantity: e.target.value })); }}
@@ -162,6 +216,7 @@ export function WhatsAppOrderSheet({ whatsapp, isOpen, onClose }: WhatsAppOrderS
                 <input
                   id="order-date"
                   type="date"
+                  min={today}
                   value={order.preferredDate}
                   onChange={(e) => { setOrder((o) => ({ ...o, preferredDate: e.target.value })); }}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:border-brand-gold/50 transition-colors"

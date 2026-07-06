@@ -72,7 +72,7 @@ export function EducationHubTeaser({ articles = staticArticles }: { articles?: E
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight leading-[0.9] text-white">
               Know Your{' '}
-              <span className="gradient-brand-text">Farm.</span>
+              <span className="text-brand-gold">Farm.</span>
             </h2>
             <p className="mt-4 text-base text-white/45 max-w-md leading-relaxed">
               From day-one chicks to farm-fresh eggs — learn exactly how we raise

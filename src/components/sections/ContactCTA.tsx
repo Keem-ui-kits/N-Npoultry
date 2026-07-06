@@ -3,14 +3,11 @@
 import Link from 'next/link';
 import { MessageCircle, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { OrderSheetButton } from '@/components/ui/OrderSheetButton';
 import type { HomeConfig } from '@/sanity/lib/queries';
 
 const FALLBACK_WHATSAPP = '254113377623';
 const FALLBACK_PHONE = '0113377623';
-
-const WA_ORDER_MESSAGE = encodeURIComponent(
-  "Hi N&N, I'd like to place an order:\n- Product: ___\n- Quantity: ___\n- Delivery to: ___\n- Preferred time: ___"
-);
 
 export function ContactCTA({
   whatsapp,
@@ -23,7 +20,6 @@ export function ContactCTA({
 }) {
   const cta = contactCtaConfig;
   const number = whatsapp ?? FALLBACK_WHATSAPP;
-  const orderUrl = `https://wa.me/${number}?text=${WA_ORDER_MESSAGE}`;
   const displayPhone = phone ?? FALLBACK_PHONE;
 
   return (
@@ -73,7 +69,7 @@ export function ContactCTA({
 
             <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tight leading-[0.88] mb-6 max-w-4xl">
               {cta?.headlinePre ?? "Let's sort"}{' '}
-              <span className="gradient-brand-text">{cta?.headlineAccent ?? 'your first'}</span>{' '}
+              <span className="text-brand-gold">{cta?.headlineAccent ?? 'your first'}</span>{' '}
               {cta?.headlinePost ?? 'order.'}
             </h2>
 
@@ -82,15 +78,13 @@ export function ContactCTA({
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full">
-              <a
-                href={orderUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <OrderSheetButton
+                whatsapp={number}
                 className="flex items-center justify-center gap-3 px-8 py-4 gradient-brand text-brand-dark rounded-full font-black text-base transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] flex-1 sm:flex-none"
               >
                 <MessageCircle className="w-5 h-5" />
                 {cta?.ctaPrimary ?? 'Order on WhatsApp'}
-              </a>
+              </OrderSheetButton>
 
               <a
                 href={`tel:${displayPhone}`}
@@ -103,10 +97,10 @@ export function ContactCTA({
               <p className="text-sm text-white/30 text-center pt-1">
                 Prefer a form?{' '}
                 <Link
-                  href="/quote"
+                  href="/contact"
                   className="text-brand-gold/60 hover:text-brand-gold underline underline-offset-2 transition-colors"
                 >
-                  Request a quote online
+                  Send us a message
                 </Link>
               </p>
             </div>

@@ -60,13 +60,13 @@ export function Hero({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 0.5 }}
-        className="absolute top-1/4 -left-20 w-96 h-96 bg-brand-gold/10 blur-[120px] rounded-full pointer-events-none"
+        className="hidden md:block absolute top-1/4 -left-20 w-96 h-96 bg-brand-gold/10 blur-[120px] rounded-full pointer-events-none"
       />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 2, delay: 0.7 }}
-        className="absolute bottom-1/3 -right-20 w-96 h-96 bg-brand-orange/10 blur-[120px] rounded-full pointer-events-none"
+        className="hidden md:block absolute bottom-1/3 -right-20 w-96 h-96 bg-brand-orange/10 blur-[120px] rounded-full pointer-events-none"
       />
 
       {/* Hero Content — fills viewport, pushes strip to natural bottom */}

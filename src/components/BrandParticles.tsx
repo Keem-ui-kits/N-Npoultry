@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 export default function BrandParticles() {
   const [dimensions, setDimensions] = useState({ width: 1000, height: 600 });
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const dotRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -14,6 +15,10 @@ export default function BrandParticles() {
     let rafId: number | null = null;
 
     const updateDimensions = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (mobile) return;
+
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         const el = containerRef.current;
@@ -34,7 +39,7 @@ export default function BrandParticles() {
   }, []);
 
   const dots = useMemo(() => {
-    if (!mounted) return [];
+    if (!mounted || isMobile) return [];
 
     const seed = (n: number) => {
       const x = Math.sin(n) * 10000;
@@ -100,7 +105,7 @@ export default function BrandParticles() {
     }, containerRef);
 
     return () => { ctx.revert(); };
-  }, [dots, mounted]);
+  }, [dots, mounted, isMobile]);
 
   if (!mounted) {
     return (
@@ -112,6 +117,8 @@ export default function BrandParticles() {
       />
     );
   }
+
+  if (isMobile) return null;
 
   return (
     <div

@@ -84,7 +84,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
         >
           <h2 className="text-foreground dark:text-white text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight uppercase">
             THREE PRODUCTS, <br className="hidden sm:block" />
-            <span className="gradient-brand-text">ONE TRUSTED</span> SOURCE
+            <span className="text-brand-gold">ONE TRUSTED</span> SOURCE
           </h2>
           <p className="text-muted-foreground dark:text-zinc-400 text-lg md:text-xl font-medium mt-2">
             Freshness you can count on

@@ -37,7 +37,7 @@ export async function ProductsTeaser() {
           </div>
           <h2 className="text-4xl sm:text-5xl font-black uppercase tracking-tight leading-tight text-foreground">
             Three Products,{' '}
-            <span className="gradient-brand-text">One Trusted</span> Source
+            <span className="text-brand-gold">One Trusted</span> Source
           </h2>
           <p className="mt-3 text-base sm:text-lg text-muted-foreground leading-relaxed max-w-md">
             Table eggs graded daily, organic manure from our flock, and ex-layer hens when the cycle turns — all raised and dispatched from our farm outside Machakos Town.

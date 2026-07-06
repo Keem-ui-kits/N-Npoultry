@@ -1,10 +1,12 @@
 import { PageWrapper } from '@/components/layout/PageWrapper';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Contact } from '@/components/sections/Contact';
+import { FaqSection } from '@/components/sections/FaqSection';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import { getSiteConfig } from '@/sanity/lib/queries';
 import type { Metadata } from 'next';
 import { siteConfig } from '@/content/site';
+import { faqItems } from '@/content/faq';
 
 export const metadata: Metadata = {
   title: 'Contact Us | N&N Poultry Palace',
@@ -27,10 +29,24 @@ export const metadata: Metadata = {
   },
 };
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+
 export default async function ContactPage() {
   const siteConfig = await getSiteConfig();
   return (
     <PageWrapper>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <PageHeader
         title="Contact"
         accent="Us"
@@ -39,6 +55,7 @@ export default async function ContactPage() {
       <ErrorBoundary>
         <Contact contactInfo={siteConfig} />
       </ErrorBoundary>
+      <FaqSection />
     </PageWrapper>
   );
 }

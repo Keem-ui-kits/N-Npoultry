@@ -2,9 +2,11 @@
 
 import type { Product } from '@/types/product';
 import Image from 'next/image';
-import { CheckCircle2 } from 'lucide-react';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { CheckCircle2, Send } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import { OrderSheetButton } from '@/components/ui/OrderSheetButton';
+import { siteConfig } from '@/content/site';
 
 function resolveAccent(color: string): string {
   if (color === 'var(--brand-gold)') return '#eccc74';
@@ -132,6 +134,21 @@ function MobileProductLayout({ product, badge }: { product: Product; badge: stri
           </div>
         </motion.div>
       )}
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.24 }}
+      >
+        <OrderSheetButton
+          initialProductId={product.id}
+          whatsapp={siteConfig.contacts.whatsapp}
+          className="w-full flex items-center justify-center gap-2 px-6 py-4 gradient-brand text-brand-dark rounded-full font-bold text-base shadow-lg active:scale-[0.98] transition-transform"
+        >
+          Order {product.title} {product.titleAccent} <Send className="w-4 h-4" />
+        </OrderSheetButton>
+      </motion.div>
     </div>
   );
 }
@@ -139,10 +156,8 @@ function MobileProductLayout({ product, badge }: { product: Product; badge: stri
 // ─── Primary hero row — full-width, dominant treatment for Table Eggs ────────
 function PrimaryProductRow({ product }: { product: Product }) {
   const ref = useRef<HTMLDivElement>(null);
-  const prefersReduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imageYRaw = useTransform(scrollYProgress, [0, 1], ['4%', '-4%']);
-  const imageY = prefersReduced ? '0%' : imageYRaw;
+  const imageY = useTransform(scrollYProgress, [0, 1], ['4%', '-4%']);
   const accentHex = resolveAccent(product.color);
 
   return (
@@ -256,9 +271,10 @@ function PrimaryProductRow({ product }: { product: Product }) {
         </div>
 
         {/* Large image panel */}
+        {/* Parallax stays in markup for SSR parity; motion-reduce neutralizes it in CSS */}
         <motion.div
           style={{ borderColor: `${accentHex}20`, y: imageY }}
-          className="relative lg:min-h-[580px] rounded-[3rem] overflow-hidden group shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] border"
+          className="relative lg:min-h-[580px] rounded-[3rem] overflow-hidden group shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] border motion-reduce:transform-none!"
         >
           <div
             className="absolute inset-0 opacity-30 z-10"

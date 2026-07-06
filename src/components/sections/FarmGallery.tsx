@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useReducedMotion } from 'framer-motion';
 import { Camera } from 'lucide-react';
 import type { HomeConfig } from '@/sanity/lib/queries';
 
@@ -27,7 +26,6 @@ export function FarmGallery({
   farmGalleryConfig?: HomeConfig['farmGallery'];
 }) {
   const fg = farmGalleryConfig;
-  const prefersReduced = useReducedMotion();
   const displayPhotos = photos && photos.length > 0 ? photos : FALLBACK_PHOTOS;
   const track = [...displayPhotos, ...displayPhotos];
 
@@ -59,7 +57,7 @@ export function FarmGallery({
             </div>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight leading-[0.9] text-white">
               {fg?.heading ?? 'The Farm,'}{' '}
-              <span className="gradient-brand-text">{fg?.headingAccent ?? 'Live.'}</span>
+              <span className="text-brand-gold">{fg?.headingAccent ?? 'Live.'}</span>
             </h2>
           </div>
           <p className="text-sm sm:text-base text-white/50 font-medium max-w-sm md:text-right leading-relaxed">
@@ -83,12 +81,9 @@ export function FarmGallery({
         />
 
         {/* Scrolling track */}
+        {/* Animation via CSS class + motion-reduce so SSR and client markup match */}
         <div
-          className="flex gap-3 w-max pl-4 pr-4 pb-3 group-hover/gallery:[animation-play-state:paused] group-active/gallery:[animation-play-state:paused] active:[animation-play-state:paused]"
-          style={{
-            animation: prefersReduced ? 'none' : 'gallery-marquee 42s linear infinite',
-            willChange: 'transform',
-          }}
+          className="flex gap-3 w-max pl-4 pr-4 pb-3 will-change-transform [animation:gallery-marquee_42s_linear_infinite] motion-reduce:[animation:none] group-hover/gallery:[animation-play-state:paused] group-active/gallery:[animation-play-state:paused] active:[animation-play-state:paused]"
         >
           {track.map((photo, i) => {
             const isOriginal = i < displayPhotos.length;
@@ -109,7 +104,7 @@ export function FarmGallery({
                   fill
                   className="object-cover pointer-events-none select-none transition-transform duration-700 group-hover/gallery:scale-[1.03] group-hover/photo:scale-105 group-active/photo:scale-105"
                   sizes="320px"
-                  loading={i < 4 ? 'eager' : 'lazy'}
+                  loading="lazy"
                 />
 
                 {/* Text overlay on touch/hold/hover */}

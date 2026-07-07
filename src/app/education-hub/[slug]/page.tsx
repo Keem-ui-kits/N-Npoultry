@@ -21,6 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const article = await getEducationArticleBySlug(slug);
   if (!article) return { title: 'Article Not Found | N&N Poultry Palace' };
+  // Sanity can return articles without an image — fall back to the site OG image
+  const ogImage = article.image ?? '/og-image.png';
   return {
     title: `${article.title} | N&N Poultry Palace`,
     description: article.excerpt,
@@ -30,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: article.excerpt,
       url: `${siteConfig.baseUrl}/education-hub/${slug}`,
       siteName: siteConfig.name,
-      images: [{ url: article.image, alt: article.title }],
+      images: [{ url: ogImage, alt: article.title }],
       locale: 'en_KE',
       type: 'article',
     },
@@ -38,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: `${article.title} | N&N Poultry Palace`,
       description: article.excerpt,
-      images: [article.image],
+      images: [ogImage],
     },
   };
 }
@@ -55,7 +57,9 @@ export default async function EducationArticlePage({ params }: Props) {
     '@type': 'Article',
     headline: article.title,
     description: article.excerpt,
-    image: article.image.startsWith('http') ? article.image : `${siteConfig.baseUrl}${article.image}`,
+    ...(article.image
+      ? { image: article.image.startsWith('http') ? article.image : `${siteConfig.baseUrl}${article.image}` }
+      : {}),
     url: `${siteConfig.baseUrl}/education-hub/${slug}`,
     author: { '@type': 'Organization', name: 'N&N Poultry Palace', url: siteConfig.baseUrl },
     publisher: {
@@ -101,17 +105,19 @@ export default async function EducationArticlePage({ params }: Props) {
 
       {/* Article Content */}
       <section className="py-16 px-4 md:px-8 max-w-4xl mx-auto">
-        <div className="relative aspect-[16/9] rounded-[2rem] overflow-hidden mb-12 shadow-2xl">
-          <Image
-            src={article.image}
-            alt={article.title}
-            fill
-            priority
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 896px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-transparent" />
-        </div>
+        {article.image && (
+          <div className="relative aspect-[16/9] rounded-[2rem] overflow-hidden mb-12 shadow-2xl">
+            <Image
+              src={article.image}
+              alt={article.title}
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 896px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 via-transparent to-transparent" />
+          </div>
+        )}
 
         {/* Farm note callout */}
         {article.authorNote && (

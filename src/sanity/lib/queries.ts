@@ -327,9 +327,15 @@ export async function getEducationArticles(): Promise<EducationArticle[]> {
 
 export async function getEducationArticleBySlug(slug: string): Promise<EducationArticle | null> {
   const data = await fetchFromSanity<EducationArticle>(EDUCATION_ARTICLE_BY_SLUG_QUERY, { slug })
-  if (data) return data
   const { educationArticles } = await import('@/content/education')
-  return educationArticles.find((a) => a.id === slug) ?? null
+  const fallback = educationArticles.find((a) => a.id === slug) ?? null
+  // Mirror getEducationArticles: a Sanity doc without an image loses to the
+  // local fallback; the page guards handle the no-fallback null-image case.
+  if (data) {
+    if (data.image || !fallback) return data
+    return fallback
+  }
+  return fallback
 }
 
 // cache() deduplicates calls within a single render pass across layout, footer, pages

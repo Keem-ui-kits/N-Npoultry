@@ -121,7 +121,7 @@ export function EducationHubTeaser({ articles = staticArticles }: { articles?: E
                   >
                     <div className="relative h-48 overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10" aria-hidden="true" />
-                      <Image src={article.image} alt={article.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="85vw" />
+                      {article.image && <Image src={article.image} alt={article.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="85vw" />}
                       <div className="absolute bottom-3 left-3 z-20 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm" style={{ background: `${color}22`, color, border: `1px solid ${color}40` }}>
                         {label}
                       </div>
@@ -174,13 +174,15 @@ export function EducationHubTeaser({ articles = staticArticles }: { articles?: E
                     aria-hidden="true"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent z-10" aria-hidden="true" />
-                  <Image
-                    src={featured.image}
-                    alt={featured.title}
-                    fill
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    sizes="(max-width: 1280px) 60vw, 800px"
-                  />
+                  {featured.image && (
+                    <Image
+                      src={featured.image}
+                      alt={featured.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      sizes="(max-width: 1280px) 60vw, 800px"
+                    />
+                  )}
                   <div
                     className="absolute bottom-4 left-4 z-20 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm"
                     style={{
@@ -228,13 +230,15 @@ export function EducationHubTeaser({ articles = staticArticles }: { articles?: E
                     >
                       <div className="relative h-36 overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10" aria-hidden="true" />
-                        <Image
-                          src={article.image}
-                          alt={article.title}
-                          fill
-                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                          sizes="(max-width: 1280px) 35vw, 480px"
-                        />
+                        {article.image && (
+                          <Image
+                            src={article.image}
+                            alt={article.title}
+                            fill
+                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            sizes="(max-width: 1280px) 35vw, 480px"
+                          />
+                        )}
                         <div
                           className="absolute bottom-3 left-3 z-20 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm"
                           style={{ background: `${color}22`, color, border: `1px solid ${color}40` }}

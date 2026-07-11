@@ -135,7 +135,7 @@ const HeroSection = ({ badge, title, subtitle, actions, images, className }: Her
                 alt="Hero Image 1"
                 fill
                 sizes="(max-width: 640px) 224px, (max-width: 1024px) 320px, 384px"
-                priority
+                loading="lazy"
                 className="relative z-10 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
             ) : (

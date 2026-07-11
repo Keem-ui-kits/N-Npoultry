@@ -44,16 +44,18 @@ export async function POST(request: Request) {
 
     const { name, email, website, message } = validatedData.data;
 
-    // 3. Persist to Supabase (before email — DB write is independent of email success)
-    await persistToSupabase('contact_submissions', { name, email, website, message });
-
-    // 4. Process the form - Send Email via Resend
-    if (process.env.RESEND_API_KEY) {
-      await resend.emails.send({
-        from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
-        to: 'palacepoultryn.n@gmail.com',
-        subject: `New enquiry from ${name}`,
-        html: `
+    // 3 & 4. Persist to Supabase and send both emails concurrently — these are
+    // independent I/O calls with no data dependency on each other, so running
+    // them in parallel cuts request latency roughly 3x versus sequential awaits.
+    // persistToSupabase never throws (fails silently internally), so it can't
+    // short-circuit the email sends.
+    const emailTask = process.env.RESEND_API_KEY
+      ? Promise.all([
+          resend.emails.send({
+            from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+            to: 'palacepoultryn.n@gmail.com',
+            subject: `New enquiry from ${name}`,
+            html: `
           <h2>New Contact Form Submission</h2>
           <p><strong>Name:</strong> ${escapeHtml(name)}</p>
           <p><strong>Email:</strong> ${escapeHtml(email)}</p>
@@ -63,21 +65,25 @@ export async function POST(request: Request) {
             ${escapeHtml(message ?? 'No message provided')}
           </div>
         `,
-        replyTo: email,
-      });
+            replyTo: email,
+          }),
+          resend.emails.send({
+            from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+            to: email,
+            subject: 'We received your message — N&N Poultry Palace',
+            html: `<p>Hi ${escapeHtml(name)},</p><p>Thank you for reaching out. We've received your message and will get back to you within 24 hours.</p><p>— N&N Poultry Palace</p>`,
+            replyTo: 'palacepoultryn.n@gmail.com',
+          }),
+        ])
+      : (() => {
+          console.warn('RESEND_API_KEY is not defined. Skipping email sending.');
+          return new Promise((resolve) => setTimeout(resolve, 800));
+        })();
 
-      // 5. Customer auto-reply
-      await resend.emails.send({
-        from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
-        to: email,
-        subject: 'We received your message — N&N Poultry Palace',
-        html: `<p>Hi ${escapeHtml(name)},</p><p>Thank you for reaching out. We've received your message and will get back to you within 24 hours.</p><p>— N&N Poultry Palace</p>`,
-        replyTo: 'palacepoultryn.n@gmail.com',
-      });
-    } else {
-      console.warn('RESEND_API_KEY is not defined. Skipping email sending.');
-      await new Promise((resolve) => setTimeout(resolve, 800));
-    }
+    await Promise.all([
+      persistToSupabase('contact_submissions', { name, email, website, message }),
+      emailTask,
+    ]);
 
     return NextResponse.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {

@@ -57,13 +57,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.png?v=4", type: "image/png" },
-      { url: "/favicon.ico?v=4", type: "image/x-icon" },
+      { url: "/nn-poultry-logo.png?v=5", type: "image/png" },
+      { url: "/favicon.ico?v=5", type: "image/x-icon" },
     ],
     apple: [
-      { url: "/apple-icon.png?v=4", type: "image/png" },
+      { url: "/nn-poultry-logo.png?v=5", type: "image/png" },
     ],
-    shortcut: "/icon.png?v=4",
+    shortcut: "/nn-poultry-logo.png?v=5",
   },
 };
 
@@ -144,9 +144,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} ${plexMono.variable} h-full antialiased`}>
       <head>
-        <link rel="icon" type="image/png" sizes="512x512" href="/icon.png?v=4" />
-        <link rel="shortcut icon" href="/icon.png?v=4" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png?v=4" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/nn-poultry-logo.png?v=5" />
+        <link rel="shortcut icon" href="/nn-poultry-logo.png?v=5" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/nn-poultry-logo.png?v=5" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}

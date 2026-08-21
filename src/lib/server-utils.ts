@@ -13,7 +13,7 @@ export function escapeHtml(str: string): string {
 
 /**
  * Persists a form submission to a Supabase table.
- * Fails silently — a DB write failure should never block the email send.
+ * Fails silently - a DB write failure should never block the email send.
  *
  * @param table - The Supabase table name (e.g. 'contact_submissions')
  * @param data  - The row to insert (must match the table schema)

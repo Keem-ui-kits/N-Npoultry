@@ -1,11 +1,10 @@
-import { createImageUrlBuilder } from '@sanity/image-url'
-import type { SanityImageSource } from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
+import { dataset, projectId } from "@/sanity/env";
 
-import { dataset, projectId } from '../env'
+const builder = createImageUrlBuilder({ projectId, dataset });
 
-// https://www.sanity.io/docs/image-url
-const builder = createImageUrlBuilder({ projectId, dataset })
-
-export const urlFor = (source: SanityImageSource) => {
-  return builder.image(source)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function urlFor(source: any) {
+  return builder.image(source);
 }
+

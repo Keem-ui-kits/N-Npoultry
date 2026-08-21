@@ -1,15 +1,16 @@
 import type { MetadataRoute } from 'next';
-import { siteConfig } from '@/content/site';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nnpoultrypalace.co.ke';
+
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/sanity', '/sanity/'],
+        disallow: ['/studio', '/sanity', '/api/'],
       },
     ],
-    sitemap: `${siteConfig.baseUrl}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

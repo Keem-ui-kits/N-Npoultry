@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { z } from 'zod';
 import { Resend } from 'resend';
 
 import { contactSchema } from '@/lib/schemas/contact';
@@ -32,48 +31,53 @@ export async function POST(request: Request) {
     }
 
     // 2. Data Validation
-    const body = await request.json() as unknown;
+    const body = (await request.json()) as unknown;
     const validatedData = contactSchema.safeParse(body);
 
     if (!validatedData.success) {
       return NextResponse.json(
-        { error: 'Invalid data', details: z.treeifyError(validatedData.error) },
+        { error: 'Invalid data', details: validatedData.error.format() },
         { status: 400 }
       );
     }
 
-    const { name, email, website, message } = validatedData.data;
+    const { name, email, phone, productInterest, customerType, quantity, deliveryArea, message } =
+      validatedData.data;
 
-    // 3 & 4. Persist to Supabase and send both emails concurrently — these are
-    // independent I/O calls with no data dependency on each other, so running
-    // them in parallel cuts request latency roughly 3x versus sequential awaits.
-    // persistToSupabase never throws (fails silently internally), so it can't
-    // short-circuit the email sends.
+    // 3 & 4. Persist to Supabase and send emails concurrently
     const emailTask = process.env.RESEND_API_KEY
       ? Promise.all([
           resend.emails.send({
             from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
             to: 'palacepoultryn.n@gmail.com',
-            subject: `New enquiry from ${name}`,
+            subject: `New ${escapeHtml(productInterest)} enquiry from ${escapeHtml(name)}`,
             html: `
-          <h2>New Contact Form Submission</h2>
+          <h2>New Contact Form Lead</h2>
           <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-          <p><strong>Website:</strong> ${escapeHtml(website ?? 'N/A')}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email ?? 'N/A')}</p>
+          <p><strong>Phone:</strong> ${escapeHtml(phone ?? 'N/A')}</p>
+          <p><strong>Product Interest:</strong> ${escapeHtml(productInterest)}</p>
+          <p><strong>Customer Type:</strong> ${escapeHtml(customerType ?? 'N/A')}</p>
+          <p><strong>Quantity Needed:</strong> ${escapeHtml(quantity ?? 'N/A')}</p>
+          <p><strong>Delivery Location:</strong> ${escapeHtml(deliveryArea ?? 'N/A')}</p>
           <p><strong>Message:</strong></p>
           <div style="background: #f4f4f4; padding: 15px; border-radius: 8px;">
-            ${escapeHtml(message ?? 'No message provided')}
+            ${escapeHtml(message ?? 'No additional message provided')}
           </div>
         `,
-            replyTo: email,
+            replyTo: email || undefined,
           }),
-          resend.emails.send({
-            from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
-            to: email,
-            subject: 'We received your message — N&N Poultry Palace',
-            html: `<p>Hi ${escapeHtml(name)},</p><p>Thank you for reaching out. We've received your message and will get back to you within 24 hours.</p><p>— N&N Poultry Palace</p>`,
-            replyTo: 'palacepoultryn.n@gmail.com',
-          }),
+          ...(email
+            ? [
+                resend.emails.send({
+                  from: 'N&N Poultry Palace <noreply@nnpoultry.co.ke>',
+                  to: email,
+                  subject: 'We received your enquiry - N&N Poultry Palace',
+                  html: `<p>Hi ${escapeHtml(name)},</p><p>Thank you for reaching out regarding <strong>${escapeHtml(productInterest)}</strong>. We've received your request and will get back to you within a few hours.</p><p>For faster response, you can also connect directly on WhatsApp: <a href="https://wa.me/254113377623">Chat on WhatsApp</a>.</p><p>- N&N Poultry Palace</p>`,
+                  replyTo: 'palacepoultryn.n@gmail.com',
+                }),
+              ]
+            : []),
         ])
       : (() => {
           console.warn('RESEND_API_KEY is not defined. Skipping email sending.');
@@ -81,7 +85,16 @@ export async function POST(request: Request) {
         })();
 
     await Promise.all([
-      persistToSupabase('contact_submissions', { name, email, website, message }),
+      persistToSupabase('contact_submissions', {
+        name,
+        email,
+        phone,
+        productInterest,
+        customerType,
+        quantity,
+        deliveryArea,
+        message,
+      }),
       emailTask,
     ]);
 

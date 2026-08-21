@@ -1,98 +1,84 @@
-import { StaticPageWrapper } from '@/components/layout/StaticPageWrapper';
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
+import { business } from "@/lib/site-data";
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | N&N Poultry Palace',
-  description: 'Data protection and privacy policy for N&N Poultry Palace.',
-  robots: { index: false, follow: false },
+  title: "Privacy Policy",
+  description: "How N&N Poultry Palace collects, uses and protects your information.",
 };
+
+const sectionH2: React.CSSProperties = { fontSize: "clamp(22px, 2.4vw, 32px)", fontWeight: 700, letterSpacing: "-.02em", margin: "48px 0 16px" };
+const body: React.CSSProperties = { fontSize: 17, lineHeight: 1.75, color: "rgba(17,17,17,.75)", margin: "0 0 16px" };
 
 export default function PrivacyPage() {
   return (
-    <StaticPageWrapper>
-      <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto min-h-screen">
-        <h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Privacy <span className="text-brand-gold italic font-serif font-light">Policy</span></h1>
-        
-        <div className="prose prose-invert prose-brand prose-lg max-w-none text-white/80 font-light">
-          <p className="text-sm text-white/50 mb-8">Last Updated: April 2026</p>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">1. INTRODUCTION</h2>
-          <p>1.1. N And N Poultry Palace Limited (&ldquo;we&rdquo; or &ldquo;us&rdquo; or &ldquo;our&rdquo;) respects the privacy of our users (&ldquo;user&rdquo; or &ldquo;you&rdquo;). This Privacy Policy explains how we collect, use, disclose, and protect your information when you visit our website <strong>nnpoultrypalace.vercel.app</strong> as well as any other media form, media channel, mobile website, or mobile application related to it (collectively, the &ldquo;Site&rdquo;).</p>
-          <p>1.2. We reserve the right to modify this Privacy Policy at any time. We will notify you by updating the &ldquo;Last Updated&rdquo; date. Any changes take effect immediately upon posting.</p>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">2. COLLECTION OF YOUR INFORMATION</h2>
-          <p>We may collect and use information if it is necessary for our legitimate interests, in accordance with the Kenyan Data Protection Act.</p>
-          <ul className="list-none space-y-2 mt-4">
-            <li><strong>2.1. Personal Data:</strong> Personally identifiable information (name, address, email, phone number) and demographic info voluntarily provided during Site activities.</li>
-            <li><strong>2.2. Derivative Data:</strong> Information our servers automatically collect (IP address, browser type, operating system, access times, pages viewed).</li>
-            <li><strong>2.3. Data from Social Networks:</strong> Information from social networking sites (Facebook, Twitter, Instagram) if you grant us access to your account.</li>
-            <li><strong>2.4. Data from Mobile Devices:</strong> Device ID, model, manufacturer, and location data.</li>
-            <li><strong>2.5. Third Party Data:</strong> Information from third parties if you connect your account.</li>
-          </ul>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">3. USE OF YOUR INFORMATION</h2>
-          <p>We use collected information for:</p>
-          <ul className="list-disc pl-6 space-y-2 mt-4 marker:text-brand-gold">
-            <li>Processing products and services bought.</li>
-            <li>Responding to queries or concerns.</li>
-            <li>Verifying identity through government databases to comply with regulations.</li>
-            <li>Informing you about new products/services and marketing offers (with opt-out option).</li>
-            <li>Complying with legal/regulatory requirements.</li>
-            <li>Quality control, training, and effective systems operations.</li>
-            <li>Preventing fraud and debt recovery.</li>
-            <li>Research, statistical, and survey purposes.</li>
-            <li>Providing aggregated data (anonymized) to third parties.</li>
-            <li>Administering our online platforms.</li>
-          </ul>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">4. DATA SUBJECT RIGHTS</h2>
-          <p>You have the right to:</p>
-          <ul className="list-disc pl-6 space-y-2 mt-4 marker:text-brand-gold">
-            <li>Be informed about how your data is used.</li>
-            <li>Request copies of your personal data.</li>
-            <li>Request correction of inaccurate or incomplete information.</li>
-            <li>Request deletion of data (subject to certain conditions).</li>
-            <li>Oppose processing for serious and legitimate reasons.</li>
-            <li>Withdraw consent at any time.</li>
-            <li>Restrict processing under certain conditions.</li>
-            <li>Request data portability to another controller or to yourself.</li>
-          </ul>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">5. CONFIDENTIALITY OF PERSONAL DATA</h2>
-          <p>Information is kept private and accessed only on a &ldquo;need to know&rdquo; basis by employees for specified tasks.</p>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">6. STORING YOUR INFORMATION</h2>
-          <p>Data is kept for as long as required to fulfill the purpose for which it was collected, or as authorized by law (historical, statistical, or research purposes).</p>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">7. DISCLOSURE OF YOUR INFORMATION</h2>
-          <p>We may share your info:</p>
-          <ul className="list-none space-y-2 mt-4">
-            <li><strong>7.1. By Law:</strong> To respond to legal processes or protect rights/safety.</li>
-            <li><strong>7.2. Third Party Service Providers:</strong> Payment processing, data analysis, email delivery, hosting, customer service, and marketing.</li>
-            <li><strong>7.3. Marketing:</strong> With your prior consent.</li>
-            <li><strong>7.4. Third Party Advertisers:</strong> To display ads of interest.</li>
-            <li><strong>7.5. Business Partners:</strong> To provide specific products/services.</li>
-          </ul>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">8. TRACKING TECHNOLOGIES</h2>
-          <ul className="list-none space-y-2 mt-4">
-            <li><strong>8.1. Cookies/Web Beacons:</strong> Used to customize and improve experience.</li>
-            <li><strong>8.2. Internet-Based Collection:</strong> Third-party software used to manage and optimize experience.</li>
-            <li><strong>8.3. Web Analytics:</strong> Collaboration with vendors like Google for remarketing and tracking.</li>
-          </ul>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">9. SECURITY OF YOUR INFORMATION</h2>
-          <p>We employ administrative, technical, and physical security measures. However, no method of transmission is 100% secure.</p>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">10. COMMUNICATIONS AND EMAILS</h2>
-          <p>You can opt-out of communications by contacting us. For third-party communications, you must contact them directly.</p>
-
-          <h2 className="text-2xl text-white font-bold mt-12 mb-4">11. CONTACT US</h2>
-          <p>If you have questions about this Privacy Policy, please contact us at:</p>
-          <p><strong>Tel:</strong> +254 113377623</p>
-          <p><strong>Email:</strong> info@nnpoultry.co.ke</p>
+    <section style={{ background: "var(--color-cream)", padding: "clamp(56px, 8vw, 120px) clamp(20px, 4vw, 56px) clamp(80px, 10vw, 140px)" }}>
+      <div style={{ maxWidth: 760, margin: "0 auto" }}>
+        <div className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".2em", color: "rgba(17,17,17,.5)", marginBottom: 20 }}>
+          Legal / Privacy
         </div>
+        <h1 style={{ fontSize: "clamp(38px, 5vw, 64px)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-.035em", margin: "0 0 12px" }}>
+          Privacy Policy
+        </h1>
+        <p className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".14em", color: "rgba(17,17,17,.45)", marginBottom: 40 }}>
+          Last updated August 2026 · {business.name}
+        </p>
+
+        <p style={body}>
+          {business.name} (&quot;N&amp;N&quot;, &quot;we&quot;, &quot;us&quot;) operates as a farm business based in Machakos, Kenya. This
+          policy explains what information we collect when you contact us, order from us, or use this website, and
+          how we handle it.
+        </p>
+
+        <h2 style={sectionH2}>What we collect</h2>
+        <p style={body}>
+          When you order or get in touch — by WhatsApp, phone, email, or the contact form on this site — we collect
+          what you give us directly: your name, phone number, delivery area or address, and the details of your
+          order or enquiry. We do not ask for payment card details or run any online checkout on this site; pricing
+          and payment are confirmed directly with you by message or call.
+        </p>
+
+        <h2 style={sectionH2}>How we use it</h2>
+        <p style={body}>
+          We use this information to confirm and fulfil orders, arrange delivery, respond to enquiries, and keep
+          basic records for our own accounting and invoicing. We do not sell your information to third parties, and
+          we do not use it for advertising.
+        </p>
+
+        <h2 style={sectionH2}>WhatsApp and messaging</h2>
+        <p style={body}>
+          Our order concierge on this site builds a message and hands it off to WhatsApp, which is operated by Meta.
+          Once a message is sent via WhatsApp, that conversation is subject to WhatsApp&apos;s own privacy terms in
+          addition to this policy. We keep order conversations only as long as needed to fulfil and follow up on
+          your order.
+        </p>
+
+        <h2 style={sectionH2}>Cookies and analytics</h2>
+        <p style={body}>
+          This site does not run advertising trackers. If we add basic, privacy-respecting analytics in future (for
+          example, to understand which pages are useful), this policy will be updated to reflect it before that
+          happens.
+        </p>
+
+        <h2 style={sectionH2}>Data retention</h2>
+        <p style={body}>
+          We keep order and contact records for as long as reasonably needed for accounting, delivery history, and
+          customer service — typically no longer than a few years — and delete or anonymise older records when
+          they&apos;re no longer needed.
+        </p>
+
+        <h2 style={sectionH2}>Your rights</h2>
+        <p style={body}>
+          Under Kenya&apos;s Data Protection Act, 2019, you can ask us what information we hold about you, ask us to
+          correct it, or ask us to delete it. To do any of this, contact us using the details below.
+        </p>
+
+        <h2 style={sectionH2}>Contact us</h2>
+        <p style={body}>
+          Questions about this policy or your information can be sent to{" "}
+          <a href={`mailto:${business.email}`} style={{ color: "var(--color-terracotta)" }}>{business.email}</a> or via
+          WhatsApp at {business.whatsappFormatted}.
+        </p>
       </div>
-    </StaticPageWrapper>
+    </section>
   );
 }

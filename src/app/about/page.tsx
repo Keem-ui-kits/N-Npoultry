@@ -96,26 +96,26 @@ export default function AboutPage() {
 
       {/* 02 The name */}
       <Reveal as="section" style={{ background: "var(--color-dark)", color: "var(--color-cream)", padding: "0 clamp(20px, 4vw, 56px)" }}>
-      <div className="grid grid-cols-12 items-center" style={{ maxWidth: "var(--container-site)", margin: "0 auto" }}>
-        <div className="col-span-12 md:col-span-6" style={{ padding: "clamp(64px, 8vw, 130px) 0" }}>
-          <div className="flex items-center gap-3.5" style={{ marginBottom: 26 }}>
-            <span style={{ width: 34, height: 1, background: "var(--color-gold)", display: "inline-block" }} />
-            <span className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".22em", color: "var(--color-gold)" }}>02 / The name</span>
+        <div className="grid grid-cols-12 items-center" style={{ maxWidth: "var(--container-site)", margin: "0 auto" }}>
+          <div className="col-span-12 md:col-span-6" style={{ padding: "clamp(64px, 8vw, 130px) 0" }}>
+            <div className="flex items-center gap-3.5" style={{ marginBottom: 26 }}>
+              <span style={{ width: 34, height: 1, background: "var(--color-gold)", display: "inline-block" }} />
+              <span className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".22em", color: "var(--color-gold)" }}>02 / The name</span>
+            </div>
+            <h2 style={{ margin: "0 0 26px", fontSize: "clamp(30px, 4vw, 60px)", fontWeight: 700, lineHeight: 1.02, letterSpacing: "-.03em" }}>
+              Two initials. Two daughters.
+            </h2>
+            <p style={{ fontSize: 19, lineHeight: 1.75, color: "rgba(245,240,232,.66)", maxWidth: "50ch", marginBottom: 18 }}>
+              The name comes from a family setup — our two daughters bear the initials. It is not a brand exercise. It is the reason the standard does not slip when nobody is watching.
+            </p>
+            <p style={{ fontSize: 19, lineHeight: 1.75, color: "rgba(245,240,232,.66)", maxWidth: "50ch" }}>
+              “Fresh and Nutritious” has been the promise since the first tray left the gate, and it is still what the whole operation is measured against.
+            </p>
           </div>
-          <h2 style={{ margin: "0 0 26px", fontSize: "clamp(30px, 4vw, 60px)", fontWeight: 700, lineHeight: 1.02, letterSpacing: "-.03em" }}>
-            Two initials. Two daughters.
-          </h2>
-          <p style={{ fontSize: 19, lineHeight: 1.75, color: "rgba(245,240,232,.66)", maxWidth: "50ch", marginBottom: 18 }}>
-            The name comes from a family setup — our two daughters bear the initials. It is not a brand exercise. It is the reason the standard does not slip when nobody is watching.
-          </p>
-          <p style={{ fontSize: 19, lineHeight: 1.75, color: "rgba(245,240,232,.66)", maxWidth: "50ch" }}>
-            “Fresh and Nutritious” has been the promise since the first tray left the gate, and it is still what the whole operation is measured against.
-          </p>
+          <div className="col-span-12 md:col-span-5 md:col-start-8 relative" style={{ minHeight: "clamp(320px, 40vw, 600px)" }}>
+            <ZoomImage src="/nn-poultry-logo.png" alt="The N&N Poultry Palace crest" className="absolute inset-0" />
+          </div>
         </div>
-        <div className="col-span-12 md:col-span-5 md:col-start-8 relative" style={{ minHeight: "clamp(320px, 40vw, 600px)" }}>
-          <ZoomImage src="/nn-poultry-logo.png" alt="The N&N Poultry Palace crest" className="absolute inset-0" />
-        </div>
-      </div>
       </Reveal>
 
       {/* 03 Values */}
@@ -192,35 +192,35 @@ export default function AboutPage() {
 
       {/* 05 Founder story */}
       <Reveal as="section" style={{ background: "var(--color-dark)", color: "var(--color-cream)", padding: "0 clamp(20px, 4vw, 56px)" }}>
-      <div className="grid grid-cols-12 items-center" style={{ maxWidth: "var(--container-site)", margin: "0 auto" }}>
-        <div className="col-span-12 md:col-span-5 relative" style={{ minHeight: "clamp(360px, 46vw, 700px)" }}>
-          <ZoomImage src="/farm-sign.jpeg" alt="The N&N Poultry Farm entrance sign" className="absolute inset-0" />
-          <div className="absolute left-0 right-0 bottom-0 font-mono uppercase" style={{ background: "rgba(17,17,17,.88)", padding: "14px 20px", fontSize: 10, letterSpacing: ".16em", color: "rgba(245,240,232,.6)" }}>
-            Founder portrait to be photographed — flock imagery standing in
+        <div className="grid grid-cols-12 items-center" style={{ maxWidth: "var(--container-site)", margin: "0 auto" }}>
+          <div className="col-span-12 md:col-span-5 relative" style={{ minHeight: "clamp(360px, 46vw, 700px)" }}>
+            <ZoomImage src="/farm-sign.jpeg" alt="The N&N Poultry Farm entrance sign" className="absolute inset-0" />
+            <div className="absolute left-0 right-0 bottom-0 font-mono uppercase" style={{ background: "rgba(17,17,17,.88)", padding: "14px 20px", fontSize: 10, letterSpacing: ".16em", color: "rgba(245,240,232,.6)" }}>
+              Founder portrait to be photographed — flock imagery standing in
+            </div>
           </div>
-        </div>
-        <div className="col-span-12 md:col-span-6 md:col-start-7" style={{ padding: "clamp(64px, 8vw, 130px) 0" }}>
-          <div className="flex items-center gap-3.5" style={{ marginBottom: 26 }}>
-            <span style={{ width: 34, height: 1, background: "var(--color-gold)", display: "inline-block" }} />
-            <span className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".22em", color: "var(--color-gold)" }}>05 / The people behind it</span>
-          </div>
-          <blockquote style={{ margin: "0 0 28px", fontSize: "clamp(26px, 3.2vw, 46px)", fontWeight: 600, lineHeight: 1.12, letterSpacing: "-.03em" }}>
-            “Every egg, every day, done right.”
-          </blockquote>
-          <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(245,240,232,.62)", maxWidth: "52ch", marginBottom: 18 }}>
-            Integrity, teamwork and consistency are the guiding principles, and they are tested most on the days nothing goes to plan — a power cut on a cold Machakos night, a batch running light by week three, a Saturday route with more orders than slots.
-          </p>
-          <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(245,240,232,.62)", maxWidth: "52ch", marginBottom: 40 }}>
-            “When a kiosk owner in Athi River tells me our eggs are the only ones her customers ask for by name — that&apos;s what it&apos;s all about. That trust is everything we&apos;ve worked for.”
-          </p>
-          <div style={{ borderTop: "1px solid rgba(245,240,232,.2)", paddingTop: 22 }}>
-            <div style={{ fontSize: 18, fontWeight: 600 }}>The Kyalos</div>
-            <div className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".16em", color: "var(--color-gold)", marginTop: 6 }}>
-              Founders &amp; Directors · 5 years farming
+          <div className="col-span-12 md:col-span-6 md:col-start-7" style={{ padding: "clamp(64px, 8vw, 130px) 0" }}>
+            <div className="flex items-center gap-3.5" style={{ marginBottom: 26 }}>
+              <span style={{ width: 34, height: 1, background: "var(--color-gold)", display: "inline-block" }} />
+              <span className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".22em", color: "var(--color-gold)" }}>05 / The people behind it</span>
+            </div>
+            <blockquote style={{ margin: "0 0 28px", fontSize: "clamp(26px, 3.2vw, 46px)", fontWeight: 600, lineHeight: 1.12, letterSpacing: "-.03em" }}>
+              “Every egg, every day, done right.”
+            </blockquote>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(245,240,232,.62)", maxWidth: "52ch", marginBottom: 18 }}>
+              Integrity, teamwork and consistency are the guiding principles, and they are tested most on the days nothing goes to plan — a power cut on a cold Machakos night, a batch running light by week three, a Saturday route with more orders than slots.
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(245,240,232,.62)", maxWidth: "52ch", marginBottom: 40 }}>
+              “When a kiosk owner in Athi River tells me our eggs are the only ones her customers ask for by name — that&apos;s what it&apos;s all about. That trust is everything we&apos;ve worked for.”
+            </p>
+            <div style={{ borderTop: "1px solid rgba(245,240,232,.2)", paddingTop: 22 }}>
+              <div style={{ fontSize: 18, fontWeight: 600 }}>The Kyalos</div>
+              <div className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".16em", color: "var(--color-gold)", marginTop: 6 }}>
+                Founders &amp; Directors · 5 years farming
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </Reveal>
 
       {/* 06 Proof */}
@@ -256,20 +256,19 @@ export default function AboutPage() {
         <div className="grid grid-cols-12 gap-8 items-end" style={{ maxWidth: "var(--container-site)", margin: "0 auto" }}>
           <div className="col-span-12 md:col-span-7">
             <span className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".22em", color: "var(--color-gold)", display: "block", marginBottom: 30 }}>
-              07 / Come and see
+              07 / Biosecurity
             </span>
             <h2 style={{ margin: "0 0 28px", fontSize: "clamp(38px, 5.6vw, 88px)", fontWeight: 800, lineHeight: 0.92, letterSpacing: "-.038em" }}>
-              Visit the farm,
-              <br />
-              or start with a tray.
+              We protect what we raise.
+              So you can trust what we deliver.
             </h2>
             <p style={{ fontSize: 20, lineHeight: 1.6, color: "rgba(245,240,232,.65)", maxWidth: "46ch" }}>
-              We keep the barns closed to casual visitors for biosecurity, but arranged visits are welcome — footbath and farm clothing, no exceptions.
+              Our farm is a protected production environment, and access is reserved for authorised staff only. It is one of the ways we keep our flock healthy, our standards consistent, and every tray leaving the farm worthy of your table.
             </p>
           </div>
           <div className="col-span-12 md:col-span-4 md:col-start-9 flex flex-col gap-4">
             <ArrowButton href="/order" variant="primary" size="lg">Order Fresh Eggs</ArrowButton>
-            <ArrowButton href="/contact" variant="secondary" size="lg" onDark>Arrange a visit</ArrowButton>
+            <ArrowButton href="/inside-the-farm" variant="secondary" size="lg" onDark>Learn How We Farm</ArrowButton>
           </div>
         </div>
       </Reveal>

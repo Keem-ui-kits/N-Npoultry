@@ -119,7 +119,7 @@ export const educationSections: EducationSection[] = [
     content: [
       "Our daily operations are guided by our core value of Integrity and doing what is right. Our experienced farmhands conduct multiple walk-throughs daily to monitor the flock's behavior, health, and comfort.",
       "Ventilation is constantly adjusted to ensure optimal air quality, and the barns are kept clean and dry. We use automated systems to monitor water consumption and house temperature, ensuring the environment remains stress-free.",
-      "Happy, healthy birds are productive birds. We maintain low stocking densities to allow for natural behaviors, resulting in better overall welfare and superior egg production.",
+      "Happy, healthy birds are productive birds. Our battery cage system houses four hens per cage — structured, clean, and easy to monitor individually for health and output.",
     ],
   },
   {
@@ -134,7 +134,7 @@ export const educationSections: EducationSection[] = [
     authorNote:
       "At N&N, we collect eggs three times a day during peak production — morning, midday, and late afternoon. That frequency is what keeps our eggs clean and uncracked. One collection a day is not enough for a high-producing flock.",
     farmerTip:
-      "We judge the health of a laying cycle by the floor eggs, not just the nests. If we start finding more eggs on the floor than usual, it's the flock's way of telling us the nest boxes need attention or the lighting schedule is off.",
+      "We judge the health of a laying cycle cage by cage. If egg counts drop in a specific box, we know exactly which four hens to check — feed intake, shell quality, behaviour. That's the advantage of the battery system: you can pinpoint problems fast.",
     content: [
       "During the layer phase, the diet is switched to a high-calcium layer mash to support daily egg production. The timing and duration of lighting in the barns are closely managed to simulate natural daylight and maintain consistent laying cycles.",
       "Eggs are collected gently and frequently throughout the day to ensure they remain clean and fresh. At this stage, our commitment to “Fresh and Nutritious” is realized in every egg laid.",
@@ -172,7 +172,7 @@ export const educationSections: EducationSection[] = [
     authorNote:
       "At N&N, we don't allow casual visitors into the barns — even family. We know it sounds strict, but one disease outbreak can wipe out months of work. Our rule is simple: if you're coming into a barn, you change footwear and wash your hands. No exceptions.",
     farmerTip:
-      "The most common disease entry point we've seen isn't visitors — it's new equipment. We always disinfect any second-hand feeders, drinkers, or crates before they touch the floor of our barns.",
+      "The most common disease entry point we've seen isn't visitors — it's new equipment. We always disinfect all feeders, drinkers, or crates before they touch the floor of our barns.",
     content: [
       "Biosecurity is our first line of defense against poultry diseases. We implement strict controlled access to all our barns to prevent the introduction of pathogens from outside sources.",
       "Visitors and farm workers must adhere to rigorous sanitation protocols, including the use of footbaths and farm-specific clothing, ensuring that the environment remains sterile and safe for our birds.",

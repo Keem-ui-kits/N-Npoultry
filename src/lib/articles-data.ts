@@ -233,7 +233,7 @@ export const articles: Article[] = [
         { label: "First check", value: "Before breakfast" },
         { label: "Walk-throughs", value: "Multiple daily" },
         { label: "Logging", value: "Daily farm log" },
-        { label: "Density", value: "Kept low" },
+        { label: "Housing", value: "Battery cages, 4/cage" },
       ],
       body: [
         {
@@ -248,7 +248,7 @@ export const articles: Article[] = [
         { type: "h2", text: "A notebook, not a dashboard" },
         {
           type: "p",
-          text: "Ventilation is constantly adjusted for air quality, and the barns are kept clean and dry. We monitor water consumption and house temperature so the environment stays stress-free, and we keep low stocking densities so natural behaviour — and welfare — stays intact.",
+          text: "Ventilation is constantly adjusted for air quality, and the barns are kept clean and dry. We monitor water consumption and house temperature so the environment stays stress-free. Each cage houses four hens — structured, clean, and easy to monitor individually.",
         },
         {
           type: "quote",
@@ -264,7 +264,7 @@ export const articles: Article[] = [
       stats: [
         { number: "3×", label: "Walk-throughs, minimum, daily" },
         { number: "2 days", label: "Mortality trend that triggers a check" },
-        { number: "Low", label: "Stocking density, by design" },
+        { number: "4", label: "Hens per cage, by design" },
       ],
       productCrossSell: {
         slug: "table-eggs",
@@ -277,14 +277,14 @@ export const articles: Article[] = [
     fieldNote: "Field note 05",
     category: "Product Excellence",
     title: "Peak Production: The Layer Phase",
-    excerpt: "Managing hens during their most productive laying cycle — and why floor eggs, not just nest counts, tell the real story.",
+    excerpt: "Managing hens during their most productive laying cycle — and why egg counts per cage, not just totals, tell the real story.",
     image: "/layers.jpeg",
     alt: "Layer hens at peak production",
     aspect: "3/2",
     span: "md:col-span-4",
     full: {
       readTime: "3 min read",
-      dek: "Managing hens during their most productive laying cycle — and why floor eggs, not just nest counts, tell the real story.",
+      dek: "Managing hens during their most productive laying cycle — and why egg counts per cage, not just totals, tell the real story.",
       heroAlt: "Layer hens at peak production",
       heroCaption: "Layer house, midday collection — the second of three daily passes",
       factRail: [
@@ -303,14 +303,14 @@ export const articles: Article[] = [
           type: "p",
           text: "We collect eggs three times a day during peak production — morning, midday and late afternoon. That frequency is what keeps our eggs clean and uncracked. One collection a day is not enough for a high-producing flock.",
         },
-        { type: "h2", text: "What the floor tells us" },
+        { type: "h2", text: "What the cage trays tell us" },
         {
           type: "p",
-          text: "Eggs are collected gently and frequently through the day so they stay clean and fresh. At this stage, our commitment to fresh and nutritious is realised in every egg laid.",
+          text: "In a battery cage system, eggs roll forward onto collection trays as they are laid — clean, unsoiled, and easy to pick up. We collect three times a day during peak production so nothing sits too long.",
         },
         {
           type: "quote",
-          text: "If we start finding more eggs on the floor than usual, it's the flock's way of telling us the nest boxes need attention or the lighting schedule is off.",
+          text: "If egg counts drop in a specific cage, we know exactly which four hens to check. That's the advantage of the battery system — you can pinpoint problems fast.",
           attribution: "The Kyalos · Founders",
         },
         {
@@ -318,7 +318,7 @@ export const articles: Article[] = [
           text: "We continually monitor feed-to-egg conversion and eggshell quality, making minor nutritional adjustments as needed to keep the flock at peak performance.",
         },
       ],
-      farmerTip: "We judge the health of a laying cycle by the floor eggs, not just the nests. If we start finding more eggs on the floor than usual, it's the flock's way of telling us the nest boxes need attention or the lighting schedule is off.",
+      farmerTip: "We judge the health of a laying cycle cage by cage. If egg counts drop in a specific box, we know exactly which four hens to check — feed intake, shell quality, behaviour. That's the advantage of the battery system: you can pinpoint problems fast.",
       stats: [
         { number: "3×", label: "Egg collections, daily" },
         { number: "High-Ca", label: "Layer mash formulation" },

@@ -92,7 +92,7 @@ export const productsData: Record<ProductDetail["slug"], ProductDetail> = {
       body: "High-calcium layer mash, a managed lighting schedule, and three collections a day at peak production.",
     },
     process: {
-      h2: "From nest box to your door.",
+      h2: "From cage to your door.",
       stepNumberColor: "#d4a847",
       steps: [
         { title: "Care", body: "Morning walk-through, ventilation checked, water intake logged." },

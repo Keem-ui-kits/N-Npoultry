@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /
+Disallow: /studio
+Disallow: /sanity
+Disallow: /api/
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.nnpoultrypalace.co.ke/sitemap.xml

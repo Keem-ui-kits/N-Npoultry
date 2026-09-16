@@ -93,8 +93,8 @@ export default async function HomePage() {
       : FALLBACK_TESTIMONIALS.featured;
   const grid = testimonials.length > 1
     ? testimonials
-        .filter((t) => (featuredDoc ? t._id !== featuredDoc._id : t._id !== testimonials[0]?._id))
-        .map((t) => ({ quote: t.quote, name: t.name, place: t.place, role: t.role }))
+      .filter((t) => (featuredDoc ? t._id !== featuredDoc._id : t._id !== testimonials[0]?._id))
+      .map((t) => ({ quote: t.quote, name: t.name, place: t.place, role: t.role }))
     : FALLBACK_TESTIMONIALS.grid;
 
   return (
@@ -222,50 +222,50 @@ export default async function HomePage() {
         as="section"
         style={{ background: "var(--color-dark)", color: "var(--color-cream)", padding: "0 clamp(20px, 4vw, 56px)" }}
       >
-      <div
-        className="grid grid-cols-12 items-center"
-        style={{ gap: "clamp(24px, 4vw, 64px)", maxWidth: "var(--container-site)", margin: "0 auto" }}
-      >
-        <div className="col-span-12 md:col-span-5 self-stretch relative" style={{ minHeight: "clamp(360px, 46vw, 700px)" }}>
-          <ZoomImage
-            src="/farm-sign.jpeg"
-            alt="The N&N Poultry Farm entrance sign"
-            className="absolute inset-0"
-            sizes="(max-width: 900px) 100vw, 42vw"
-          />
-          <div
-            className="absolute left-0 right-0 bottom-0 font-mono uppercase"
-            style={{ background: "rgba(17,17,17,.88)", padding: "14px 20px", fontSize: 10, letterSpacing: ".16em", color: "rgba(245,240,232,.6)" }}
-          >
-            Founder portrait to be photographed — flock imagery standing in
+        <div
+          className="grid grid-cols-12 items-center"
+          style={{ gap: "clamp(24px, 4vw, 64px)", maxWidth: "var(--container-site)", margin: "0 auto" }}
+        >
+          <div className="col-span-12 md:col-span-5 self-stretch relative" style={{ minHeight: "clamp(360px, 46vw, 700px)" }}>
+            <ZoomImage
+              src="/farm-sign.jpeg"
+              alt="The N&N Poultry Farm entrance sign"
+              className="absolute inset-0"
+              sizes="(max-width: 900px) 100vw, 42vw"
+            />
+            <div
+              className="absolute left-0 right-0 bottom-0 font-mono uppercase"
+              style={{ background: "rgba(17,17,17,.88)", padding: "14px 20px", fontSize: 10, letterSpacing: ".16em", color: "rgba(245,240,232,.6)" }}
+            >
+              Founder portrait to be photographed — flock imagery standing in
+            </div>
           </div>
-        </div>
-        <div className="col-span-12 md:col-span-6 md:col-start-7" style={{ padding: "clamp(64px, 8vw, 130px) 0" }}>
-          <div className="flex items-center gap-3.5" style={{ marginBottom: 30 }}>
-            <span style={{ width: 34, height: 1, background: "var(--color-gold)", display: "inline-block" }} />
-            <span className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".18em", color: "var(--color-gold)" }}>
-              The people behind it
-            </span>
-          </div>
-          <blockquote
-            style={{ margin: "0 0 36px", fontSize: "clamp(28px, 3.4vw, 50px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-.03em" }}
-          >
-            “Integrity, teamwork and consistency are our guiding principles.”
-          </blockquote>
-          <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(245,240,232,.62)", maxWidth: "52ch", marginBottom: 18 }}>
-            N&amp;N began in 2021 as a backyard broiler project during Covid. When the eateries closed and the broiler market went with them, the family moved to layers in 2022 and registered the company. Disease challenges came next, and with them online training, seminars and a long run of farm visits.
-          </p>
-          <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(245,240,232,.62)", maxWidth: "52ch", marginBottom: 40 }}>
-            The name comes from a family setup — two daughters bear the initials. The first year was hard. Batches were lost, mistakes were made. The quality of what left the farm never moved.
-          </p>
-          <div style={{ borderTop: "1px solid rgba(245,240,232,.2)", paddingTop: 22 }}>
-            <div style={{ fontSize: 18, fontWeight: 600 }}>The Kyalos</div>
-            <div className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".16em", color: "var(--color-gold)", marginTop: 6 }}>
-              Founders &amp; Directors · 5 years farming
+          <div className="col-span-12 md:col-span-6 md:col-start-7" style={{ padding: "clamp(64px, 8vw, 130px) 0" }}>
+            <div className="flex items-center gap-3.5" style={{ marginBottom: 30 }}>
+              <span style={{ width: 34, height: 1, background: "var(--color-gold)", display: "inline-block" }} />
+              <span className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".18em", color: "var(--color-gold)" }}>
+                The people behind it
+              </span>
+            </div>
+            <blockquote
+              style={{ margin: "0 0 36px", fontSize: "clamp(28px, 3.4vw, 50px)", fontWeight: 600, lineHeight: 1.1, letterSpacing: "-.03em" }}
+            >
+              “Integrity, teamwork and consistency are our guiding principles.”
+            </blockquote>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(245,240,232,.62)", maxWidth: "52ch", marginBottom: 18 }}>
+              N&amp;N began in 2021 as a backyard broiler project during Covid. When the eateries closed and the broiler market went with them, the family moved to layers in 2022 and registered the company. Disease challenges came next, and with them online training, seminars and a long run of farm visits.
+            </p>
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: "rgba(245,240,232,.62)", maxWidth: "52ch", marginBottom: 40 }}>
+              The name comes from a family setup — two daughters bear the initials. The first year was hard. Batches were lost, mistakes were made. The quality of what left the farm never moved.
+            </p>
+            <div style={{ borderTop: "1px solid rgba(245,240,232,.2)", paddingTop: 22 }}>
+              <div style={{ fontSize: 18, fontWeight: 600 }}>The Kyalos</div>
+              <div className="font-mono uppercase" style={{ fontSize: 11, letterSpacing: ".16em", color: "var(--color-gold)", marginTop: 6 }}>
+                Founders &amp; Directors · 5 years farming
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </Reveal>
 
       {/* 06 Testimonials */}

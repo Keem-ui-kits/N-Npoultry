@@ -141,6 +141,61 @@ export default function RootLayout({
     },
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Which areas in Kenya do you deliver farm-fresh eggs to?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "We deliver daily across Machakos Town, Syokimau, Athi River, Mlolongo, Katoloni, and Mwala. Deliveries are made Monday to Saturday before noon.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How fresh are N&N Poultry Palace table eggs?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Eggs are collected from our hens daily at 2:00 PM, graded and packed by 5:00 PM, and delivered to your doorstep before noon the next day with zero cold storage.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What if an egg breaks during transit?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Any egg damaged during transit is 100% replaced upon delivery verification. N&N Poultry Palace holds the quality standard.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is N&N organic poultry manure ready for immediate crop application?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Our layer manure is naturally sun-dried in Machakos to lock in nitrogen and eliminate pathogens, making it ready for direct soil mixing or top-dressing.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Are the ex-layer hens healthy and vaccinated?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes, all our ex-layer hens undergo a complete vaccination programme under strict veterinary supervision throughout their 72-80 week cycle.",
+        },
+      },
+    ],
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: business.name,
+    url: siteUrl,
+    description: business.tagline,
+  };
+
   return (
     <html lang="en" className={`${outfit.variable} ${plexMono.variable} h-full antialiased`}>
       <head>
@@ -154,6 +209,14 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
       <body className="min-h-full flex flex-col bg-cream text-dark font-display">

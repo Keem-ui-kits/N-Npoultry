@@ -10,7 +10,13 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/studio', '/sanity', '/api/'],
       },
+      {
+        userAgent: ['GPTBot', 'ChatGPT-User', 'ClaudeBot', 'PerplexityBot', 'OAI-SearchBot', 'Google-Extended'],
+        allow: '/',
+        disallow: ['/studio', '/sanity', '/api/'],
+      },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
   };
 }
+
